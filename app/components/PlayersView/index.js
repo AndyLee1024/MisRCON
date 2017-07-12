@@ -180,4 +180,5 @@ const PlayerList = styled.div`
   overflow-y: auto;
   align-items: flex-start;
   justify-content: center;
+  transition-duration: 1s;
 `;

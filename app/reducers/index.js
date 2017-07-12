@@ -5,17 +5,15 @@ import notify from './notifyReducer';
 import rcon from './rconReducer';
 import credentials from './credentialsReducer';
 import server from './serverReducer';
-import eventLogs from './eventLogReducer';
 import tasks from './scheduledTasksReducer';
 
 const rootReducer = combineReducers({
   credentials,
-  eventLogs,
   notify,
   rcon,
   routing,
   server,
-  tasks
+  tasks,
 });
 
 export default rootReducer;

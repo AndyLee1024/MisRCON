@@ -10,7 +10,7 @@ import * as damageUtils from '../utils/damageLogUtils';
 import * as actionType from '../constants/ActionTypes';
 
 // Damage Logs
-export const loadDamageLog = (path) => {
+export const loadDamageLog = path => {
   return dispatch => {
     dispatch(parsingDamageLog());
     // do stuff
@@ -31,9 +31,8 @@ export function parsedDamageLog() {
   };
 }
 
-
 // Chat Logs
-export const loadChatLog = (path) => {
+export const loadChatLog = path => {
   return dispatch => {
     dispatch(parsingChatLog());
     // do stuff

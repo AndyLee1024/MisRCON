@@ -27,9 +27,9 @@ class ScheduledTasksView extends Component {
 
   render() {
     return (
-      <Wrapper style={{ display: this.props.tasks.display }}>
+      <Wrapper display={this.props.tasks.display}>
         <HeaderBar>
-          <HeaderTitle>
+          <HeaderTitle display={this.props.tasks.display}>
             SCHEDULED TASKS
           </HeaderTitle>
           <AddTasksButton onTouchTap={this.showCreateTaskDialog} />
@@ -52,11 +52,10 @@ class ScheduledTasksView extends Component {
 }
 
 const Wrapper = styled.div`
-  max-width: 420px;
-  display: ${props => props.display} !important;
+  transition-duration: 0.3s; 
+  width: ${props => (props.display ? 0 : '420px')};
   flex-direction: column;
   align-items: stretch;
-  flex-shrink: 1;
 `;
 
 const TaskContainer = styled.div`
@@ -72,6 +71,7 @@ const TaskContainer = styled.div`
 `;
 
 const HeaderBar = styled.div`
+  z-index: 200;
   min-height:72px;
   max-height: 72px;
   flex-grow: 1;
@@ -80,10 +80,11 @@ const HeaderBar = styled.div`
   align-items: center;
   justify-content: center;
   background-color: ${black};
+  min-width: 300px;
 `;
 
 const HeaderTitle = styled.div`
-  flex-grow: 1;
+  min-width: 300px;
 `;
 
 export default ScheduledTasksView;

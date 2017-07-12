@@ -7,7 +7,6 @@
 import * as types from '../constants/ActionTypes';
 import * as credentialsUtils from '../utils/credentialsUtils';
 
-
 export function addCredentials(creds) {
   credentialsUtils.addCredentials(creds);
   return {

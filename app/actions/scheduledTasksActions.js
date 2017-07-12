@@ -6,11 +6,10 @@
 import * as actionType from '../constants/ActionTypes';
 import * as taskUtils from '../utils/scheduledTasksUtils';
 
-
 // // // // // // // // //
 // Thunks
 // // // // // // // // //
-export const loadTasks = (taskList) => {
+export const loadTasks = taskList => {
   return dispatch => {
     // schedule specific tasks
     taskList.forEach(task => {
@@ -64,6 +63,6 @@ export function openCreateTaskDialog() {
 }
 export function toggleTaskList() {
   return {
-    type: actionType.TOGGLE_TASK_LIST,
+    type: actionType.TOGGLE_TASK_LIST
   };
 }

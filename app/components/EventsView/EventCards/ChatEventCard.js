@@ -5,10 +5,11 @@
  * Description: The compoonent used to dispaly information about a chatEvent
  */
 import React, { PropTypes } from 'react';
-import SteamAvatar from '../../common/SteamAvatar';
 import styled from 'styled-components';
 import Paper from 'material-ui/Paper';
 import format from 'date-fns/format';
+
+import SteamAvatar from '../../common/SteamAvatar';
 
 import { darkGrey, offWhite } from '../../../styles/colors';
 

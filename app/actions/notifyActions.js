@@ -28,6 +28,6 @@ export function emitInfo(msg) {
 
 export function dismissNotify() {
   return {
-    type: types.DISMISS_NOTIFY,
+    type: types.DISMISS_NOTIFY
   };
 }

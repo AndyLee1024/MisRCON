@@ -54,6 +54,7 @@ const Container = styled.div`
   margin: 10px;
   display: flex;
   box-sizing: border-box;
+  min-height: 80px;
   height: 80px;
   border-radius: 4px;
   width: 300px;

@@ -13,11 +13,14 @@ export function sendRCONCommandToServer(command) {
   return (dispatch, getState) => {
     dispatch(rconSetCommand(command));
     dispatch(rconPending());
-    misrcon.sendRCONCommandToServer({...getState().credentials.active, command}).then(res => {
-      dispatch(rconRecieved(res));
-    }).catch(e => {
-      dispatch(notify.emitError(e));
-    });
+    misrcon
+      .sendRCONCommandToServer({ ...getState().credentials.active, command })
+      .then(res => {
+        dispatch(rconRecieved(res));
+      })
+      .catch(e => {
+        dispatch(notify.emitError(e));
+      });
   };
 }
 

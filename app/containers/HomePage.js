@@ -24,14 +24,13 @@ import * as updateUtils from '../utils/updateUtils';
 
 // redux containers
 import NotificationBar from '../containers/NotificationBar';
-import LoginView from '../components/LoginView/LoginView';
-import StatusBar from '../components/StatusBar/StatusBar';
-import BansView from '../components/BansView/BansView';
-import ConsoleView from '../components/ConsoleView/ConsoleView';
-import PlayersView from '../components/PlayersView/PlayersView';
-import ScheduledTasksView
-  from '../components/ScheduledTasksView/ScheduledTasksView';
-import WhitelistView from '../components/WhitelistView/WhitelistView';
+import LoginView from '../components/LoginView';
+import StatusBar from '../components/StatusBar';
+import BansView from '../components/BansView';
+import ConsoleView from '../components/ConsoleView';
+import PlayersView from '../components/PlayersView';
+import ScheduledTasksView from '../components/ScheduledTasksView';
+import WhitelistView from '../components/WhitelistView';
 // import WeatherView from '../components/WeatherView/WeatherView';
 
 import { Tabs, Tab } from '../components/common/Tabs';

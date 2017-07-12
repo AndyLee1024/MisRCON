@@ -1,8 +1,8 @@
 {
   "name": "MisRCON",
   "productName": "MisRCON",
-  "version": "0.2.3",
-  "versionName": "Shaboygan",
+  "version": "1.0.0",
+  "versionName": "Seneca",
   "description": "RCON Tool for Miscreated game.",
   "main": "main.js",
   "scripts": {
