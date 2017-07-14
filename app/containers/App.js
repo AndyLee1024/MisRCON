@@ -1,21 +1,17 @@
+// @flow
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
-import BaseTheme from '../styles/MisRCONBaseTheme';
+import type { Children } from 'react';
 
 export default class App extends Component {
-  static propTypes = {
-    children: PropTypes.element.isRequired
+  props: {
+    children: Children
   };
 
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(BaseTheme)}>
+      <div>
         {this.props.children}
-      </MuiThemeProvider>
+      </div>
     );
   }
 }

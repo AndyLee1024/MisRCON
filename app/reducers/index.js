@@ -1,19 +1,9 @@
+// @flow
 import { combineReducers } from 'redux';
-import { routerReducer as routing } from 'react-router-redux';
-
-import notify from './notifyReducer';
-import rcon from './rconReducer';
-import credentials from './credentialsReducer';
-import server from './serverReducer';
-import tasks from './scheduledTasksReducer';
+import { routerReducer as router } from 'react-router-redux';
 
 const rootReducer = combineReducers({
-  credentials,
-  notify,
-  rcon,
-  routing,
-  server,
-  tasks,
+  router,
 });
 
 export default rootReducer;

@@ -1,15 +1,18 @@
 {
   "name": "MisRCON",
   "productName": "MisRCON",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "RCON Tool for Miscreated game.",
-  "main": "./main.js",
+  "main": "./main.prod.js",
   "author": {
     "name": "Chris Sprance",
     "email": "chrissprance@gmail.com",
     "url": "https://github.com/csprance"
   },
-
+  "scripts": {
+    "postinstall": "npm rebuild --runtime=electron --target=1.6.6 --disturl=https://atom.io/download/atom-shell --build-from-source"
+  },
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+  }
 }
