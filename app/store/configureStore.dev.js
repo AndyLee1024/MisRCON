@@ -8,7 +8,7 @@ import * as serversActions from '../features/Servers/actions';
 
 const history = createHashHistory();
 
-const configureStore = (initialState?: counterStateType) => {
+const configureStore = (initialState) => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];

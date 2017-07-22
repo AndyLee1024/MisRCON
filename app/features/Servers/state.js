@@ -3,12 +3,13 @@
  * Name: Servers State
  * Description:
  */
-interface Credentials {
+export interface Credentials {
   ip: string,
   port: string,
   password: string
 }
-interface Status {
+
+export interface Status {
   name: string,
   ip: string,
   version: string,
@@ -17,6 +18,7 @@ interface Status {
   whitelist: [string],
   banlist: [string]
 }
+
 export interface ServerState {
   id: number,
   name: string,

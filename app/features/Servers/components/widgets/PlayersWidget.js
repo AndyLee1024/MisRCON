@@ -1,15 +1,15 @@
 /**
- * Name: index
+ * Name: PlayersWidget
  * Description:
  */
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-class Servers extends Component {
+class PlayersWidget extends Component {
   render() {
     return (
       <Container>
-        Servers Container
+        Players
       </Container>
     );
   }
@@ -19,4 +19,4 @@ const Container = styled.div`
     display: flex;
 `;
 
-export default Servers;
+export default PlayersWidget;
