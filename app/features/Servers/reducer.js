@@ -1,3 +1,4 @@
+// @flow
 /**
  * Name: servers Reducer
  * Type: Redux Reducer
@@ -7,8 +8,8 @@ import type { ServerState } from './state';
 import initialState from './state';
 
 export default function servers(state: ServerState = initialState, action) {
-  switch (action.type) {
-    default:
-      return state;
-  }
+	switch (action.type) {
+		default:
+			return state;
+	}
 }

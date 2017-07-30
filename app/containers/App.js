@@ -3,15 +3,15 @@
  * Name: App
  * Description: The container that holds the app and the routes
  */
-import React, { Component } from 'react';
+import { Component } from 'react';
 import type { Children } from 'react';
 
 export default class App extends Component {
-  props: {
-    children: Children
-  };
+	props: {
+		children: Children
+	};
 
-  render() {
-    return this.props.children;
-  }
+	render() {
+		return this.props.children;
+	}
 }

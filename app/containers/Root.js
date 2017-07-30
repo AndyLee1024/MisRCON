@@ -1,20 +1,16 @@
 // @flow
 import React from 'react';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import Routes from '../routes';
+import Main from './Main';
 
 type RootType = {
-  store: {},
-  history: {}
+	store: {}
 };
 
-export default function Root({ store, history }: RootType) {
-  return (
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <Routes />
-      </ConnectedRouter>
-    </Provider>
-  );
+export default function Root({ store }: RootType) {
+	return (
+		<Provider store={store}>
+			<Main store={store} />
+		</Provider>
+	);
 }

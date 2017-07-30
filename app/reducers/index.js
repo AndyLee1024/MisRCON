@@ -1,13 +1,13 @@
 // @flow
 import { combineReducers } from 'redux';
-import { routerReducer as router } from 'react-router-redux';
-import servers from '../features/Servers/reducer';
 import layoutProvider from '../features/LayoutProvider/reducer';
+import notifications from '../features/Notifications/reducer';
+import servers from '../features/Servers/reducer';
 
 const rootReducer = combineReducers({
-  router,
-  servers,
-  layoutProvider
+	layoutProvider,
+	notifications,
+	servers,
 });
 
 export default rootReducer;
