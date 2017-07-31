@@ -8,6 +8,8 @@ import * as misrcon from 'node-misrcon';
 import * as actionType from '../../constants/ActionTypes';
 import * as notify from '../Notifications/actions';
 
+type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
+
 // // // // // // // // //
 // initialData Getter
 // // // // // // // // //
@@ -22,7 +24,7 @@ export function recievedServerData(data) {
 		payload: data
 	};
 }
-export function getInitialData() {
+export function getInitialData(): ThunkAction {
 	return (dispatch, getState) => {
 		dispatch(fetchingServerData());
 		misrcon
@@ -51,7 +53,7 @@ export function fetchingStatus() {
 		type: actionType.FETCHING_SERVER_STATUS
 	};
 }
-export function getStatus() {
+export function getStatus(): ThunkAction {
 	return (dispatch, getState) => {
 		dispatch(fetchingStatus());
 		misrcon
@@ -83,7 +85,7 @@ export function fetchingWhitelist() {
 		type: actionType.FETCHING_SERVER_WHITELIST
 	};
 }
-export function getWhitelist() {
+export function getWhitelist(): ThunkAction {
 	return (dispatch, getState) => {
 		dispatch(fetchingWhitelist());
 		misrcon
@@ -102,7 +104,7 @@ export function getWhitelist() {
 			.catch(() => {});
 	};
 }
-export function whitelistPlayer(steamid) {
+export function whitelistPlayer(steamid): ThunkAction {
 	return (dispatch, getState) => {
 		misrcon
 			.sendRCONCommandToServer({
@@ -116,7 +118,7 @@ export function whitelistPlayer(steamid) {
 			.catch(() => {});
 	};
 }
-export function unWhitelistPlayer(steamid) {
+export function unWhitelistPlayer(steamid): ThunkAction {
 	return (dispatch, getState) => {
 		misrcon
 			.sendRCONCommandToServer({
@@ -145,7 +147,7 @@ export function fetchingBanList() {
 		type: actionType.FETCHING_SERVER_BANLIST
 	};
 }
-export function getBanList() {
+export function getBanList(): ThunkAction {
 	return (dispatch, getState) => {
 		dispatch(fetchingBanList());
 		misrcon
@@ -162,7 +164,7 @@ export function getBanList() {
 			.catch(() => {});
 	};
 }
-export function banPlayer(steamid: string) {
+export function banPlayer(steamid: string): ThunkAction {
 	return (dispatch, getState) => {
 		misrcon
 			.sendRCONCommandToServer({
@@ -176,7 +178,7 @@ export function banPlayer(steamid: string) {
 			.catch(() => {});
 	};
 }
-export function unBanPlayer(steamid: string) {
+export function unBanPlayer(steamid: string): ThunkAction {
 	return (dispatch, getState) => {
 		misrcon
 			.sendRCONCommandToServer({
@@ -194,7 +196,7 @@ export function unBanPlayer(steamid: string) {
 // // // // // // // // //
 // Kick
 // // // // // // // // //
-export function kickPlayer(steamid: string) {
+export function kickPlayer(steamid: string): ThunkAction {
 	return (dispatch, getState) => {
 		misrcon
 			.sendRCONCommandToServer({
@@ -212,7 +214,7 @@ export function kickPlayer(steamid: string) {
 
 // RCON Actions
 // the thunk action that sends the command and adds the response to state
-export function sendRCONCommandToServer(command: string) {
+export function sendRCONCommandToServer(command: Array<string>): ThunkAction {
 	return (dispatch, getState) => {
 		dispatch(rconSetCommand(command));
 		dispatch(rconPending());
@@ -257,13 +259,14 @@ export function commandPassThrough(
 	runCommand: any
 ) {
 	print('Sending...');
+	const creds = {
+		port: '64040',
+		password: 'password',
+		ip: '192.168.1.1',
+		command: cmd.join(' ')
+	};
 	misrcon
-		.sendRCONCommandToServer({
-			port: '64154',
-			password: '3Jq1SAN36',
-			ip: '162.244.55.44',
-			command: cmd.join(' ')
-		})
+		.sendRCONCommandToServer(creds)
 		.then(res => {
 			// Parse the status response
 			runCommand('edit-line  ');
