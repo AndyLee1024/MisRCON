@@ -4,10 +4,13 @@
  * Type: Redux Reducer
  * Description:
  */
-import type { ServerState } from './state';
+import type { ServersState } from './state';
 import initialState from './state';
 
-export default function servers(state: ServerState = initialState, action) {
+export default function servers(
+	state: ServersState = initialState,
+	action: any
+) {
 	switch (action.type) {
 		default:
 			return state;

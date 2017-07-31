@@ -5,227 +5,216 @@
  */
 import * as misrcon from 'node-misrcon';
 
+import type { ServerState } from './state';
+
 import * as actionType from '../../constants/ActionTypes';
 import * as notify from '../Notifications/actions';
 
+type GetState = () => ServerState;
 type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
 
-// // // // // // // // //
-// initialData Getter
-// // // // // // // // //
+/**
+ * Initial Date Getters
+ */
 export function fetchingServerData() {
 	return {
 		type: actionType.FETCHING_ALL_SERVER_DATA
 	};
 }
-export function recievedServerData(data) {
+
+export function recievedServerData(data: any) {
 	return {
 		type: actionType.UPDATE_ALL_SERVER_DATA,
 		payload: data
 	};
 }
+
 export function getInitialData(): ThunkAction {
 	return (dispatch, getState) => {
 		dispatch(fetchingServerData());
 		misrcon
-			.getAllServerData({ ...getState().credentials.active })
-			.then(res => {
-				dispatch(recievedServerData(res));
-				return null;
-			})
+			.getAllServerData(getState().credentials)
+			.then(res => dispatch(recievedServerData(res)))
 			.catch(e => {
 				throw e;
 			});
 	};
 }
 
-// // // // // // // // //
-// Status
-// // // // // // // // //
+/**
+ * Status
+ */
 export function updateStatus(status) {
 	return {
 		type: actionType.UPDATE_SERVER_STATUS,
 		payload: status
 	};
 }
+
 export function fetchingStatus() {
 	return {
 		type: actionType.FETCHING_SERVER_STATUS
 	};
 }
+
 export function getStatus(): ThunkAction {
 	return (dispatch, getState) => {
 		dispatch(fetchingStatus());
 		misrcon
 			.sendRCONCommandToServer({
-				...getState().credentials.active,
+				...getState().credentials,
 				command: 'status'
 			})
-			.then(statusResponseString => {
-				dispatch(
-					updateStatus(misrcon.parseStatusResponseToJs(statusResponseString))
-				);
-				return null;
-			})
-			.catch(() => {});
+			.then((statusRes: string) =>
+				dispatch(updateStatus(misrcon.parseStatusResponseToJs(statusRes)))
+			)
+			.catch(e => console.log(e));
 	};
 }
 
-// // // // // // // // //
-// Whitelist
-// // // // // // // // //
+/**
+ * Whitelist
+ */
 export function updateWhitelist(whitelist) {
 	return {
 		type: actionType.UPDATE_SERVER_WHITELIST,
 		payload: whitelist
 	};
 }
+
 export function fetchingWhitelist() {
 	return {
 		type: actionType.FETCHING_SERVER_WHITELIST
 	};
 }
+
 export function getWhitelist(): ThunkAction {
 	return (dispatch, getState) => {
 		dispatch(fetchingWhitelist());
 		misrcon
 			.sendRCONCommandToServer({
-				...getState().credentials.active,
+				...getState().credentials,
 				command: 'mis_whitelist_status'
 			})
-			.then(whitelistResponseString => {
+			.then((whitelistRes: string) =>
 				dispatch(
-					updateWhitelist(
-						misrcon.parseWhitelistResponseToJs(whitelistResponseString)
-					)
-				);
-				return null;
-			})
-			.catch(() => {});
+					updateWhitelist(misrcon.parseWhitelistResponseToJs(whitelistRes))
+				)
+			)
+			.catch(e => console.log(e));
 	};
 }
-export function whitelistPlayer(steamid): ThunkAction {
+
+export function whitelistPlayer(steamid: string): ThunkAction {
 	return (dispatch, getState) => {
 		misrcon
 			.sendRCONCommandToServer({
-				...getState().credentials.active,
+				...getState().credentials,
 				command: `mis_whitelist_add ${steamid}`
 			})
-			.then(() => {
-				dispatch(getWhitelist());
-				return null;
-			})
-			.catch(() => {});
-	};
-}
-export function unWhitelistPlayer(steamid): ThunkAction {
-	return (dispatch, getState) => {
-		misrcon
-			.sendRCONCommandToServer({
-				...getState().credentials.active,
-				command: `mis_whitelist_remove ${steamid}`
-			})
-			.then(() => {
-				dispatch(getWhitelist());
-				return null;
-			})
+			.then(() => dispatch(getWhitelist()))
 			.catch(() => {});
 	};
 }
 
-// // // // // // // // //
-// Ban
-// // // // // // // // //
-export function updateBanList(banList) {
+export function unWhitelistPlayer(steamid: string): ThunkAction {
+	return (dispatch, getState) => {
+		misrcon
+			.sendRCONCommandToServer({
+				...getState().credentials,
+				command: `mis_whitelist_remove ${steamid}`
+			})
+			.then(() => dispatch(getWhitelist()))
+			.catch(() => {});
+	};
+}
+
+/**
+ * Bans
+ */
+export function updateBanList(banList: Array<string>) {
 	return {
 		type: actionType.UPDATE_SERVER_BANLIST,
 		payload: banList
 	};
 }
+
 export function fetchingBanList() {
 	return {
 		type: actionType.FETCHING_SERVER_BANLIST
 	};
 }
+
 export function getBanList(): ThunkAction {
 	return (dispatch, getState) => {
 		dispatch(fetchingBanList());
 		misrcon
 			.sendRCONCommandToServer({
-				...getState().credentials.active,
+				...getState().credentials,
 				command: 'mis_ban_status'
 			})
-			.then(banListResponseString => {
-				dispatch(
-					updateBanList(misrcon.parseBanListResponseToJs(banListResponseString))
-				);
-				return null;
-			})
+			.then((banListRes: string) =>
+				dispatch(updateBanList(misrcon.parseBanListResponseToJs(banListRes)))
+			)
 			.catch(() => {});
 	};
 }
+
 export function banPlayer(steamid: string): ThunkAction {
 	return (dispatch, getState) => {
 		misrcon
 			.sendRCONCommandToServer({
-				...getState().credentials.active,
+				...getState().credentials,
 				command: `mis_ban_steamid ${steamid}`
 			})
-			.then(() => {
-				dispatch(getBanList());
-				return null;
-			})
+			.then(() => dispatch(getBanList()))
 			.catch(() => {});
 	};
 }
+
 export function unBanPlayer(steamid: string): ThunkAction {
 	return (dispatch, getState) => {
 		misrcon
 			.sendRCONCommandToServer({
-				...getState().credentials.active,
+				...getState().credentials,
 				command: `mis_ban_remove ${steamid}`
 			})
-			.then(() => {
-				dispatch(getBanList());
-				return null;
-			})
+			.then(() => dispatch(getBanList()))
 			.catch(() => {});
 	};
 }
 
-// // // // // // // // //
-// Kick
-// // // // // // // // //
+/**
+ * Kicks
+ */
 export function kickPlayer(steamid: string): ThunkAction {
 	return (dispatch, getState) => {
 		misrcon
 			.sendRCONCommandToServer({
-				...getState().credentials.active,
+				...getState().credentials,
 				command: `mis_kick ${steamid}`
 			})
-			.then(() => {
+			.then(() =>
 				// add it to status
-				dispatch(getStatus());
-				return null;
-			})
+				dispatch(getStatus())
+			)
 			.catch(() => {});
 	};
 }
 
-// RCON Actions
-// the thunk action that sends the command and adds the response to state
+/**
+ * RCON Actions
+ */
+
+// This thunk sends the command and adds the response to state
 export function sendRCONCommandToServer(command: Array<string>): ThunkAction {
 	return (dispatch, getState) => {
-		dispatch(rconSetCommand(command));
+		dispatch(rconSetCommand(command.join(' ')));
 		dispatch(rconPending());
 		misrcon
-			.sendRCONCommandToServer({ ...getState().credentials.active, command })
-			.then(res => {
-				dispatch(rconRecieved(res));
-			})
-			.catch(e => {
-				dispatch(notify.emitError(e));
-			});
+			.sendRCONCommandToServer({ ...getState().credentials, command })
+			.then(res => dispatch(rconRecieved(res)))
+			.catch(e => dispatch(notify.emitError(e)));
 	};
 }
 
@@ -267,14 +256,6 @@ export function commandPassThrough(
 	};
 	misrcon
 		.sendRCONCommandToServer(creds)
-		.then(res => {
-			// Parse the status response
-			runCommand('edit-line  ');
-			console.log(res);
-			return true;
-		})
-		.catch(err => {
-			runCommand(`edit-line ${err}`);
-			return false;
-		});
+		.then((res: string) => runCommand(`edit-line  ${res}`))
+		.catch(err => runCommand(`edit-line ${err}`));
 }

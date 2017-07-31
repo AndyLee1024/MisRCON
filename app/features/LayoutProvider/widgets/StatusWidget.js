@@ -7,16 +7,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import type { ServerState } from '../../Servers/state';
+import type { ServersState } from '../../Servers/state';
 
 class StatusWidget extends Component {
 	props: {
-		servers: ServerState
+		servers: ServersState
 	};
 	render() {
 		return (
 			<div>
-				{JSON.stringify(this.props.servers.status)}
+				{JSON.stringify(this.props.servers)}
 			</div>
 		);
 	}

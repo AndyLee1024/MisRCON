@@ -1,27 +1,28 @@
 // @flow
 /**
- * Name: BansWidget
+ * Name: TasksWidget
  * Type: Component
  * Description:
  */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import type { ServersState } from '../../Servers/state';
+import type { TasksType } from '../../../Tasks/state';
 
-class BansWidget extends Component {
+class TasksWidget extends Component {
 	props: {
-		servers: ServersState
+		tasks: TasksType
 	};
 	render() {
 		return (
 			<div>
-				{JSON.stringify(this.props.servers)}
+				{JSON.stringify(this.props.tasks)}
 			</div>
 		);
 	}
 }
 
 export default connect(store => ({
-	servers: store.servers
-}))(BansWidget);
+	tasks: store.tasks
+}))(TasksWidget);
