@@ -7,7 +7,6 @@ import type { TaskType } from './state';
 
 import type {
 	GetState,
-	Action,
 	TasksActions,
 	Dispatch,
 	ThunkAction
