@@ -5,24 +5,24 @@
  */
 import * as misrcon from 'node-misrcon';
 
-import type { ServerState } from './state';
-
+// Actions
 import * as actionType from '../../constants/ActionTypes';
 import * as notify from '../Notifications/actions';
 
-type GetState = () => ServerState;
-type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
+// Types
+import type { Action, ThunkAction, Dispatch, GetState } from '../../constants/ActionTypes';
+import type {ServersState} from './state';
 
 /**
  * Initial Date Getters
  */
-export function fetchingServerData() {
+export function fetchingServerData(): Action {
 	return {
 		type: actionType.FETCHING_ALL_SERVER_DATA
 	};
 }
 
-export function recievedServerData(data: any) {
+export function recievedServerData(data: ServersState) {
 	return {
 		type: actionType.UPDATE_ALL_SERVER_DATA,
 		payload: data
@@ -30,7 +30,7 @@ export function recievedServerData(data: any) {
 }
 
 export function getInitialData(): ThunkAction {
-	return (dispatch, getState) => {
+	return (dispatch: Dispatch, getState: GetState) => {
 		dispatch(fetchingServerData());
 		misrcon
 			.getAllServerData(getState().credentials)
@@ -58,7 +58,7 @@ export function fetchingStatus() {
 }
 
 export function getStatus(): ThunkAction {
-	return (dispatch, getState) => {
+	return (dispatch: Dispatch, getState: GetState) => {
 		dispatch(fetchingStatus());
 		misrcon
 			.sendRCONCommandToServer({
@@ -89,7 +89,7 @@ export function fetchingWhitelist() {
 }
 
 export function getWhitelist(): ThunkAction {
-	return (dispatch, getState) => {
+	return (dispatch: Dispatch, getState: GetState) => {
 		dispatch(fetchingWhitelist());
 		misrcon
 			.sendRCONCommandToServer({
@@ -106,7 +106,7 @@ export function getWhitelist(): ThunkAction {
 }
 
 export function whitelistPlayer(steamid: string): ThunkAction {
-	return (dispatch, getState) => {
+	return (dispatch: Dispatch, getState: GetState) => {
 		misrcon
 			.sendRCONCommandToServer({
 				...getState().credentials,
@@ -118,7 +118,7 @@ export function whitelistPlayer(steamid: string): ThunkAction {
 }
 
 export function unWhitelistPlayer(steamid: string): ThunkAction {
-	return (dispatch, getState) => {
+	return (dispatch: Dispatch, getState: GetState) => {
 		misrcon
 			.sendRCONCommandToServer({
 				...getState().credentials,
@@ -146,7 +146,7 @@ export function fetchingBanList() {
 }
 
 export function getBanList(): ThunkAction {
-	return (dispatch, getState) => {
+	return (dispatch: Dispatch, getState: GetState) => {
 		dispatch(fetchingBanList());
 		misrcon
 			.sendRCONCommandToServer({
@@ -161,7 +161,7 @@ export function getBanList(): ThunkAction {
 }
 
 export function banPlayer(steamid: string): ThunkAction {
-	return (dispatch, getState) => {
+	return (dispatch: Dispatch, getState: GetState) => {
 		misrcon
 			.sendRCONCommandToServer({
 				...getState().credentials,
@@ -173,7 +173,7 @@ export function banPlayer(steamid: string): ThunkAction {
 }
 
 export function unBanPlayer(steamid: string): ThunkAction {
-	return (dispatch, getState) => {
+	return (dispatch: Dispatch, getState: GetState) => {
 		misrcon
 			.sendRCONCommandToServer({
 				...getState().credentials,
@@ -188,7 +188,7 @@ export function unBanPlayer(steamid: string): ThunkAction {
  * Kicks
  */
 export function kickPlayer(steamid: string): ThunkAction {
-	return (dispatch, getState) => {
+	return (dispatch: Dispatch, getState: GetState) => {
 		misrcon
 			.sendRCONCommandToServer({
 				...getState().credentials,
@@ -208,7 +208,7 @@ export function kickPlayer(steamid: string): ThunkAction {
 
 // This thunk sends the command and adds the response to state
 export function sendRCONCommandToServer(command: Array<string>): ThunkAction {
-	return (dispatch, getState) => {
+	return (dispatch: Dispatch, getState: GetState) => {
 		dispatch(rconSetCommand(command.join(' ')));
 		dispatch(rconPending());
 		misrcon

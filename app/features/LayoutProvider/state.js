@@ -4,7 +4,7 @@
 * Description:
 */
 
-import { Config } from 'golden-layout';
+import type { Config } from 'golden-layout';
 
 const config: Config = {
 	settings: {
@@ -176,6 +176,9 @@ const config: Config = {
 	title: '',
 	openPopouts: [],
 	maximisedItemId: null
+};
+export type LayoutProviderState = {
+	config: Config
 };
 
 export default {

@@ -2,23 +2,29 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import GoldenLayout from 'golden-layout';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+import BansWidget from './widgets/BansWidget';
 import ConsoleWidget from './widgets/ConsoleWidget';
 import HelpWidget from './widgets/HelpWidget';
 import PlayersWidget from './widgets/PlayersWidget';
 import StatusWidget from './widgets/StatusWidget';
-import WhitelistWidget from './widgets/WhitelistWidget';
-import BansWidget from './widgets/BansWidget';
 import TasksWidget from './widgets/TasksWidget';
+import WhitelistWidget from './widgets/WhitelistWidget';
+
+import { MisRCONTheme } from '../../styles/theme';
 
 /**
- * Wraps a widget in the redux store provider
+ * Wraps a widget in the redux store provider and material ui theme
  */
-function wrapWidgetInReduxProvider(Widget, store) {
+function wrapWidget(Widget, store) {
 	class Wrapped extends Component {
 		render() {
 			return (
 				<Provider store={store}>
-					<Widget {...this.props} />
+					<MuiThemeProvider muiTheme={MisRCONTheme}>
+						<Widget {...this.props} />
+					</MuiThemeProvider>
 				</Provider>
 			);
 		}
@@ -28,40 +34,23 @@ function wrapWidgetInReduxProvider(Widget, store) {
 
 /**
  * Registers all the react components (Widgets) to the golden layout manager
- * and wraps it with wrapWidgetInReduxProvider
+ * and wraps it with wrapWidget
  * these wrapped widgets now can call connect and access all the redux store in
  * /MisRCON/app/reducers/index.js
+ * it can also use material ui themes
  */
 export default function registerWidgetsToLayout(
 	layout: GoldenLayout,
 	store: any
 ) {
-	layout.registerComponent(
-		'console-widget',
-		wrapWidgetInReduxProvider(ConsoleWidget, store)
-	);
-	layout.registerComponent(
-		'players-widget',
-		wrapWidgetInReduxProvider(PlayersWidget, store)
-	);
-	layout.registerComponent(
-		'status-widget',
-		wrapWidgetInReduxProvider(StatusWidget, store)
-	);
+	layout.registerComponent('bans-widget', wrapWidget(BansWidget, store));
+	layout.registerComponent('console-widget', wrapWidget(ConsoleWidget, store));
+	layout.registerComponent('help-widget', wrapWidget(HelpWidget, store));
+	layout.registerComponent('players-widget', wrapWidget(PlayersWidget, store));
+	layout.registerComponent('status-widget', wrapWidget(StatusWidget, store));
+	layout.registerComponent('tasks-widget', wrapWidget(TasksWidget, store));
 	layout.registerComponent(
 		'whitelist-widget',
-		wrapWidgetInReduxProvider(WhitelistWidget, store)
-	);
-	layout.registerComponent(
-		'bans-widget',
-		wrapWidgetInReduxProvider(BansWidget, store)
-	);
-	layout.registerComponent(
-		'tasks-widget',
-		wrapWidgetInReduxProvider(TasksWidget, store)
-	);
-	layout.registerComponent(
-		'help-widget',
-		wrapWidgetInReduxProvider(HelpWidget, store)
+		wrapWidget(WhitelistWidget, store)
 	);
 }

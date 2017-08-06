@@ -1,45 +1,93 @@
 // @flow
 /**
- * Name: ActionTypes
- * Description: All redux ActionTypes
+ * Names
+ * Description: All redux actions
  */
-type ActionType = string;
+import type { ServersState } from '../features/Servers/state';
+import type { LayoutProviderState } from '../features/LayoutProvider/state';
+import type { TasksState, TaskType } from '../features/Tasks/state';
+import type { NotificationsState } from '../features/Notifications/state';
 
-export const SAVE_LAYOUT_PROVIDER_STATE: ActionType = 'SAVE_LAYOUT_PROVIDER_STATE';
-export const RESET_LAYOUT_PROVIDER_STATE: ActionType = 'RESET_LAYOUT_PROVIDER_STATE';
-export const RESTORE_LAYOUT_PROVIDER_STATE: ActionType = 'RESTORE_LAYOUT_PROVIDER_STATE';
+// LayoutProvider
+export const SAVE_LAYOUT_PROVIDER_STATE = 'SAVE_LAYOUT_PROVIDER_STATE';
+export const RESET_LAYOUT_PROVIDER_STATE = 'RESET_LAYOUT_PROVIDER_STATE';
+export const RESTORE_LAYOUT_PROVIDER_STATE = 'RESTORE_LAYOUT_PROVIDER_STATE';
+export type LayoutProviderActions =
+	| { type: 'SAVE_LAYOUT_PROVIDER_STATE' }
+	| { type: 'RESET_LAYOUT_PROVIDER_STATE', payload: LayoutProviderState }
+	| { type: 'RESTORE_LAYOUT_PROVIDER_STATE', payload: LayoutProviderState };
 
-// RCON action types
-export const SEND_RCON_COMMAND_PENDING: ActionType = 'SEND_RCON_COMMAND_PENDING';
-export const SEND_RCON_COMMAND_RECEIVED: ActionType = 'SEND_RCON_COMMAND_RECEIVED';
-export const SET_RCON_COMMAND: ActionType = 'SET_RCON_COMMAND';
-
-// Credentials
-export const ADD_CREDENTIALS: ActionType = 'ADD_CREDENTIALS';
-export const REMOVE_CREDENTIALS: ActionType = 'REMOVE_CREDENTIALS';
-export const USE_CREDENTIALS: ActionType = 'USE_CREDENTIALS';
-export const LOG_OUT: ActionType = 'LOG_OUT';
-
-// Server  - Contains all the info on the current server
-export const UPDATE_SERVER_STATUS: ActionType = 'UPDATE_SERVER_STATUS';
-export const FETCHING_SERVER_STATUS: ActionType = 'FETCHING_SERVER_STATUS';
-export const UPDATE_SERVER_WHITELIST: ActionType = 'UPDATE_SERVER_WHITELIST';
-export const FETCHING_SERVER_WHITELIST: ActionType = 'FETCHING_SERVER_WHITELIST';
-export const UPDATE_SERVER_BANLIST: ActionType = 'UPDATE_SERVER_BANLIST';
-export const FETCHING_SERVER_BANLIST: ActionType = 'FETCHING_SERVER_BANLIST';
-export const UPDATE_ALL_SERVER_DATA: ActionType = 'UPDATE_ALL_SERVER_DATA';
-export const FETCHING_ALL_SERVER_DATA: ActionType = 'FETCHING_ALL_SERVER_DATA';
+// Servers  - Contains all the info on the current server
+export const UPDATE_SERVER_STATUS = 'UPDATE_SERVER_STATUS';
+export const FETCHING_SERVER_STATUS = 'FETCHING_SERVER_STATUS';
+export const UPDATE_SERVER_WHITELIST = 'UPDATE_SERVER_WHITELIST';
+export const FETCHING_SERVER_WHITELIST = 'FETCHING_SERVER_WHITELIST';
+export const UPDATE_SERVER_BANLIST = 'UPDATE_SERVER_BANLIST';
+export const FETCHING_SERVER_BANLIST = 'FETCHING_SERVER_BANLIST';
+export const UPDATE_ALL_SERVER_DATA = 'UPDATE_ALL_SERVER_DATA';
+export const FETCHING_ALL_SERVER_DATA = 'FETCHING_ALL_SERVER_DATA';
+export type ServersActions =
+	| { type: 'UPDATE_SERVER_STATUS', task: TaskType }
+	| { type: 'FETCHING_SERVER_STATUS', id: number }
+	| { type: 'UPDATE_SERVER_WHITELIST', id: number }
+	| { type: 'FETCHING_SERVER_WHITELIST', id: number }
+	| { type: 'UPDATE_SERVER_BANLIST', payload: number }
+	| { type: 'FETCHING_SERVER_BANLIST', id: number }
+	| { type: 'UPDATE_ALL_SERVER_DATA', id: number }
+	| { type: 'FETCHING_ALL_SERVER_DATA', id: number };
 
 // Scheduled Tasks
-export const SHOW_TASK_DIALOG: ActionType = 'SHOW_TASK_DIALOG';
-export const ADD_TASK: ActionType = 'ADD_TASK';
-export const REMOVE_TASK: ActionType = 'REMOVE_TASK';
-export const INCREMENT_TASK: ActionType = 'INCREMENT_TASK';
-export const TASKS_LOADED: ActionType = 'TASKS_LOADED';
-export const TOGGLE_TASK_LIST: ActionType = 'TOGGLE_TASK_LIST';
+export const ADD_TASK = 'ADD_TASK';
+export const PAUSE_TASK = 'PAUSE_TASK';
+export const PLAY_TASK = 'PLAY_TASK';
+export const REMOVE_TASK = 'REMOVE_TASK';
+export const INCREMENT_TASK = 'INCREMENT_TASK';
+type _ADD_TASK = { type: 'ADD_TASK', task: TaskType };
+type _PAUSE_TASK = { type: 'PAUSE_TASK', id: number };
+type _PLAY_TASK = { type: 'PLAY_TASK', id: number };
+type _REMOVE_TASK = { type: 'REMOVE_TASK', id: number };
+type _INCREMENT_TASK = { type: 'INCREMENT_TASK', id: number };
+
+export type TasksActions =
+	| _ADD_TASK
+	| _PAUSE_TASK
+	| _PLAY_TASK
+	| _REMOVE_TASK
+	| _INCREMENT_TASK
+	| BaseReduxAction;
 
 // Notification system - notify
-export const EMIT_INFO: ActionType = 'EMIT_INFO';
-export const EMIT_WARN: ActionType = 'EMIT_WARN';
-export const EMIT_ERROR: ActionType = 'EMIT_ERROR';
-export const DISMISS_NOTIFY: ActionType = 'DISMISS_NOTIFY';
+export const EMIT_INFO = 'EMIT_INFO';
+export const EMIT_WARN = 'EMIT_WARN';
+export const EMIT_ERROR = 'EMIT_ERROR';
+export const DISMISS_NOTIFY = 'DISMISS_NOTIFY';
+export type NotificationActions =
+	| { type: 'EMIT_INFO', msg: string }
+	| { type: 'EMIT_WARN', msg: string }
+	| { type: 'EMIT_ERROR', msg: string }
+	| { type: 'DISMISS_NOTIFY' };
+
+// Base Redux Types
+export type BaseReduxAction = { type: string };
+
+export type Action =
+	| BaseReduxAction
+	| TasksActions
+	| ServersActions
+	| LayoutProviderActions
+	| NotificationActions;
+
+export type Dispatch = (
+	action: Action | ThunkAction | PromiseAction | Array<Action>
+) => any;
+
+export type GetState = () => {
+	servers: ServersState,
+	layoutProvider: LayoutProviderState,
+	tasks: TasksState,
+	notifications: NotificationsState
+};
+
+export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
+
+export type PromiseAction = Promise<Action>;

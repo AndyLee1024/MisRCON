@@ -12,14 +12,15 @@ import * as serverActions from '../../Servers/actions';
 
 import helpString from '../../../../CVARHelp.md';
 
+type Props = {
+	dispatch: any
+};
+
 class ConsoleWidget extends Component {
-	props: {
-		dispatch: any
-	};
 	descriptions: Object;
 	commands: Object;
 
-	constructor(props: any) {
+	constructor(props: Props) {
 		super(props);
 		this.descriptions = {
 			clear: '',
