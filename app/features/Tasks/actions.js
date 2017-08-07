@@ -11,20 +11,13 @@ import type {
 	Dispatch,
 	ThunkAction
 } from '../../constants/ActionTypes';
-import {
-	ADD_TASK,
-	PAUSE_TASK,
-	PLAY_TASK,
-	REMOVE_TASK,
-	INCREMENT_TASK
-} from '../../constants/ActionTypes';
 
 /**
  * This function adds a task to state
  */
 export function addTask(task: TaskType): TasksActions {
 	return {
-		type: ADD_TASK,
+		type: 'ADD_TASK',
 		task
 	};
 }
@@ -49,7 +42,7 @@ export const addTaskAndScheduleCron = (task: TaskType): ThunkAction => (
  */
 export function removeTask(id: number): TasksActions {
 	return {
-		type: REMOVE_TASK,
+		type: 'REMOVE_TASK',
 		id
 	};
 }
@@ -60,7 +53,7 @@ export function removeTask(id: number): TasksActions {
  */
 export function pauseTask(id: number): TasksActions {
 	return {
-		type: PAUSE_TASK,
+		type: 'PAUSE_TASK',
 		id
 	};
 }
@@ -71,18 +64,17 @@ export function pauseTask(id: number): TasksActions {
  */
 export function playTask(id: number): TasksActions {
 	return {
-		type: PLAY_TASK,
+		type: 'PLAY_TASK',
 		id
 	};
 }
 
 /**
- * This function modifies the enabled:true to a task in state
- * and adds the task to the execution queue
+ * This function increments the task timesRun field based on the id of the task
  */
 export function incrementTask(id: number): TasksActions {
 	return {
-		type: INCREMENT_TASK,
+		type: 'INCREMENT_TASK',
 		id
 	};
 }

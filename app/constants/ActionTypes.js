@@ -37,24 +37,25 @@ export type ServersActions =
 	| { type: 'FETCHING_ALL_SERVER_DATA', id: number };
 
 // Scheduled Tasks
-export const ADD_TASK = 'ADD_TASK';
-export const PAUSE_TASK = 'PAUSE_TASK';
-export const PLAY_TASK = 'PLAY_TASK';
-export const REMOVE_TASK = 'REMOVE_TASK';
-export const INCREMENT_TASK = 'INCREMENT_TASK';
-type _ADD_TASK = { type: 'ADD_TASK', task: TaskType };
-type _PAUSE_TASK = { type: 'PAUSE_TASK', id: number };
-type _PLAY_TASK = { type: 'PLAY_TASK', id: number };
-type _REMOVE_TASK = { type: 'REMOVE_TASK', id: number };
-type _INCREMENT_TASK = { type: 'INCREMENT_TASK', id: number };
+type ADD_TASK = { type: 'ADD_TASK', task: TaskType };
+type PAUSE_TASK = { type: 'PAUSE_TASK', id: number };
+type PLAY_TASK = { type: 'PLAY_TASK', id: number };
+type REMOVE_TASK = { type: 'REMOVE_TASK', id: number };
+type INCREMENT_TASK = { type: 'INCREMENT_TASK', id: number };
 
 export type TasksActions =
-	| _ADD_TASK
-	| _PAUSE_TASK
-	| _PLAY_TASK
-	| _REMOVE_TASK
-	| _INCREMENT_TASK
+	| ADD_TASK
+	| PAUSE_TASK
+	| PLAY_TASK
+	| REMOVE_TASK
+	| INCREMENT_TASK
 	| BaseReduxAction;
+
+export type TaskActionsType = {
+	type: string,
+	task: TaskType,
+	id: number
+};
 
 // Notification system - notify
 export const EMIT_INFO = 'EMIT_INFO';
