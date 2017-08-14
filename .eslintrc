@@ -19,7 +19,7 @@
     "generator-star-spacing": "off",
     "import/no-unresolved": "error",
     "import/no-extraneous-dependencies": "off",
-		"indent": [2, "tab", { "SwitchCase": 1 }],
+		"indent": "off",
 		"max-len": ["error", { "comments": 121, "code": 121 }],
     "no-console": "off",
     "no-use-before-define": "off",
@@ -33,6 +33,7 @@
       "order": ["type-annotations", "static-methods", "lifecycle", "everything-else", "render"]
     }],
     "react/jsx-no-bind": "off",
+    "react/jsx-wrap-multilines": "off",
 		"react/jsx-indent": [2, "tab"],
 		"react/jsx-indent-props": [2, "tab"],
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],

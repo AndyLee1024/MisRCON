@@ -4,7 +4,7 @@
  * Description:
  */
 import React, { Component } from 'react';
-import RaisedButton from 'material-ui/RaisedButton/index';
+import IconButton from 'material-ui/IconButton/index';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
 class AddButton extends Component {
@@ -13,11 +13,13 @@ class AddButton extends Component {
 	};
 
 	render() {
-		const style = { color: 'white', height: 25, width: 25, minWidth: 25 };
 		return (
-			<RaisedButton primary style={style} onTouchTap={this.props.handleClick}>
+			<IconButton
+				tooltip={'Add Task'}
+				onTouchTap={this.props.handleClick}
+			>
 				<AddIcon />
-			</RaisedButton>
+			</IconButton>
 		);
 	}
 }

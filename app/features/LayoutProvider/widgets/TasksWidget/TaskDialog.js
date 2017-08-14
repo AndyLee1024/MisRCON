@@ -3,47 +3,78 @@
  * Name: TaskDialog
  * Description:
  */
-import React, { Component } from 'react';
+import React from 'react';
 import Dialog from 'material-ui/Dialog/index';
-import styled from 'styled-components';
+import TextField from 'material-ui/TextField/index';
+import CheckBox from 'material-ui/Checkbox/index';
+import FlatButton from 'material-ui/FlatButton/index';
+import DatePicker from 'material-ui/DatePicker/index';
+import CodeEditor from '../../../../components/CodeEditor';
+
+import type { TaskType } from '../../../Tasks/state';
 
 type Props = {
-	handleClickAddTaskButton: any
+	// the function to add the task to state
+	addTask: any,
+
+	// function to hide the task dialog
+	hideTaskDialog: any,
+
+	// Is this dialog open or closed
+	open: boolean,
+
+	// function to update the value used in the TaskType.payload
+	onChangeCodeEditor: any,
+
+	// function to change the TaskType.code
+	toggleCodeCheckBox: any,
+
+	// function change the TaskType.recurring
+	toggleRecurringCheckBox: any,
+
+	// the task values to add
+	task: TaskType
 };
-class TaskDialog extends Component {
-	state: {
-		open: boolean
-	};
 
-	constructor(props: Props) {
-		super(props);
-		this.state = {
-			open: true
-		};
-	}
+const TaskDialog = (props: Props) => {
+	const CancelButton = (
+		<FlatButton onTouchTap={props.hideTaskDialog}>Cancel</FlatButton>
+	);
 
-	handleClose = () => {
-		this.setState({
-			open: false
-		});
-	};
+	const SubmitTaskButton = (
+		<FlatButton onTouchTap={props.addTask}>Submit</FlatButton>
+	);
 
-	render() {
-		const actions = [];
-		return (
-			<Dialog
-				title="Dialog With Actions"
-				actions={actions}
-				modal={false}
-				open={this.state.open}
-				onRequestClose={this.handleClose}
-			>
-				The actions in this window were passed in as an array of React objects.
-			</Dialog>
-		);
-	}
-}
+	return (
+		<Dialog
+			title="Add/Edit Task"
+			autoScrollBodyContent
+			autoDetectWindowHeight
+			actions={[CancelButton, SubmitTaskButton]}
+			modal={false}
+			open={props.open}
+			onRequestClose={props.hideTaskDialog}
+		>
+			<TextField name={'name'} hintText={'Name'} />
+			<DatePicker hintText={'Date'} />
+			<CodeEditor
+				onChangeCodeEditor={props.onChangeCodeEditor}
+				value={props.task.payload}
+			/>
+			<br />
 
-const Container = styled.div`display: flex;`;
+			<CheckBox
+				value={props.task.recurring}
+				onCheck={props.toggleRecurringCheckBox}
+				label="Recurring"
+			/>
+			<CheckBox
+				value={props.task.code}
+				onCheck={props.toggleCodeCheckBox}
+				label="Code"
+			/>
+		</Dialog>
+	);
+};
 
 export default TaskDialog;

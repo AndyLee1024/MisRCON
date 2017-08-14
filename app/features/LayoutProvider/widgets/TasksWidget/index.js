@@ -8,18 +8,17 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import fuzzy from 'fuzzy';
-
 // Actions
 import * as TasksActions from '../../../Tasks/actions';
-
 // Components
 import FilterBar from '../../../../components/FilterBar';
-import AddTaskButton from '../../../../components/AddButton';
+import ShowTaskDialogButton from '../../../../components/AddButton';
 import TaskItem from './TaskItem';
 import TaskDialog from './TaskDialog';
-
+// Default Task State
+import { defaultTaskState } from '../../../Tasks/state';
 // Types
-import type { TasksState } from '../../../Tasks/state';
+import type { TasksState, TaskType } from '../../../Tasks/state';
 import type { SyntheticInputEvent } from '../../../../constants/FlowTypes';
 
 class TasksWidget extends Component {
@@ -28,49 +27,86 @@ class TasksWidget extends Component {
 		dispatch: any
 	};
 	state: {
-		filterValue: string
+		filterValue: string,
+		open: boolean,
+		task: TaskType
 	};
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			filterValue: ''
+			filterValue: '',
+			open: true,
+			task: defaultTaskState
 		};
 	}
 
-	handleClickAddTaskButton = () => {
-		this.props.dispatch(
-			// TODO: Hook this up to a dialog and get the user input
-			TasksActions.addTaskAndScheduleCron({
-				id: Date.now(),
-				serverId: 0,
-				name: 'New Task',
-				payload: 'sv_say This is a test!',
-				recurring: false,
-				date: Date.now(),
-				code: true,
-				timesRun: 0,
-				enabled: true,
-				cronJob: {}
-			})
-		);
+	toggleTaskDialog = () => {
+		this.setState({ open: !this.state.open });
 	};
 
-	handleClickRemoveTaskButton = (taskId: number) => {
+	addTask = () => {
+		this.props.dispatch(TasksActions.addTaskAndScheduleCron(this.state.task));
+	};
+
+	removeTask = (taskId: number) => {
 		this.props.dispatch(TasksActions.removeTask(taskId));
 	};
 
-	handleClickPauseTaskButton = (taskId: number) => {
+	pauseTask = (taskId: number) => {
 		this.props.dispatch(TasksActions.pauseTask(taskId));
 	};
 
-	handleClickPlayTaskButton = (taskId: number) => {
+	playTask = (taskId: number) => {
 		this.props.dispatch(TasksActions.playTask(taskId));
 	};
 
 	onChangeFilterBar = ({ target }: SyntheticInputEvent) => {
+		this.setState({ filterValue: target.value });
+	};
+
+	onChangeCodeEditor = (payload: string) => {
 		this.setState({
-			filterValue: target.value
+			task: {
+				...this.state.task,
+				payload
+			}
+		});
+	};
+
+	toggleCodeCheckBox = ({ target = {} }: any, isInputChecked: boolean) => {
+		this.setState({
+			task: {
+				...this.state.task,
+				code: isInputChecked
+			}
+		});
+	};
+
+	toggleRecurringCheckBox = ({ target = {} }: any, isInputChecked: boolean) => {
+		this.setState({
+			task: {
+				...this.state.task,
+				recurring: isInputChecked
+			}
+		});
+	};
+
+	onChangeNameTextField = ({ target }: SyntheticInputEvent) => {
+		this.setState({
+			task: {
+				...this.state.task,
+				name: target.value
+			}
+		});
+	};
+
+	onChangeDatePicker = ({ target }: SyntheticInputEvent) => {
+		this.setState({
+			task: {
+				...this.state.task,
+				date: target.value
+			}
 		});
 	};
 
@@ -84,8 +120,18 @@ class TasksWidget extends Component {
 			task => fuzzyList.indexOf(task.name) >= 0
 		);
 		return (
-			<Container>
-				<TaskDialog handleClickAddTaskButton={this.handleClickAddTaskButton} />
+			<div
+				style={container}
+			>
+				<TaskDialog
+					open={this.state.open}
+					task={this.state.task}
+					onChangeCodeEditor={this.onChangeCodeEditor}
+					hideTaskDialog={this.toggleTaskDialog}
+					addTask={this.addTask}
+					toggleCodeCheckBox={this.toggleCodeCheckBox}
+					toggleRecurringCheckBox={this.toggleRecurringCheckBox}
+				/>
 				<Row>
 					<Spacer />
 					<FilterBar
@@ -94,7 +140,7 @@ class TasksWidget extends Component {
 						value={this.state.filterValue}
 					/>
 					<Spacer />
-					<AddTaskButton handleClick={this.handleClickAddTaskButton} />
+					<ShowTaskDialogButton handleClick={this.toggleTaskDialog} />
 					<Spacer />
 				</Row>
 
@@ -103,17 +149,27 @@ class TasksWidget extends Component {
 						<TaskItem
 							key={task.id}
 							task={task}
-							handleClickPauseTaskButton={this.handleClickPauseTaskButton}
-							handleClickPlayTaskButton={this.handleClickPlayTaskButton}
-							handleClickRemoveTaskButton={this.handleClickRemoveTaskButton}
+							handleClickPauseTaskButton={this.pauseTask}
+							handleClickPlayTaskButton={this.playTask}
+							handleClickRemoveTaskButton={this.removeTask}
 						/>
 					)}
 				</Column>
 				<Spacer />
-			</Container>
+			</div>
 		);
 	}
 }
+
+
+const container = {
+	display: 'block',
+	height: '100%',
+	overflow: 'auto',
+	padding: '5px',
+	boxSizing: 'border-box'
+};
+
 
 const Spacer = styled.div`
 	display: flex;
@@ -138,14 +194,6 @@ const Column = styled.div`
 	justify-content: center;
 	flex-grow: 1;
 	width: 100%;
-`;
-
-const Container = styled.div`
-	display: block;
-	height: 100%;
-	overflow: auto;
-	padding: 5px;
-	box-sizing: border-box;
 `;
 
 export default connect(store => ({

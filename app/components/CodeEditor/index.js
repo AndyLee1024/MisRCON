@@ -1,3 +1,4 @@
+// @flow
 /**
  * Created by chris on 8/8/2017.
  */
@@ -10,52 +11,32 @@ import 'brace/ext/language_tools';
 
 import './aceEditorTheme';
 
-
-type Props = {
-	value: string
-};
-
 class CodeEditor extends Component {
 	ace: HTMLElement;
-	state: {
+	props: {
+		onChangeCodeEditor: any,
 		value: string
 	};
 
-
-	constructor(props: Props) {
-		super(props);
-		this.state = {
-			value: this.props.value
-		};
-	}
-
-
-	onChangeAceEditor = (value: string) => {
-		this.setState({
-			value
-		});
-	};
-
-
-  render() {
-    return (
+	render() {
+		return (
 			<AceEditor
 				enableBasicAutocompletion
 				enableLiveAutocompletion
 				ref={r => {
-						this.ace = r;
-					}}
-				value={this.state.value}
+					this.ace = r;
+				}}
+				value={this.props.value}
 				width="100%"
-				height="500px"
+				height="300px"
 				mode="javascript"
 				theme="dataFoundryTheme"
-				onChange={this.onChangeAceEditor}
+				onChange={this.props.onChangeCodeEditor}
 				name="UNIQUE_ID_OF_DIV"
 				editorProps={{ $blockScrolling: Infinity }}
 			/>
-    );
-  }
+		);
+	}
 }
 
 injectGlobal`

@@ -2,6 +2,7 @@
 /**
  * Name: Tasks State
  * Description: The initial state and type declaration of the tasks
+ * and any relevant bootstrapping for tasks
  */
 
 // The individual tasks themselves
@@ -41,20 +42,38 @@ export type TaskType = {
 export type TasksState = Array<TaskType>;
 
 // TODO: bootstrap here!
-const initialState: TasksState = [
-	{
-		id: 0,
-		serverId: 0,
-		name: 'Task Name',
-		payload: 'sv_say This is a test!',
-		recurring: true,
-		date: '* * * * *',
-		code: false,
-		timesRun: 0,
-		enabled: false,
-		cronJob: {}
-	}
-];
+const initialState: TasksState = [];
 console.log('Bootstrapped');
+export const defaultTaskState: TaskType = {
+	// a unique id used to start and cancel tasks with the node-cron lib
+	id: -1,
+
+	// the server to access credentials from
+	serverId: -1,
+
+	// display name for task
+	name: '',
+
+	// the code or command to run
+	payload: '',
+
+	// should we run this more than once?
+	recurring: true,
+
+	// datetime of when to run or cron string
+	date: '',
+
+	// should we eval this as js code?
+	code: false,
+
+	// number of times the command has been run
+	timesRun: 0,
+
+	// Is this task currently being executed or is it paused
+	enabled: true,
+
+	// the node-cron job to pause or cancel
+	cronJob: {}
+};
 
 export default initialState;

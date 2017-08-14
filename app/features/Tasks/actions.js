@@ -3,6 +3,8 @@
  * Name: actions
  * Description:
  */
+import { scheduleTask } from './utils';
+
 import type { TaskType } from './state';
 
 import type {
@@ -29,11 +31,10 @@ export const addTaskAndScheduleCron = (task: TaskType): ThunkAction => (
 	dispatch: Dispatch,
 	getState: GetState
 ) => {
-	dispatch(addTask(task));
-	const credentials = getState().servers.filter(
-		server => server.id === task.serverId
-	)[0].credentials;
-	console.log(credentials);
+	const scheduledTask = scheduleTask(task, dispatch, getState);
+	if (scheduledTask) {
+		dispatch(addTask(scheduledTask));
+	}
 };
 
 /**

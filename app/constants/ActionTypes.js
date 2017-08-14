@@ -82,12 +82,14 @@ export type Dispatch = (
 	action: Action | ThunkAction | PromiseAction | Array<Action>
 ) => any;
 
-export type GetState = () => {
+export type AppState = {
 	servers: ServersState,
 	layoutProvider: LayoutProviderState,
 	tasks: TasksState,
 	notifications: NotificationsState
 };
+
+export type GetState = () => AppState;
 
 export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
 

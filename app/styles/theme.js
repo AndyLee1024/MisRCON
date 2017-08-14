@@ -5,57 +5,53 @@
  */
 import { injectGlobal } from 'styled-components';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import {
-	cyan700,
-	grey600,
-	pinkA100,
-	fullWhite
-} from 'material-ui/styles/colors';
-import { fade } from 'material-ui/utils/colorManipulator';
 import spacing from 'material-ui/styles/spacing';
 
-import { grey, orange, white } from './colors';
+import { white, orange, lightBlue, midBlue, midText } from './colors';
 
 export const addGlobalStyling = () => {
 	injectGlobal`
 	::-webkit-scrollbar {
-		width: 12px;
-		height: 8px;
-		background-color: inherit;
+		width: 0.7em;
 	}
-	::-webkit-scrollbar-thumb {
-		-webkit-border-radius: 10px;
-		border: 2px solid #2c2c2c;
-		background-color: #404040;
-	}
+	
 	::-webkit-scrollbar-track {
-		width: 12px;
-		height: 8px;
-		background-color: #2c2c2c;
+		box-shadow: inset 0 0 6px ${midBlue};
 	}
-	::-webkit-scrollbar-corner { 
-		background: #2c2c2c; 
+	
+	::-webkit-scrollbar-thumb {
+		background: ${lightBlue};
+	}
+	
+	::-webkit-scrollbar-corner,
+	::-webkit-scrollbar-thumb:window-inactive {
+		background: ${midBlue};
 	}
 `;
 };
 
 export const MisRCONTheme = getMuiTheme({
+	tooltip: {
+		color: midText,
+		rippleBackgroundColor: midBlue
+	},
 	spacing,
 	fontFamily: 'Roboto, sans-serif',
+	borderRadius: 2,
 	palette: {
-		primary1Color: grey,
-		primary2Color: cyan700,
-		primary3Color: grey600,
-		accent1Color: orange,
-		accent2Color: '#65b8ff',
-		accent3Color: pinkA100,
+		primary1Color: orange,
+		primary2Color: midBlue,
+		primary3Color: lightBlue,
+		accent1Color: lightBlue,
+		accent2Color: orange,
+		accent3Color: orange,
 		textColor: white,
-		secondaryTextColor: fade(fullWhite, 0.7),
-		alternateTextColor: '#ffffff',
-		canvasColor: '#303030',
-		borderColor: fade(fullWhite, 0.3),
-		disabledColor: fade(fullWhite, 0.3),
-		pickerHeaderColor: fade(fullWhite, 0.12),
-		clockCircleColor: fade(fullWhite, 0.12)
+		secondaryTextColor: white,
+		alternateTextColor: white,
+		canvasColor: midBlue,
+		borderColor: midBlue,
+		disabledColor: lightBlue,
+		pickerHeaderColor: orange,
+		clockCircleColor: lightBlue
 	}
 });

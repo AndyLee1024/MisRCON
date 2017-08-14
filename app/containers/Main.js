@@ -4,13 +4,11 @@
  * Description: The Main Entry point for the React App.
  */
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
 
 import LayoutProvider from '../features/LayoutProvider';
 
-import {MisRCONTheme, addGlobalStyling} from '../styles/theme';
+import { MisRCONTheme, addGlobalStyling } from '../styles/theme';
 
 class Main extends Component {
 	componentWillMount() {
@@ -20,14 +18,12 @@ class Main extends Component {
 	render() {
 		return (
 			<MuiThemeProvider muiTheme={MisRCONTheme}>
-				<Container>
+				<div style={{ display: 'flex' }}>
 					<LayoutProvider store={this.props.store} />
-				</Container>
+				</div>
 			</MuiThemeProvider>
 		);
 	}
 }
-
-const Container = styled.div`display: flex;`;
 
 export default Main;

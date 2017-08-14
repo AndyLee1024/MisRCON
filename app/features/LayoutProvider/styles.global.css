@@ -1,2 +1,13 @@
 @import "~golden-layout/src/css/goldenlayout-dark-theme.css";
 @import "~golden-layout/src/css/goldenlayout-base.css";
+
+.lm_content {
+	background: #0f1419;
+}
+.lm_tab:hover,
+.lm_tab.lm_active {
+	background: #0f1419;
+}
+.lm_tab {
+	background: #0f1419;
+}
