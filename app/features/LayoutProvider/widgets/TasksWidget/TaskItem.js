@@ -9,7 +9,6 @@ import TrashIcon from 'material-ui/svg-icons/action/delete';
 import PauseIcon from 'material-ui/svg-icons/av/pause';
 import PlayIcon from 'material-ui/svg-icons/av/play-arrow';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
-import styled from 'styled-components';
 import IconButton from 'material-ui/IconButton/index';
 
 import type { TaskType } from '../../../Tasks/state';
@@ -66,7 +65,17 @@ class TaskItem extends Component {
 		);
 
 		return (
-			<Container>
+			<Paper
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					margin: '10px',
+					width: '90%',
+					minHeight: '50px',
+					padding: '10px',
+					boxSizing: 'border-box'
+				}}
+			>
 				<div>
 					Name: {this.props.task.name}
 				</div>
@@ -84,29 +93,19 @@ class TaskItem extends Component {
 					Command: {this.props.task.payload}
 				</div>
 
-				<Actions>
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'flex-end'
+					}}
+				>
 					{EditButton}
 					{DeleteButton}
 					{this.props.task.enabled ? PauseButton : PlayButton}
-				</Actions>
-			</Container>
+				</div>
+			</Paper>
 		);
 	}
 }
-
-const Actions = styled.div`
-	display: flex;
-	justify-content: flex-end;
-`;
-
-const Container = styled(Paper)`
-	display: flex;
-	flex-direction: column;
-	margin: 10px;
-	width: 90%;
-	min-height: 50px;
-	padding: 10px;
-	box-sizing: border-box;
-`;
 
 export default TaskItem;

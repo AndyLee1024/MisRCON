@@ -3,14 +3,13 @@
  * Name: theme
  * Description:
  */
-import { injectGlobal } from 'styled-components';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import spacing from 'material-ui/styles/spacing';
 
 import { white, orange, lightBlue, midBlue, midText } from './colors';
 
 export const addGlobalStyling = () => {
-	injectGlobal`
+	const styles = `
 	::-webkit-scrollbar {
 		width: 0.7em;
 	}

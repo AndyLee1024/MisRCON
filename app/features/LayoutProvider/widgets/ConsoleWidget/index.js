@@ -5,12 +5,11 @@
  */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import Terminal from 'terminal-in-react';
 
-import * as serverActions from '../../Servers/actions';
+import * as serverActions from '../../../Servers/actions';
 
-import helpString from '../../../../CVARHelp.md';
+import helpString from '../../../../../CVARHelp.md';
 
 type Props = {
 	dispatch: any
@@ -60,7 +59,7 @@ class ConsoleWidget extends Component {
 
 	render() {
 		return (
-			<Container>
+			<div style={Container}>
 				<Terminal
 					color="white"
 					backgroundColor="transparent"
@@ -71,40 +70,17 @@ class ConsoleWidget extends Component {
 					msg="MisRCON v2.0.0 type help for more info."
 					commandPassThrough={this.commandPassThrough}
 				/>
-			</Container>
+			</div>
 		);
 	}
 }
 
-const Container = styled.div`
-	display: flex;
-	height: 100%;
-	overflow-y: scroll;
-	padding-left: 5px;
-
-	& div.terminal-top-bar {
-		display: none;
-	}
-
-	& div.terminal-tab-bar {
-		display: none;
-	}
-
-	& div.terminal-container {
-		outline: none;
-		border: none;
-	}
-
-	& div.terminal-base {
-		width: 100%;
-	}
-
-	& input.terminal-main-input {
-		border: none;
-		outline: none;
-		width: 90%;
-	}
-`;
+const Container = {
+	display: 'flex',
+	height: '100%',
+	overflowY: 'scroll',
+	paddingLeft: '5px'
+};
 
 export default connect(store => ({
 	servers: store.servers

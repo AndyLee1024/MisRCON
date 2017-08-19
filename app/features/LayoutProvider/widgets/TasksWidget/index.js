@@ -5,7 +5,6 @@
  * Description:
  */
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
 import fuzzy from 'fuzzy';
 // Actions
@@ -46,7 +45,12 @@ class TasksWidget extends Component {
 	};
 
 	addTask = () => {
-		this.props.dispatch(TasksActions.addTaskAndScheduleCron(this.state.task));
+		this.props.dispatch(
+			TasksActions.addTaskAndScheduleCron({
+				...this.state.task,
+				id: Date.now()
+			})
+		);
 	};
 
 	removeTask = (taskId: number) => {
@@ -101,7 +105,16 @@ class TasksWidget extends Component {
 		});
 	};
 
-	onChangeDatePicker = ({ target }: SyntheticInputEvent) => {
+	onChangeDatePicker = (event: null, date) => {
+		this.setState({
+			task: {
+				...this.state.task,
+				date: date.toString()
+			}
+		});
+	};
+
+	onChangeCronStringTextField = ({ target }: SyntheticInputEvent) => {
 		this.setState({
 			task: {
 				...this.state.task,
@@ -120,31 +133,32 @@ class TasksWidget extends Component {
 			task => fuzzyList.indexOf(task.name) >= 0
 		);
 		return (
-			<div
-				style={container}
-			>
+			<div style={container}>
 				<TaskDialog
 					open={this.state.open}
 					task={this.state.task}
 					onChangeCodeEditor={this.onChangeCodeEditor}
 					hideTaskDialog={this.toggleTaskDialog}
 					addTask={this.addTask}
+					onChangeNameTextField={this.onChangeNameTextField}
+					onChangeCronStringTextField={this.onChangeCronStringTextField}
+					onChangeDatePicker={this.onChangeDatePicker}
 					toggleCodeCheckBox={this.toggleCodeCheckBox}
 					toggleRecurringCheckBox={this.toggleRecurringCheckBox}
 				/>
-				<Row>
-					<Spacer />
+				<div style={Row}>
+					<div style={spacer} />
 					<FilterBar
 						fullWidth
 						onChange={this.onChangeFilterBar}
 						value={this.state.filterValue}
 					/>
-					<Spacer />
+					<div style={spacer} />
 					<ShowTaskDialogButton handleClick={this.toggleTaskDialog} />
-					<Spacer />
-				</Row>
+					<div style={spacer} />
+				</div>
 
-				<Column>
+				<div style={Column}>
 					{filterList.map(task =>
 						<TaskItem
 							key={task.id}
@@ -154,13 +168,12 @@ class TasksWidget extends Component {
 							handleClickRemoveTaskButton={this.removeTask}
 						/>
 					)}
-				</Column>
-				<Spacer />
+				</div>
+				<div style={spacer} />
 			</div>
 		);
 	}
 }
-
 
 const container = {
 	display: 'block',
@@ -170,31 +183,30 @@ const container = {
 	boxSizing: 'border-box'
 };
 
+const spacer = {
+	display: 'flex',
+	flexGrow: 1,
+	width: '40px'
+};
 
-const Spacer = styled.div`
-	display: flex;
-	flex-grow: 1;
-	width: 40px;
-`;
+const Row = {
+	display: 'flex',
+	flexDirection: 'row',
+	alignItems: 'center',
+	justifyContent: 'center',
+	flexGrow: 1,
+	width: '100%',
+	minHeight: '50px'
+};
 
-const Row = styled.div`
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	flex-grow: 1;
-	width: 100%;
-	min-height: 50px;
-`;
-
-const Column = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	flex-grow: 1;
-	width: 100%;
-`;
+const Column = {
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'center',
+	justifyContent: 'center',
+	flexGrow: 1,
+	width: '100%'
+};
 
 export default connect(store => ({
 	tasks: store.tasks

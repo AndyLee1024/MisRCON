@@ -32,6 +32,15 @@ type Props = {
 	// function change the TaskType.recurring
 	toggleRecurringCheckBox: any,
 
+	// function that changes Task.name
+	onChangeNameTextField: any,
+
+	// function that changes Task.date if it's an actual date object
+	onChangeDatePicker: any,
+
+	// function to change the Task.date if it's a cron string
+	onChangeCronStringTextField: any,
+
 	// the task values to add
 	task: TaskType
 };
@@ -55,21 +64,36 @@ const TaskDialog = (props: Props) => {
 			open={props.open}
 			onRequestClose={props.hideTaskDialog}
 		>
-			<TextField name={'name'} hintText={'Name'} />
-			<DatePicker hintText={'Date'} />
+			<TextField
+				fullWidth
+				name={'name'}
+				hintText={'Name'}
+				onChange={props.onChangeNameTextField}
+			/>
+
+			{props.task.recurring
+				? <TextField
+						fullWidth
+						hintText={'Cron String'}
+						value={props.task.date}
+						name={'Date'}
+						onChange={props.onChangeCronStringTextField}
+					/>
+				: <DatePicker onChange={props.onChangeDatePicker} hintText={'Date'} />}
+
 			<CodeEditor
 				onChangeCodeEditor={props.onChangeCodeEditor}
 				value={props.task.payload}
 			/>
-			<br />
 
 			<CheckBox
-				value={props.task.recurring}
+				checked={props.task.recurring}
 				onCheck={props.toggleRecurringCheckBox}
 				label="Recurring"
 			/>
+
 			<CheckBox
-				value={props.task.code}
+				checked={props.task.code}
 				onCheck={props.toggleCodeCheckBox}
 				label="Code"
 			/>

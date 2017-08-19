@@ -24,10 +24,7 @@ class LayoutProvider extends Component<void, Props, void> {
 
 	componentDidMount() {
 		// Set up GoldenLayout
-		this.layout = new GoldenLayout(
-			this.props.layoutProvider.config,
-			this.node
-		);
+		this.layout = new GoldenLayout(this.props.layoutProvider.config, this.node);
 		registerWidgetsToLayout(this.layout, this.props.store);
 		this.layout.init();
 
@@ -43,7 +40,6 @@ class LayoutProvider extends Component<void, Props, void> {
 		}, 20);
 		window.layout = this.layout;
 	}
-
 
 	render() {
 		return (

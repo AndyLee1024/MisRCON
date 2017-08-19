@@ -64,7 +64,7 @@ export const defaultTaskState: TaskType = {
 	date: '',
 
 	// should we eval this as js code?
-	code: false,
+	code: true,
 
 	// number of times the command has been run
 	timesRun: 0,

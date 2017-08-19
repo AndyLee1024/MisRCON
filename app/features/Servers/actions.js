@@ -9,8 +9,13 @@ import * as misrcon from 'node-misrcon';
 import * as notify from '../Notifications/actions';
 
 // Types
-import type { Action, ThunkAction, Dispatch, GetState } from '../../constants/ActionTypes';
-import type {ServersState} from './state';
+import type {
+	Action,
+	ThunkAction,
+	Dispatch,
+	GetState
+} from '../../constants/ActionTypes';
+import type { ServersState } from './state';
 
 /**
  * Initial Date Getters

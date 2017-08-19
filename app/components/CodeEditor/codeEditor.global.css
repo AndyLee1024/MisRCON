@@ -1,0 +1,46 @@
+/**
+ * Name: codeEditor.global
+ * Description:
+ */
+.ace_search {
+	background-color: orange;
+	color: orange;
+	border: none;
+	padding: 5px;
+}
+
+.ace_search_field {
+	background-color: orange;
+	color: orange;
+}
+
+.ace_searchbtn, .ace_replacebtn {
+	background-color: orange;
+	color: orange;
+	border-left: none;
+}
+
+.ace_search_form {
+	border: 1px solid orange;
+}
+
+.ace_replace_form {
+	border: 1px solid orange
+}
+
+.ace_button.checked {
+	border-color: orange;
+	opacity: 1;
+}
+
+.ace_button {
+	color: orange
+}
+
+.ace_searchbtn.next {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABlBMVEX////N0dWiLwRoAAAAAXRSTlMAQObYZgAAABpJREFUeAFjYGBkYAATjIxIBJiGsBjAAEwDAAIBABWbqTWqAAAAAElFTkSuQmCC);
+}
+
+.ace_searchbtn.prev {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAABlBMVEX////N0dWiLwRoAAAAAXRSTlMAQObYZgAAABlJREFUeAFjAAJGRiABooEAQkNYCAIizAAAAd0AFT3O9lkAAAAASUVORK5CYII=);
+}

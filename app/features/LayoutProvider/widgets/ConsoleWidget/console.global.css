@@ -1,0 +1,22 @@
+.terminal-top-bar {
+	display: none;
+}
+
+.terminal-tab-bar {
+	display: none;
+}
+
+.terminal-container {
+	outline: none;
+	border: none;
+}
+
+.terminal-base {
+	width: 100%;
+}
+
+.terminal-main-input {
+	border: none;
+	outline: none;
+	width: 90%;
+}
