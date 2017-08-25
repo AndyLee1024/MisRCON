@@ -11,6 +11,8 @@ import * as serverActions from '../../../Servers/actions';
 
 import helpString from '../../../../../CVARHelp.md';
 
+import './console.global.css';
+
 type Props = {
 	dispatch: any
 };

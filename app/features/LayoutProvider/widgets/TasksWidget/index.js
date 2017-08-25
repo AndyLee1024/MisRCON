@@ -20,6 +20,40 @@ import { defaultTaskState } from '../../../Tasks/state';
 import type { TasksState, TaskType } from '../../../Tasks/state';
 import type { SyntheticInputEvent } from '../../../../constants/FlowTypes';
 
+const container = {
+	display: 'block',
+	height: '100%',
+	overflow: 'auto',
+	padding: '5px',
+	boxSizing: 'border-box'
+};
+
+const spacer = {
+	display: 'flex',
+	flexGrow: 1,
+	width: '40px'
+};
+
+const Row = {
+	display: 'flex',
+	flexDirection: 'row',
+	alignItems: 'center',
+	justifyContent: 'center',
+	flexGrow: 1,
+	width: '100%',
+	minHeight: '50px'
+};
+
+const Column = {
+	display: 'flex',
+	flexDirection: 'column',
+	alignItems: 'center',
+	justifyContent: 'center',
+	flexGrow: 1,
+	width: '100%'
+};
+
+
 class TasksWidget extends Component {
 	props: {
 		tasks: TasksState,
@@ -35,10 +69,16 @@ class TasksWidget extends Component {
 		super(props);
 		this.state = {
 			filterValue: '',
-			open: true,
+			open: false,
 			task: defaultTaskState
 		};
 	}
+
+	componentDidMount() {
+		// Bootstrap tasks
+		this.props.dispatch(TasksActions.bootStrap());
+	}
+
 
 	toggleTaskDialog = () => {
 		this.setState({ open: !this.state.open });
@@ -175,38 +215,7 @@ class TasksWidget extends Component {
 	}
 }
 
-const container = {
-	display: 'block',
-	height: '100%',
-	overflow: 'auto',
-	padding: '5px',
-	boxSizing: 'border-box'
-};
 
-const spacer = {
-	display: 'flex',
-	flexGrow: 1,
-	width: '40px'
-};
-
-const Row = {
-	display: 'flex',
-	flexDirection: 'row',
-	alignItems: 'center',
-	justifyContent: 'center',
-	flexGrow: 1,
-	width: '100%',
-	minHeight: '50px'
-};
-
-const Column = {
-	display: 'flex',
-	flexDirection: 'column',
-	alignItems: 'center',
-	justifyContent: 'center',
-	flexGrow: 1,
-	width: '100%'
-};
 
 export default connect(store => ({
 	tasks: store.tasks

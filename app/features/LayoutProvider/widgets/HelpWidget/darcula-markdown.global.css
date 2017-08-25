@@ -439,7 +439,7 @@ TODO: There is still some odd issue with the code and pre tags doing strange thi
 	margin: 0;
 	font-size: 85%;
 	color: #dddddd;
-	background-color: #333333;
+	background-color: #1a1f25;
 	border-radius: 3px;
 }
 
@@ -469,7 +469,7 @@ TODO: There is still some odd issue with the code and pre tags doing strange thi
 	overflow: auto;
 	font-size: 85%;
 	line-height: 1.45;
-	background-color: #2c2c2c;
+	background-color: #1a1f25;
 	border-radius: 3px;
 }
 

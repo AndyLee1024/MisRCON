@@ -3,6 +3,7 @@
  * Name: actions
  * Description:
  */
+import store from 'store';
 import { scheduleTask } from './utils';
 
 import type { TaskType } from './state';
@@ -13,6 +14,22 @@ import type {
 	Dispatch,
 	ThunkAction
 } from '../../constants/ActionTypes';
+
+/**
+ * This thunk adds a task to state
+ * and schedules a task to be executed by node-cron
+ */
+export const bootStrap = (): ThunkAction => (
+	dispatch: Dispatch,
+	getState: GetState
+) => {
+	const storedTasks = store.get('tasks');
+	if (storedTasks !== undefined) {
+		storedTasks.map(task => {
+			dispatch(addTaskAndScheduleCron(task));
+		});
+	}
+};
 
 /**
  * This function adds a task to state

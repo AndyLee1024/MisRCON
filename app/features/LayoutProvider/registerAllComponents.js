@@ -17,13 +17,13 @@ import { MisRCONTheme } from '../../styles/theme';
 /**
  * Wraps a widget in the redux store provider and material ui theme
  */
-function wrapWidget(Widget, store) {
+function wrapWidget(Widget, store, layout) {
 	class Wrapped extends Component {
 		render() {
 			return (
 				<Provider store={store}>
 					<MuiThemeProvider muiTheme={MisRCONTheme}>
-						<Widget {...this.props} />
+						<Widget {...this.props} layout={layout} />
 					</MuiThemeProvider>
 				</Provider>
 			);
@@ -43,12 +43,30 @@ export default function registerWidgetsToLayout(
 	layout: GoldenLayout,
 	store: any
 ) {
-	layout.registerComponent('bans-widget', wrapWidget(BansWidget, store));
-	layout.registerComponent('console-widget', wrapWidget(ConsoleWidget, store));
-	layout.registerComponent('help-widget', wrapWidget(HelpWidget, store));
-	layout.registerComponent('players-widget', wrapWidget(PlayersWidget, store));
-	layout.registerComponent('status-widget', wrapWidget(StatusWidget, store));
-	layout.registerComponent('tasks-widget', wrapWidget(TasksWidget, store));
+	layout.registerComponent(
+		'bans-widget',
+		wrapWidget(BansWidget, store, layout)
+	);
+	layout.registerComponent(
+		'console-widget',
+		wrapWidget(ConsoleWidget, store, layout)
+	);
+	layout.registerComponent(
+		'help-widget',
+		wrapWidget(HelpWidget, store, layout)
+	);
+	layout.registerComponent(
+		'players-widget',
+		wrapWidget(PlayersWidget, store, layout)
+	);
+	layout.registerComponent(
+		'status-widget',
+		wrapWidget(StatusWidget, store, layout)
+	);
+	layout.registerComponent(
+		'tasks-widget',
+		wrapWidget(TasksWidget, store, layout)
+	);
 	layout.registerComponent(
 		'whitelist-widget',
 		wrapWidget(WhitelistWidget, store)

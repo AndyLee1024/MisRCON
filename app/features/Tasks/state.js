@@ -4,6 +4,7 @@
  * Description: The initial state and type declaration of the tasks
  * and any relevant bootstrapping for tasks
  */
+import store from 'store';
 
 // The individual tasks themselves
 export type TaskType = {
@@ -40,10 +41,8 @@ export type TaskType = {
 
 // The Array of Tasks
 export type TasksState = Array<TaskType>;
-
-// TODO: bootstrap here!
 const initialState: TasksState = [];
-console.log('Bootstrapped');
+
 export const defaultTaskState: TaskType = {
 	// a unique id used to start and cancel tasks with the node-cron lib
 	id: -1,
@@ -58,13 +57,13 @@ export const defaultTaskState: TaskType = {
 	payload: '',
 
 	// should we run this more than once?
-	recurring: true,
+	recurring: false,
 
 	// datetime of when to run or cron string
 	date: '',
 
 	// should we eval this as js code?
-	code: true,
+	code: false,
 
 	// number of times the command has been run
 	timesRun: 0,

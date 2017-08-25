@@ -3,12 +3,14 @@
  * Name: HelpWidget
  * Description: Renders markdown and displays the CVARHelpFile
  */
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import marked from 'marked';
-import helpString from '../../../../../CVARHelp.md';
 import './darcula-markdown.global.css';
 
-class HelpWidget extends PureComponent {
+import helpString from '../../../../../CVARHelp.md';
+
+
+class HelpWidget extends Component {
 	render() {
 		return (
 			<div

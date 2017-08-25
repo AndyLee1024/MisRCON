@@ -3,11 +3,16 @@
  * Name: actions
  * Description:
  */
-import * as actionType from '../../constants/ActionTypes';
-import type { Action } from '../../constants/ActionTypes';
-import defaultState from './state';
+import store from 'store';
 
-export const saveLayoutState = (): Action => {
+import type { GoldenLayout } from 'golden-layout';
+import type { Action } from '../../constants/ActionTypes';
+
+import * as actionType from '../../constants/ActionTypes';
+import { defaultConfig } from './state';
+
+export const saveLayoutState = (layout: GoldenLayout): Action => {
+	store.set('layoutProviderConfig', layout.toConfig());
 	return {
 		type: actionType.SAVE_LAYOUT_PROVIDER_STATE
 	};
@@ -16,13 +21,6 @@ export const saveLayoutState = (): Action => {
 export const resetLayoutState = (): Action => {
 	return {
 		type: actionType.RESET_LAYOUT_PROVIDER_STATE,
-		payload: defaultState
-	};
-};
-
-export const restoreLayoutState = (): Action => {
-	return {
-		type: actionType.RESTORE_LAYOUT_PROVIDER_STATE,
-		payload: defaultState
+		payload: defaultConfig
 	};
 };

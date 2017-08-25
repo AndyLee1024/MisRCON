@@ -11,6 +11,7 @@ export const orange = '#da8918';
 export const darkBlue = '#0f1419';
 export const midBlue = '#1a1f25';
 export const lightBlue = '#596775';
+export const vividBlue = '#03d5fe';
 
 //
 export const bg = darkBlue;

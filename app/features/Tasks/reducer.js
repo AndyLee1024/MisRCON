@@ -4,18 +4,21 @@
  * Type: Redux Reducer
  * Description:
  */
+import store from 'store';
 import type { TaskActionsType } from '../../constants/ActionTypes';
 import type { TasksState } from './state';
 import initialState from './state';
 
-export default function tasks(
+export default function tasksReducer(
 	state: TasksState = initialState,
 	action: TaskActionsType | any
 ): TasksState {
-	console.log(state);
+	let tasks = [];
 	switch (action.type) {
 		case 'ADD_TASK':
-			return [].concat(state, action.task);
+			tasks = [].concat(state, action.task);
+			store.set('tasks', tasks);
+			return tasks;
 
 		case 'REMOVE_TASK':
 			state.forEach(task => {
@@ -23,7 +26,9 @@ export default function tasks(
 					task.cronJob.cancel();
 				}
 			});
-			return state.filter(task => task.id !== action.id);
+			tasks = state.filter(task => task.id !== action.id);
+			store.set('tasks', tasks);
+			return tasks;
 
 		case 'PAUSE_TASK':
 			state.forEach(task => {
@@ -31,10 +36,12 @@ export default function tasks(
 					task.cronJob.cancel();
 				}
 			});
-			return state.map(task => ({
+			tasks = state.map(task => ({
 				...task,
 				enabled: task.id === action.id ? false : task.enabled
 			}));
+			store.set('tasks', tasks);
+			return tasks;
 
 		case 'PLAY_TASK':
 			state.forEach(task => {
@@ -42,16 +49,20 @@ export default function tasks(
 					task.cronJob.reschedule(task.date);
 				}
 			});
-			return state.map(task => ({
+			tasks = state.map(task => ({
 				...task,
 				enabled: task.id === action.id ? true : task.enabled
 			}));
+			store.set('tasks', tasks);
+			return tasks;
 
 		case 'INCREMENT_TASK':
-			return state.map(task => ({
+			tasks = state.map(task => ({
 				...task,
 				timesRun: task.id === action.id ? task.timesRun + 1 : task.timesRun
 			}));
+			store.set('tasks', tasks);
+			return tasks;
 
 		default:
 			return state;

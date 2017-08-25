@@ -4,15 +4,16 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import GoldenLayout from 'golden-layout';
 
+import * as layoutProvider from './actions';
+
 import './styles.global.css';
 import registerWidgetsToLayout from './registerAllComponents';
 
-type Props = {
-	layoutProvider: Object,
-	store: any
-};
-
-class LayoutProvider extends Component<void, Props, void> {
+class LayoutProvider extends Component {
+	props: {
+		layoutProvider: Object,
+		store: any
+	};
 	layout: GoldenLayout;
 	node: HTMLElement;
 
@@ -39,6 +40,16 @@ class LayoutProvider extends Component<void, Props, void> {
 			this.layout.updateSize();
 		}, 20);
 		window.layout = this.layout;
+
+		// Save the state when we change it
+		this.layout.on('stateChanged', () => {
+			this.props.dispatch(layoutProvider.saveLayoutState(this.layout));
+		});
+	}
+
+	componentWillUnmount() {
+		console.log('removing listener');
+		window.removeEventListener('resize');
 	}
 
 	render() {

@@ -3,10 +3,13 @@
 * Name: state
 * Description:
 */
-
+import store from 'store';
 import type { Config } from 'golden-layout';
 
-const config: Config = {
+// Bootstrap
+const storedConfig = store.get('layoutProviderConfig');
+
+export const defaultConfig: Config = {
 	settings: {
 		hasHeaders: true,
 		constrainDragToContainer: true,
@@ -177,10 +180,11 @@ const config: Config = {
 	openPopouts: [],
 	maximisedItemId: null
 };
+
 export type LayoutProviderState = {
 	config: Config
 };
 
 export default {
-	config
+	config: storedConfig === undefined ? defaultConfig : storedConfig
 };
