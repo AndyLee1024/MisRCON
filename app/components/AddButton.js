@@ -11,13 +11,9 @@ class AddButton extends Component {
 	props: {
 		handleClick: any
 	};
-
 	render() {
 		return (
-			<IconButton
-				tooltip={'Add Task'}
-				onTouchTap={this.props.handleClick}
-			>
+			<IconButton tooltip={'Add Task'} onTouchTap={this.props.handleClick}>
 				<AddIcon />
 			</IconButton>
 		);

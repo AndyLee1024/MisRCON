@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { Provider } from 'react-redux';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';

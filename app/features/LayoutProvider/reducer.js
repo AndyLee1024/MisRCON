@@ -3,15 +3,18 @@
  * Type: Redux Reducer
  * Description:
  */
-import * as actionTypes from '../../constants/ActionTypes';
+import type { Action } from '../../constants/ActionTypes';
+import type { LayoutProviderState } from './state';
+
 import defaultState from './state';
 
-export default function layoutProvider(state = defaultState, action) {
+export default function layoutProvider(
+	state: LayoutProviderState = defaultState,
+	action: Action
+): LayoutProviderState {
 	switch (action.type) {
-		case actionTypes.SAVE_LAYOUT_PROVIDER_STATE:
+		case 'SAVE_LAYOUT_PROVIDER_STATE':
 			return state;
-		case actionTypes.RESET_LAYOUT_PROVIDER_STATE:
-			return { ...state, ...action.payload };
 		default:
 			return state;
 	}

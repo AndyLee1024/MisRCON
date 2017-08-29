@@ -3,6 +3,9 @@
  * Name: Servers State
  * Description:
  */
+import store from 'store';
+import {dev} from '../../../secrets';
+
 
 import type {
 	StatusResponse,
@@ -45,6 +48,7 @@ export type ServerState = {
 };
 
 export type ServersState = Array<ServerState>;
+const storedState = store.get('ServersState');
 
 const defaultState: ServersState = [
 	{
@@ -52,9 +56,9 @@ const defaultState: ServersState = [
 		active: false,
 		name: 'Test Server 1',
 		credentials: {
-			ip: '192.168.1.1',
-			port: '64040',
-			password: 'password'
+			ip: '31.204.150.21',
+			port: '64099',
+			password: '*****'
 		},
 		status: {
 			name: 'i3d.net #457934',
@@ -91,14 +95,10 @@ const defaultState: ServersState = [
 		banlist: ['76561197975954828', '76561197975954829']
 	},
 	{
-		id: 0,
+		id: 1,
 		active: true,
 		name: 'Test Server 2',
-		credentials: {
-			ip: '192.168.1.2',
-			port: '64041',
-			password: 'otherpassword'
-		},
+		credentials: dev,
 		status: {
 			name: 'my cool dev server',
 			ip: '192.168.1.2:64041',
@@ -125,4 +125,4 @@ const defaultState: ServersState = [
 	}
 ];
 
-export default defaultState;
+export default (storedState === undefined ? defaultState : storedState);

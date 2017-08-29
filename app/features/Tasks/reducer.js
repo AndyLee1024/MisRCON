@@ -5,13 +5,15 @@
  * Description:
  */
 import store from 'store';
-import type { TaskActionsType } from '../../constants/ActionTypes';
+import type { Action } from '../../constants/ActionTypes';
 import type { TasksState } from './state';
 import initialState from './state';
 
+
+
 export default function tasksReducer(
 	state: TasksState = initialState,
-	action: TaskActionsType | any
+	action: Action
 ): TasksState {
 	let tasks = [];
 	switch (action.type) {

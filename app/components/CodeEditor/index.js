@@ -12,15 +12,15 @@ import './aceEditorTheme';
 import './codeEditor.global.css';
 
 class CodeEditor extends Component {
-	ace: HTMLElement;
 	props: {
 		onChangeCodeEditor: any,
 		value: string
 	};
+	ace: HTMLElement;
 
 	render() {
 		return (
-			<div style={{marginBottom: 15}}>
+			<div style={{ marginBottom: 15 }}>
 				<AceEditor
 					enableBasicAutocompletion
 					enableLiveAutocompletion
@@ -40,6 +40,5 @@ class CodeEditor extends Component {
 		);
 	}
 }
-
 
 export default CodeEditor;

@@ -56,7 +56,7 @@ class ConsoleWidget extends Component {
 
 	commandPassThrough = command => {
 		// TODO: This is broken here I just left off it's broken because it's trying to get the credentials state
-		this.props.dispatch(serverActions.sendRCONCommandToServer(command));
+		//this.props.dispatch(serverActions.sendRCONCommandToServer(command));
 	};
 
 	render() {

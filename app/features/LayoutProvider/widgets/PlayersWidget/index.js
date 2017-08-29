@@ -1,16 +1,14 @@
 // @flow
 /**
- * Name: WhitelistWidget
- * Type: Component
+ * Name: PlayersWidget
  * Description:
  */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {getActiveServer} from '../../Servers/utils';
+import { getActiveServer } from '../../../Servers/utils';
+import type { ServersState, ServerState } from '../../../Servers/state';
 
-import type { ServersState, ServerState } from '../../Servers/state';
-
-class WhitelistWidget extends Component {
+class PlayersWidget extends Component {
 	props: {
 		servers: ServersState
 	};
@@ -18,7 +16,7 @@ class WhitelistWidget extends Component {
 		const activeServer: ServerState = getActiveServer(this.props.servers);
 		return (
 			<div>
-				{JSON.stringify(activeServer.whitelist)}
+				{JSON.stringify(activeServer.status.playersArray)}
 			</div>
 		);
 	}
@@ -26,4 +24,4 @@ class WhitelistWidget extends Component {
 
 export default connect(store => ({
 	servers: store.servers
-}))(WhitelistWidget);
+}))(PlayersWidget);

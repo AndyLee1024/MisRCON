@@ -3,7 +3,7 @@
  * Name: theme
  * Description:
  */
-import React from 'react';
+import * as React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import spacing from 'material-ui/styles/spacing';
 import { injectGlobal } from 'styled-components';

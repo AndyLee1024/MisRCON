@@ -8,11 +8,15 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import LayoutProvider from '../features/LayoutProvider';
 
-import { MisRCONTheme, addGlobalStyling } from '../styles/theme';
+import { MisRCONTheme } from '../styles/theme';
+import bootStrap from '../utils/bootstrap';
 
 class Main extends Component {
+	props: {
+		store: any
+	};
 	componentWillMount() {
-		addGlobalStyling();
+		bootStrap(this.props.store.dispatch);
 	}
 
 	render() {

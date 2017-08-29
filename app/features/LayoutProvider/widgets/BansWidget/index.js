@@ -7,9 +7,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { getActiveServer } from '../../Servers/utils';
+import { getActiveServer } from '../../../Servers/utils';
 
-import type { ServersState, ServerState } from '../../Servers/state';
+import type { ServersState, ServerState } from '../../../Servers/state';
 
 class BansWidget extends Component {
 	props: {

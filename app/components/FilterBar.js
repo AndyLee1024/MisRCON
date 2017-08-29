@@ -13,7 +13,6 @@ class FilterBar extends Component {
 		fullWidth: boolean,
 		onChange: any
 	};
-
 	render() {
 		return (
 			<TextField

@@ -24,3 +24,4 @@ export function getCredentialsFromAppStateById(
 export function getActiveServer(servers: ServersState): ServerState {
 	return servers.filter(server => server.active === true)[0];
 }
+
