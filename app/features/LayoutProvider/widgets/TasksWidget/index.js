@@ -18,7 +18,7 @@ import TaskDialog from './TaskDialog';
 import { defaultTaskState } from '../../../Tasks/state';
 // Types
 import type { TasksState, TaskType } from '../../../Tasks/state';
-import type { SyntheticInputEvent } from '../../../../constants/FlowTypes';
+import type { SyntheticInputEvent } from '../../../../constants/FlowReactTypes';
 
 const container = {
 	display: 'block',

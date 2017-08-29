@@ -8,11 +8,26 @@ import type { LayoutProviderState } from '../features/LayoutProvider/state';
 import type { TasksState, TaskType } from '../features/Tasks/state';
 import type { NotificationsState } from '../features/Notifications/state';
 
+// this is the shape over the overall state of the app
+export type AppState = {
+	servers: ServersState,
+	layoutProvider: LayoutProviderState,
+	tasks: TasksState,
+	notifications: NotificationsState
+};
+
+// Every action we have in the app
 export type Action =
+	| BaseReduxAction
 	| TasksActions
 	| ServersActions
 	| LayoutProviderActions
 	| NotificationActions;
+
+
+export type BaseReduxAction = { type: string }; // I need this for the initial startup
+
+export type BootStrapAction = { type: 'BOOSTRAP' }; // I need this for the initial startup
 
 // LayoutProvider
 export type LayoutProviderActions =
@@ -20,7 +35,7 @@ export type LayoutProviderActions =
 	| { type: 'RESET_LAYOUT_PROVIDER_STATE', payload: LayoutProviderState }
 	| { type: 'RESTORE_LAYOUT_PROVIDER_STATE', payload: LayoutProviderState };
 
-// Servers  - Contains all the info on the current server
+// Servers  - The Actions that control the Servers
 export type ServersActions =
 	| { type: 'UPDATE_SERVER_DATA', payload: ServerState }
 	| { type: 'FETCHING_SERVER_DATA' };
@@ -40,16 +55,10 @@ export type NotificationActions =
 	| { type: 'EMIT_ERROR', msg: string }
 	| { type: 'DISMISS_NOTIFY' };
 
+// used to dispatch redux actions
 export type Dispatch = (
 	action: Action | ThunkAction | PromiseAction | Array<Action>
 ) => any;
-
-export type AppState = {
-	servers: ServersState,
-	layoutProvider: LayoutProviderState,
-	tasks: TasksState,
-	notifications: NotificationsState
-};
 
 export type GetState = () => AppState;
 

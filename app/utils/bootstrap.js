@@ -9,8 +9,8 @@ import type { Dispatch } from '../constants/ActionTypes';
 import * as serverActions from '../features/Servers/actions';
 
 export default function(dispatch: Dispatch) {
-	addGlobalStyling();
 	dispatch({type: 'BOOTSTRAP'});
+	addGlobalStyling();
 	dispatch(serverActions.getInitialData());
 
 }

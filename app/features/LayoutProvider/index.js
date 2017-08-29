@@ -13,11 +13,18 @@ import registerWidgetsToLayout from './registerAllComponents';
 
 import type { Dispatch } from '../../constants/ActionTypes';
 
-class LayoutProvider extends Component {
-	props: {
-		layoutProvider: Object,
-		store: any,
-		dispatch: Dispatch
+type Props = {
+	layoutProvider: Object,
+	store: any,
+	dispatch: Dispatch
+};
+class LayoutProvider extends Component<any, Props, any> {
+	static defaultProps = {
+		layoutProvider: {
+			config: {}
+		},
+		store: {},
+		dispatch: () => {}
 	};
 	layout: GoldenLayoutType;
 	node: HTMLElement;
