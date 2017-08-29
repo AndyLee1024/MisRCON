@@ -199,7 +199,7 @@
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "material-ui": "^0.18.7",
-    "node-misrcon": "^0.3.13",
+    "node-misrcon": "^0.4.0",
     "node-schedule": "^1.2.3",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",

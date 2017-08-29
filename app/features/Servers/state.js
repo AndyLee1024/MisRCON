@@ -3,6 +3,13 @@
  * Name: Servers State
  * Description:
  */
+
+import type {
+	StatusResponse,
+	BanListResponse,
+	WhiteListResponse
+} from 'node-misrcon';
+
 export type Credentials = {
 	// the ip address of the servers
 	ip: string,
@@ -12,19 +19,6 @@ export type Credentials = {
 
 	// the rcon password
 	password: string
-};
-
-export type Status = {
-	name: string,
-	ip: string,
-	time: string,
-	version: string,
-	level: string,
-	gameRules: string,
-	players: string,
-	playersArray: Array<string>,
-	whitelist: Array<string>,
-	banlist: Array<string>
 };
 
 export type ServerState = {
@@ -37,19 +31,25 @@ export type ServerState = {
 	// The display name of the server
 	name: string,
 
-	// the server crendetials
+	// the server credentials
 	credentials: Credentials,
 
-	// the status response from node-misrcon
-	status: Status
+	// the status response
+	status: StatusResponse,
+
+	// the banned players on this server
+	banlist: BanListResponse,
+
+	// the array of whitelisted players
+	whitelist: WhiteListResponse
 };
 
 export type ServersState = Array<ServerState>;
 
-export default [
+const defaultState: ServersState = [
 	{
 		id: 0,
-		active: true,
+		active: false,
 		name: 'Test Server 1',
 		credentials: {
 			ip: '192.168.1.1',
@@ -64,10 +64,31 @@ export default [
 			level: 'islands',
 			gameRules: 'mp',
 			players: '3/50',
-			playersArray: ['76561197975954834', '76561197975954831', '76561197975954832'],
-			whitelist: ['76561197975954839', '76561197975954832'],
-			banlist: ['76561197975954828', '76561197975954829']
-		}
+			playersArray: [
+				{
+					steam: '76561197975954834',
+					name: 'chrissprance',
+					entID: '1769296',
+					id: '5',
+					ip: '176.54.310:64090',
+					ping: '276',
+					state: '3',
+					profile: '0'
+				},
+				{
+					steam: '76561197975954831',
+					name: 'other_player_guy',
+					entID: '1769286',
+					id: '2',
+					ip: '176.21.310:64090',
+					ping: '128',
+					state: '2',
+					profile: '0'
+				}
+			]
+		},
+		whitelist: ['76561197975954839', '76561197975954832'],
+		banlist: ['76561197975954828', '76561197975954829']
 	},
 	{
 		id: 0,
@@ -86,9 +107,22 @@ export default [
 			level: 'surface_test',
 			gameRules: 'sp',
 			players: '1/50',
-			playersArray: ['76561197975954834'],
-			whitelist: [],
-			banlist: []
-		}
+			playersArray: [
+				{
+					steam: '76561197975954823',
+					name: 'this_final_guy',
+					entID: '1769286',
+					id: '1',
+					ip: '123.21.310:64090',
+					ping: '12',
+					state: '1',
+					profile: '0'
+				}
+			]
+		},
+		whitelist: ['76561197975954832'],
+		banlist: ['76561197975954828']
 	}
 ];
+
+export default defaultState;

@@ -6737,9 +6737,9 @@ node-libs-browser@^2.0.0:
     util "^0.10.3"
     vm-browserify "0.0.4"
 
-node-misrcon@^0.3.13:
-  version "0.3.13"
-  resolved "https://registry.yarnpkg.com/node-misrcon/-/node-misrcon-0.3.13.tgz#57f051d2a3988ce75ec974f570ac073e540148b1"
+node-misrcon@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/node-misrcon/-/node-misrcon-0.4.0.tgz#3633f3c8fea30359a3bf64ab9b113eed83c63613"
   dependencies:
     axios "^0.16.1"
     bluebird "^3.5.0"

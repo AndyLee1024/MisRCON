@@ -5,7 +5,7 @@
  */
 import cron from 'node-schedule';
 
-import * as misrcon from 'node-misrcon';
+import {sendRCONCommandToServer} from 'node-misrcon';
 
 import type { TaskType } from './state';
 import type { Dispatch, GetState } from '../../constants/ActionTypes';
@@ -22,8 +22,7 @@ export function scheduleTask(
 	getState: GetState
 ): TaskType | false {
 	const cronJob = cron.scheduleJob(task.date, () => {
-		misrcon
-			.sendRCONCommandToServer({
+		sendRCONCommandToServer({
 				...getCredentialsFromAppStateById(getState(), task.serverId),
 				command: task.payload
 			})

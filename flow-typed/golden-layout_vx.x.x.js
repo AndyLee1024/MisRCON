@@ -1,15 +1,12 @@
-// Type definitions for GoldenLayout v1.5.x
-// Project: https://golden-layout.com/
-
 declare module 'golden-layout' {
 	declare type JQuery = any;
 
-	declare export class GoldenLayout extends GoldenLayout.EventEmitter {
+	declare export class GoldenLayout {
 		/**
 		 * The topmost item in the layout item tree. In browser terms: Think of the GoldenLayout instance as window
 		 * object and of goldenLayout.root as the document.
 		 */
-			root: GoldenLayout.ContentItem;
+			root: ContentItem;
 
 		/**
 		 * A reference to the (jQuery) DOM element containing the layout
@@ -26,13 +23,13 @@ declare module 'golden-layout' {
 		 *
 		 * Don't rely on this object for state saving / serialisation. Use layout.toConfig() instead.
 		 */
-			config: GoldenLayout.Config;
+			config: Config;
 
 		/**
 		 * The currently selected item or null if no item is selected. Only relevant if settings.selectionEnabled is set
 		 * to true.
 		 */
-			selectedItem: GoldenLayout.ContentItem;
+			selectedItem: ContentItem;
 
 		/**
 		 * The current outer width of the layout in pixels.
@@ -47,7 +44,7 @@ declare module 'golden-layout' {
 		/**
 		 * An array of BrowserWindow instances
 		 */
-			openPopouts: GoldenLayout.BrowserWindow[];
+			openPopouts: BrowserWindow[];
 
 		/**
 		 * True if the layout has been opened as a popout by another layout.
@@ -57,20 +54,20 @@ declare module 'golden-layout' {
 		/**
 		 * A singleton instance of EventEmitter that works across windows
 		 */
-			eventHub: GoldenLayout.EventEmitter;
+			eventHub: EventEmitter;
 
 		/**
 		 * @param config A GoldenLayout configuration object
 		 * @param container The DOM element the layout will be initialised in. Default: document.body
 		 */
-		constructor(configuration: GoldenLayout.Config, container?: Element | HTMLElement | JQuery): any;
+		constructor(configuration: Config, container?: Element | HTMLElement | JQuery): any;
 
 		/*
 		 * @param name 	The name of the component, as referred to by componentName in the component configuration.
 		 * @param component 	A constructor or factory function. Will be invoked with new and two arguments, a
 		 *                      containerobject and a component state
 		 */
-		registerComponent(name: String, component: any): void;
+		registerComponent(name: string, component: any): void;
 
 		/**
 		 * Renders the layout into the container. If init() is called before the document is ready it attaches itself as
@@ -109,7 +106,7 @@ declare module 'golden-layout' {
 		 * @param itemConfiguration An item configuration (can be an entire tree of items)
 		 * @param parent A parent item
 		 */
-		createContentItem(itemConfiguration?: GoldenLayout.ItemConfigType, parent?: GoldenLayout.ContentItem): void;
+		createContentItem(itemConfiguration?: ItemConfigType, parent?: ContentItem): void;
 
 		/**
 		 * Creates a new popout window with configOrContentItem as contents at the position specified in dimensions
@@ -122,7 +119,7 @@ declare module 'golden-layout' {
 		 *                  when popIn is clicked
 		 * @param indexInParent The index at which the child window's contents will be appended to. Default: null
 		 */
-		createPopout(configOrContentItem: GoldenLayout.ItemConfigType | GoldenLayout.ContentItem,
+		createPopout(configOrContentItem: ItemConfigType | ContentItem,
 								 dimensions: {
 									 width: number,
 									 height: number,
@@ -137,13 +134,13 @@ declare module 'golden-layout' {
 		 * @param element The DOM element that will be turned into a dragSource
 		 * @param itemConfiguration An item configuration (can be an entire tree of items)
 		 */
-		createDragSource(element: HTMLElement | JQuery, itemConfiguration: GoldenLayout.ItemConfigType): void;
+		createDragSource(element: HTMLElement | JQuery, itemConfiguration: ItemConfigType): void;
 
 		/**
 		 * If settings.selectionEnabled is set to true, this allows to select items programmatically.
 		 * @param contentItem A ContentItem instance
 		 */
-		selectItem(contentItem: GoldenLayout.ContentItem): void;
+		selectItem(contentItem: ContentItem): void;
 
 		/**
 		 * Static method on the GoldenLayout constructor! This method will iterate through a GoldenLayout config object
@@ -153,7 +150,7 @@ declare module 'golden-layout' {
 		static minifyConfig(config: any): any;
 
 		/**
-		 * Static method on the GoldenLayout constructor! This method will reverse the minifications of GoldenLayout.minifyConfig.
+		 * Static method on the GoldenLayout constructor! This method will reverse the minifications of minifyConfig.
 		 * @param minifiedConfig A minified GoldenLayout configuration object
 		 */
 		static unminifyConfig(minifiedConfig: any): any;
@@ -195,7 +192,7 @@ declare module 'golden-layout' {
 
 	declare export type ItemConfigType = ItemConfig | ComponentConfig | ReactComponentConfig;
 
-	declare export interface Settings {
+	declare export type Settings = {
 		/**
 		 * Turns headers on or off. If false, the layout will be displayed with splitters only.
 		 * Default: true
@@ -263,7 +260,7 @@ declare module 'golden-layout' {
 			showCloseIcon?: boolean;
 	}
 
-	declare export interface Dimensions {
+	declare export type Dimensions = {
 		/**
 		 * The width of the borders between the layout items in pixel. Please note: The actual draggable area is wider
 		 * than the visible one, making it safe to set this to small values without affecting usability.
@@ -303,7 +300,7 @@ declare module 'golden-layout' {
 			dragProxyHeight?: number;
 	}
 
-	declare export interface Labels {
+	declare export type Labels = {
 		/**
 		 * The tooltip text that appears when hovering over the close icon.
 		 * Default: 'close'
@@ -329,7 +326,7 @@ declare module 'golden-layout' {
 			popout?: string;
 	}
 
-	declare export interface ItemConfig {
+	declare export type ItemConfig = {
 		/**
 		 * The type of the item. Possible values are 'row', 'column', 'stack', 'component' and 'react-component'.
 		 */
@@ -369,7 +366,7 @@ declare module 'golden-layout' {
 			title?: string;
 	}
 
-	declare export interface ComponentConfig extends ItemConfig {
+	declare export type ComponentConfig = ItemConfig & {
 		/**
 		 * The name of the component as specified in layout.registerComponent. Mandatory if type is 'component'.
 		 */
@@ -382,7 +379,7 @@ declare module 'golden-layout' {
 			componentState?: any;
 	}
 
-	declare export interface ReactComponentConfig extends ItemConfig {
+	declare export type ReactComponentConfig = ItemConfig &{
 		/**
 		 * The name of the component as specified in layout.registerComponent. Mandatory if type is 'react-component'
 		 */
@@ -394,14 +391,14 @@ declare module 'golden-layout' {
 			props?: any;
 	}
 
-	declare export interface Config {
+	declare export type Config = {
 		settings?: Settings;
 		dimensions?: Dimensions;
 		labels?: Labels;
 		content?: ItemConfigType[];
 	}
 
-	declare export interface ContentItem extends EventEmitter {
+	declare export type ContentItem = EventEmitter & {
 		/**
 		 * This items configuration in its current state
 		 */
@@ -605,7 +602,7 @@ declare module 'golden-layout' {
 
 	}
 
-	declare export interface Container extends EventEmitter {
+	declare export type Container = EventEmitter & {
 		/**
 		 * The current width of the container in pixel
 		 */
@@ -696,7 +693,7 @@ declare module 'golden-layout' {
 		close(): boolean;
 	}
 
-	declare export interface BrowserWindow {
+	declare export type BrowserWindow  = {
 
 		/**
 		 * True if the window has been opened and its GoldenLayout instance initialised.
@@ -739,7 +736,7 @@ declare module 'golden-layout' {
 		popIn(): void;
 	}
 
-	declare export interface Header {
+	declare export type Header  = {
 		/**
 		 * A reference to the LayoutManager instance
 		 */
@@ -795,7 +792,7 @@ declare module 'golden-layout' {
 		removeTab(contentItem: ContentItem): void;
 	}
 
-	declare export interface Tab {
+	declare export type Tab = {
 
 		/**
 		 * True if this tab is the selected tab
@@ -840,7 +837,7 @@ declare module 'golden-layout' {
 		setActive(isActive: boolean): void;
 	}
 
-	declare export interface EventEmitter {
+	declare class EventEmitter {
 		/**
 		 * Subscribe to an event
 		 * @param eventName The name of the event to describe to
@@ -876,5 +873,6 @@ declare module 'golden-layout' {
 		off(eventName: string, callback?: Function, context?: any): void;
 	}
 
-	declare module.exports: GoldenLayout;
+	// Declares a default export whose type is `typeof URL`
+	declare export default typeof GoldenLayout;
 }

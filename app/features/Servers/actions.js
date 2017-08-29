@@ -3,7 +3,8 @@
  * Name: Servers Actions
  * Description:
  */
-import * as misrcon from 'node-misrcon';
+import misrcon from 'node-misrcon';
+import type { StatusResponse, BanListResponse, WhiteListResponse } from 'node-misrcon';
 
 // Actions
 import * as notify from '../Notifications/actions';
@@ -48,14 +49,14 @@ export function getInitialData(): ThunkAction {
 /**
  * Status
  */
-export function updateStatus(status) {
+export function updateStatus(status: StatusResponse): Action {
 	return {
 		type: 'UPDATE_SERVER_STATUS',
 		payload: status
 	};
 }
 
-export function fetchingStatus() {
+export function fetchingStatus(): Action {
 	return {
 		type: 'FETCHING_SERVER_STATUS'
 	};
@@ -79,7 +80,7 @@ export function getStatus(): ThunkAction {
 /**
  * Whitelist
  */
-export function updateWhitelist(whitelist) {
+export function updateWhitelist(whitelist: WhiteListResponse) {
 	return {
 		type: 'UPDATE_SERVER_WHITELIST',
 		payload: whitelist
@@ -136,7 +137,7 @@ export function unWhitelistPlayer(steamid: string): ThunkAction {
 /**
  * Bans
  */
-export function updateBanList(banList: Array<string>) {
+export function updateBanList(banList: BanListResponse) {
 	return {
 		type: 'UPDATE_SERVER_BANLIST',
 		payload: banList

@@ -3,18 +3,23 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import GoldenLayout from 'golden-layout';
+import type { GoldenLayout as GoldenLayoutType } from 'golden-layout';
+import _ from 'lodash';
 
 import * as layoutProvider from './actions';
 
 import './styles.global.css';
 import registerWidgetsToLayout from './registerAllComponents';
 
+import type { Dispatch } from '../../constants/ActionTypes';
+
 class LayoutProvider extends Component {
 	props: {
 		layoutProvider: Object,
-		store: any
+		store: any,
+		dispatch: Dispatch
 	};
-	layout: GoldenLayout;
+	layout: GoldenLayoutType;
 	node: HTMLElement;
 
 	constructor(props, context) {
@@ -30,10 +35,11 @@ class LayoutProvider extends Component {
 		this.layout.init();
 
 		// Update GoldenLayout on Window Resize
-		// We don't worry about removing it since this component will always be mounted
-		window.addEventListener('resize', () => {
-			this.layout.updateSize();
-		});
+		// debounce this to keep from hammering the redux store and triggering updates
+		window.addEventListener(
+			'resize',
+			_.debounce(() => this.layout.updateSize(), 150)
+		);
 
 		// Fix the layout on load
 		setTimeout(() => {

@@ -8,17 +8,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {getActiveServer} from '../../Servers/utils';
 
-import type { ServersState } from '../../Servers/state';
+import type { ServersState, ServerState } from '../../Servers/state';
 
 class WhitelistWidget extends Component {
 	props: {
 		servers: ServersState
 	};
 	render() {
-		const activeServer = getActiveServer(this.props.servers);
+		const activeServer: ServerState = getActiveServer(this.props.servers);
 		return (
 			<div>
-				{JSON.stringify(activeServer.status.whitelist)}
+				{JSON.stringify(activeServer.whitelist)}
 			</div>
 		);
 	}

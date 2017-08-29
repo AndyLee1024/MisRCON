@@ -6,6 +6,8 @@
 
 import type { AppState } from '../../constants/ActionTypes';
 import type { Credentials, ServersState, ServerState } from './state';
+
+
 /**
  * Given the app state go and get the credentials for a server based on a serverId
  */
@@ -16,6 +18,9 @@ export function getCredentialsFromAppStateById(
 	return state.servers.filter(server => server.id === serverId)[0].credentials;
 }
 
+/**
+ * Given the ServersState go and get the active ServerState
+ */
 export function getActiveServer(servers: ServersState): ServerState {
 	return servers.filter(server => server.active === true)[0];
 }

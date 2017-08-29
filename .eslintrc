@@ -22,6 +22,10 @@
 		"indent": "off",
 		"max-len": ["error", { "comments": 121, "code": 121 }],
     "no-console": "off",
+		// use import/no-duplicates instead
+		// https://github.com/babel/eslint-plugin-babel/issues/59
+		"no-duplicate-imports": 0,
+		"no-duplicates": 2,
     "no-use-before-define": "off",
     "no-multi-assign": "off",
 		"no-tabs": 0,
