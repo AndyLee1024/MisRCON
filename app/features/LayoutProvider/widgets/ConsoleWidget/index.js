@@ -13,6 +13,8 @@ import helpString from '../../../../../CVARHelp.md';
 
 import './console.global.css';
 
+import type { PrintFunction } from './types';
+
 type Props = {
 	dispatch: any
 };
@@ -47,22 +49,24 @@ class ConsoleWidget extends Component {
 		};
 		this.commands = {
 			help: {
-				method: (args: Object, print: any) => {
+				method: (args: Object, print: PrintFunction) => {
 					print(helpString);
 				}
 			}
 		};
 	}
 
-	commandPassThrough = command => {
-		// TODO: This is broken here I just left off it's broken because it's trying to get the credentials state
-		//this.props.dispatch(serverActions.sendRCONCommandToServer(command));
+	commandPassThrough = (command: Array<string>, print: PrintFunction) => {
+		this.props.dispatch(
+			serverActions.sendConsoleCommandToServer(command, print)
+		);
 	};
 
 	render() {
 		return (
 			<div style={Container}>
 				<Terminal
+					watchConsoleLogging={false}
 					color="white"
 					backgroundColor="transparent"
 					barColor="transparent"

@@ -10,20 +10,17 @@ import type {
 	WhiteListResponse
 } from 'node-misrcon';
 
-import { getActiveServer } from './utils';
-
-// Actions
-import * as notify from '../Notifications/actions';
+import { getActiveServer, tryParse } from './utils';
 
 // Types
 import type {
-	Action,
 	ServersActions,
 	ThunkAction,
 	Dispatch,
 	GetState
 } from '../../constants/ActionTypes';
 import type { ServerState } from './state';
+import type { PrintFunction } from '../LayoutProvider/widgets/ConsoleWidget/types';
 
 /**
  * Initial Date Getters
@@ -60,7 +57,43 @@ export function getInitialData(): ThunkAction {
 			});
 	};
 }
-//
+
+export function rconPending(): ServersActions {
+	return {
+		type: 'SEND_RCON_COMMAND_PENDING'
+	};
+}
+
+// This thunk sends a console command to the server
+export function sendConsoleCommandToServer(
+	command: Array<string>,
+	print: PrintFunction
+): ThunkAction {
+	return (dispatch: Dispatch, getState: GetState) => {
+		dispatch(rconPending());
+		misrcon
+			.sendRCONCommandToServer({
+				...getActiveServer(getState().servers).credentials,
+				command: command.join(' ')
+			})
+			.then(res => {
+				// print the response to the ConsoleWidget
+				print(res);
+
+				// try to parse the response
+				const data = tryParse(res);
+				if (data) {
+					// add the parsed response to state
+					dispatch(recievedServerData(data));
+				}
+
+			})
+			.catch(e => {
+				throw e;
+			});
+	};
+}
+
 // /**
 //  * Status
 //  */
@@ -226,17 +259,7 @@ export function getInitialData(): ThunkAction {
 //  * RCON Actions
 //  */
 //
-// // This thunk sends the command and adds the response to state
-// export function sendRCONCommandToServer(command: Array<string>): ThunkAction {
-// 	return (dispatch: Dispatch, getState: GetState) => {
-// 		dispatch(rconSetCommand(command.join(' ')));
-// 		dispatch(rconPending());
-// 		misrcon
-// 			.sendRCONCommandToServer({ ...getState(), command })
-// 			.then(res => dispatch(rconRecieved(res)))
-// 			.catch(e => dispatch(notify.emitError(e)));
-// 	};
-// }
+
 //
 // export function rconSetCommand(cmd: string): Action {
 // 	return {
@@ -245,11 +268,7 @@ export function getInitialData(): ThunkAction {
 // 	};
 // }
 //
-// export function rconPending(): Action {
-// 	return {
-// 		type: 'SEND_RCON_COMMAND_PENDING'
-// 	};
-// }
+
 //
 // export function rconRecieved(data: any): Action {
 // 	return {
