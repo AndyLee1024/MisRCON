@@ -1,6 +1,6 @@
 // @flow
 /**
- * Name: FlowTypes
+ * Name: React Flow Types
  * Description:
  */
 export type SyntheticInputEvent = {

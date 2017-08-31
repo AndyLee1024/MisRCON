@@ -27,12 +27,3 @@ export function getCredentialsFromAppStateById(
 export function getActiveServer(servers: ServersState): ServerState {
 	return servers.filter(server => server.active === true)[0];
 }
-/**
- * try and parse a response from the server and return it
- * or return false
- */
-export function tryParse(
-	res: string
-): StatusResponse | BanListResponse | WhiteListResponse | false {
-		return false;
-}

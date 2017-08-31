@@ -10,7 +10,7 @@ import type { TaskType } from './state';
 
 import type {
 	GetState,
-	TasksActions,
+	Action,
 	Dispatch,
 	ThunkAction
 } from '../../constants/ActionTypes';
@@ -34,7 +34,7 @@ export const bootStrap = (): ThunkAction => (
 /**
  * This function adds a task to state
  */
-export function addTask(task: TaskType): TasksActions {
+export function addTask(task: TaskType): Action {
 	return {
 		type: 'ADD_TASK',
 		task
@@ -58,7 +58,7 @@ export const addTaskAndScheduleCron = (task: TaskType): ThunkAction => (
  * This function removes a task from state
  * and cancels the task to be executed by node-cron
  */
-export function removeTask(id: number): TasksActions {
+export function removeTask(id: number): Action {
 	return {
 		type: 'REMOVE_TASK',
 		id
@@ -69,7 +69,7 @@ export function removeTask(id: number): TasksActions {
  * This function pauses a task in state
  * and removes the task from the execution queue
  */
-export function pauseTask(id: number): TasksActions {
+export function pauseTask(id: number): Action {
 	return {
 		type: 'PAUSE_TASK',
 		id
@@ -80,7 +80,7 @@ export function pauseTask(id: number): TasksActions {
  * This function modifies the enabled:true to a task in state
  * and adds the task to the execution queue
  */
-export function playTask(id: number): TasksActions {
+export function playTask(id: number): Action {
 	return {
 		type: 'PLAY_TASK',
 		id
@@ -90,7 +90,7 @@ export function playTask(id: number): TasksActions {
 /**
  * This function increments the task timesRun field based on the id of the task
  */
-export function incrementTask(id: number): TasksActions {
+export function incrementTask(id: number): Action {
 	return {
 		type: 'INCREMENT_TASK',
 		id

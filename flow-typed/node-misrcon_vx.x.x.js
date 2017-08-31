@@ -14,11 +14,10 @@
  */
 
 declare module 'node-misrcon' {
-	// All the types
 	// 64 bit steam id
 	declare export type SteamID = string; // 76561198034520139
 
-	// This is what the shape of the object that you send as a command to misrcon
+	// shape of the object that you send as a command to misrcon
 	declare export type CommandObject = {
 		// The ip for the Server you're sending the request to
 		ip: string,
@@ -96,15 +95,20 @@ declare module 'node-misrcon' {
 
 	declare export type WhiteListResponse = Array<SteamID>;
 
+	declare export type TryParseResponse =
+		| {
+			data: WhiteListResponse | StatusResponse | BanListResponse,
+			type: 'whitelist' | 'banlist' | 'status'
+		}
+			| false;
+
 	declare export type AllData = {
 		status: StatusResponse,
 		banlist: BanListResponse,
 		whitelist: WhiteListResponse
 	};
 
-	declare export function getAllServerData(
-		options: CommandObject
-	): AllData;
+	declare export function getAllServerData(options: CommandObject): AllData;
 
 	declare export function openConnection(
 		options: CommandObject
@@ -130,6 +134,13 @@ declare module 'node-misrcon' {
 		options: CommandObject
 	): Promise<any>;
 
+	declare export function tryParseResponse(response: string): TryParseResponse;
+
+	declare export class ParserError {
+		constructor(message: string): ParserError,
+		name: string
+	}
+
 	declare export default {
 		getAllServerData: getAllServerData,
 		openConnection: openConnection,
@@ -138,5 +149,6 @@ declare module 'node-misrcon' {
 		parseWhitelistResponseToJs: parseWhitelistResponseToJs,
 		sendChainedCommand: sendChainedCommand,
 		sendRCONCommandToServer: sendRCONCommandToServer,
-	};
+		tryParseResponse: tryParseResponse
+	}
 }

@@ -1,3 +1,4 @@
+// @flow
 /**
  * Name: layoutProvider
  * Type: Redux Reducer

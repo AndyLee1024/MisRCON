@@ -4,14 +4,15 @@
  * Description:
  */
 import store from 'store';
-import {dev} from '../../../secrets';
-
-
+// noinspection Eslint
 import type {
-	StatusResponse,
+	StatusResponse as NMStatusResponse,
 	BanListResponse,
-	WhiteListResponse
+	WhiteListResponse,
 } from 'node-misrcon';
+
+import type { PlayersState } from '../Players/state';
+import { dev } from '../../../secrets';
 
 export type Credentials = {
 	// the ip address of the servers
@@ -22,6 +23,12 @@ export type Credentials = {
 
 	// the rcon password
 	password: string
+};
+
+// TODO: FlowFix This Spread operator here
+export type StatusResponse = {
+	/* :: ...NMStatusResponse, */
+	playersArray: PlayersState
 };
 
 export type ServerState = {
@@ -37,11 +44,11 @@ export type ServerState = {
 	// the server credentials
 	credentials: Credentials,
 
-	// the status response
-	status: StatusResponse,
-
 	// the banned players on this server
 	banlist: BanListResponse,
+
+	// the status response contains the playersArray
+	status: StatusResponse,
 
 	// the array of whitelisted players
 	whitelist: WhiteListResponse
@@ -77,7 +84,10 @@ const defaultState: ServersState = [
 					ip: '176.54.310:64090',
 					ping: '276',
 					state: '3',
-					profile: '0'
+					profile: '0',
+					notes: '',
+					avatarURL: 'http://placehold.it/42x42',
+					lastSeen: new Date().toISOString()
 				},
 				{
 					steam: '76561197975954831',
@@ -87,12 +97,15 @@ const defaultState: ServersState = [
 					ip: '176.21.310:64090',
 					ping: '128',
 					state: '2',
-					profile: '0'
+					profile: '0',
+					notes: '',
+					avatarURL: 'http://placehold.it/42x42',
+					lastSeen: new Date().toISOString()
 				}
 			]
 		},
-		whitelist: ['76561197975954839', '76561197975954832'],
-		banlist: ['76561197975954828', '76561197975954829']
+		whitelist: ['76561197975954839', '76561197975954832', '76561197975954834'],
+		banlist: ['76561197975954828', '76561197975954829', '76561197975954834']
 	},
 	{
 		id: 1,
@@ -116,12 +129,28 @@ const defaultState: ServersState = [
 					ip: '123.21.310:64090',
 					ping: '12',
 					state: '1',
-					profile: '0'
+					profile: '0',
+					notes: '',
+					avatarURL: 'http://placehold.it/42x42',
+					lastSeen: new Date().toISOString()
+				},
+				{
+					steam: '76561197975954831',
+					name: 'other_player_guy',
+					entID: '1769286',
+					id: '2',
+					ip: '176.21.310:64090',
+					ping: '128',
+					state: '2',
+					profile: '0',
+					notes: '',
+					avatarURL: 'http://placehold.it/42x42',
+					lastSeen: new Date().toISOString()
 				}
 			]
 		},
-		whitelist: ['76561197975954832'],
-		banlist: ['76561197975954828']
+		whitelist: ['76561197975954832', '76561197975954834'],
+		banlist: ['76561197975954828', '76561197975954831']
 	}
 ];
 

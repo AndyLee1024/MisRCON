@@ -13,15 +13,15 @@ import helpString from '../../../../../CVARHelp.md';
 
 import './console.global.css';
 
-import type { PrintFunction } from './types';
+import type { PrintToConsoleFunction } from './types';
 
 type Props = {
 	dispatch: any
 };
 
 class ConsoleWidget extends Component {
-	descriptions: Object;
-	commands: Object;
+	descriptions: Object; // All auto completes and there help string [help string not used]
+	commands: Object; // any console command not defined here falls through to commandPassThrough
 
 	constructor(props: Props) {
 		super(props);
@@ -49,14 +49,14 @@ class ConsoleWidget extends Component {
 		};
 		this.commands = {
 			help: {
-				method: (args: Object, print: PrintFunction) => {
+				method: (args: Object, print: PrintToConsoleFunction) => {
 					print(helpString);
 				}
 			}
 		};
 	}
 
-	commandPassThrough = (command: Array<string>, print: PrintFunction) => {
+	commandPassThrough = (command: Array<string>, print: PrintToConsoleFunction) => {
 		this.props.dispatch(
 			serverActions.sendConsoleCommandToServer(command, print)
 		);
