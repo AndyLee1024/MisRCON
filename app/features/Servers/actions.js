@@ -16,7 +16,7 @@ import type {
 } from '../../constants/ActionTypes';
 import type { ServerState } from './state';
 import type { PrintToConsoleFunction } from '../LayoutProvider/widgets/ConsoleWidget/types';
-import { getActiveServer } from './utils';
+import { getActiveServer, normalizeAllData, normalizeStatus } from './utils';
 
 /**
  * Called after we've received and parsed server data
@@ -41,17 +41,17 @@ export function rconPending(): Action {
 /**
  * Gets all the data for the active server
  */
-export function getActiveServerData(): ThunkAction {
+export function fetchActiveServerData(): ThunkAction {
 	return (dispatch: Dispatch, getState: GetState) => {
 		dispatch(rconPending());
 		const activeServer = getActiveServer(getState().servers);
 		misrcon
 			.getAllServerData(activeServer.credentials)
-			.then(serverStatus => {
+			.then(allData => {
 				dispatch(
 					recievedServerData({
 						...activeServer,
-						...serverStatus
+						...normalizeAllData(allData)
 					})
 				);
 			})
@@ -102,7 +102,10 @@ export function tryParseAndAddToState(response: string): ThunkAction {
 					break;
 				case 'status':
 					dispatch(
-						recievedServerData({ ...activeServer, status: parsed.data })
+						recievedServerData({
+							...activeServer,
+							status: normalizeStatus(parsed.data)
+						})
 					);
 					break;
 				case 'banlist':
@@ -116,7 +119,7 @@ export function tryParseAndAddToState(response: string): ThunkAction {
 }
 
 /**
- * Given a task
+ * Given a task send it to the server and do something with the response
  */
 export function sendTaskCommandToServer(response: string): ThunkAction {
 	return (dispatch: Dispatch, getState: GetState) => {

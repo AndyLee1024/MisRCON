@@ -15,7 +15,6 @@ import { getPlayerFromDb } from '../../../Players/utils';
 // Types
 import type { ServersState, ServerState } from '../../../Servers/state';
 
-
 class PlayersWidget extends Component {
 	props: {
 		servers: ServersState
@@ -24,9 +23,12 @@ class PlayersWidget extends Component {
 		const activeServer: ServerState = getActiveServer(this.props.servers);
 		return (
 			<Container>
-				{activeServer.status.playersArray.map(player =>(
-					<PlayerCard key={player.steam} player={getPlayerFromDb(player.steam)}/>
-				))}
+				{activeServer.status.playersArray.map(player =>
+					<PlayerCard
+						key={player.steam}
+						player={getPlayerFromDb(player.steam)}
+					/>
+				)}
 			</Container>
 		);
 	}
@@ -34,9 +36,15 @@ class PlayersWidget extends Component {
 
 const Container = styled.div`
 	display: flex;
-	flex-direction: row; 
+	flex-direction: row;
 	padding: 10px;
 	box-sizing: border-box;
+	flex-flow: wrap;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
 `;
 
 export default connect(store => ({

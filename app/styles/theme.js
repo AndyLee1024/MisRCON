@@ -3,7 +3,6 @@
  * Name: theme
  * Description:
  */
-import * as React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import spacing from 'material-ui/styles/spacing';
 import { injectGlobal } from 'styled-components';
@@ -12,7 +11,7 @@ import { white, orange, lightBlue, midBlue, midText } from './colors';
 export const addGlobalStyling = () => {
 	injectGlobal`
 	::-webkit-scrollbar {
-		width: 0.4em;
+		width: 0.5em;
 		height: 0.4em;
 	}
 	::-webkit-scrollbar-track {

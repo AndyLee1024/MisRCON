@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PlayerCard from '../../../../components/PlayerCard';
 
-import {getActiveServer} from '../../../Servers/utils';
+import { getActiveServer } from '../../../Servers/utils';
 import { getPlayerFromDb } from '../../../Players/utils';
 
 import type { ServersState, ServerState } from '../../../Servers/state';
@@ -22,9 +22,9 @@ class WhitelistWidget extends Component {
 		const activeServer: ServerState = getActiveServer(this.props.servers);
 		return (
 			<Container>
-				{activeServer.whitelist.map(steamid =>(
-					<PlayerCard key={steamid} player={getPlayerFromDb(steamid)}/>
-				))}
+				{activeServer.whitelist.map(steamid =>
+					<PlayerCard key={steamid} player={getPlayerFromDb(steamid)} />
+				)}
 			</Container>
 		);
 	}
@@ -32,9 +32,15 @@ class WhitelistWidget extends Component {
 
 const Container = styled.div`
 	display: flex;
-	flex-direction: row; 
+	flex-direction: row;
 	padding: 10px;
 	box-sizing: border-box;
+	flex-flow: wrap;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
 `;
 
 export default connect(store => ({

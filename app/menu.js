@@ -152,7 +152,10 @@ export default class MenuBuilder {
 				submenu: [
 					{
 						label: '&New Server',
-						accelerator: 'Ctrl+N'
+						accelerator: 'Ctrl+N',
+						click: () => {
+							console.log(this.mainWindow);
+						}
 					},
 					{
 						label: '&Quit',

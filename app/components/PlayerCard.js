@@ -40,6 +40,7 @@ const Container = styled(Paper)`
 	height: 150px;
 	min-width: 250px;
 	min-height: 150px;
+	margin: 15px;
 `;
 
 export default PlayerCard;

@@ -8,11 +8,11 @@ import store from 'store';
 import type {
 	StatusResponse as NMStatusResponse,
 	BanListResponse,
-	WhiteListResponse,
+	WhiteListResponse
 } from 'node-misrcon';
 
 import type { PlayersState } from '../Players/state';
-import { dev } from '../../../secrets';
+import { dev, us75 } from '../../../secrets';
 
 export type Credentials = {
 	// the ip address of the servers
@@ -25,7 +25,7 @@ export type Credentials = {
 	password: string
 };
 
-// TODO: FlowFix This Spread operator here
+// TODO: FlowFix Spread operator here works but eslint doesn't like it
 export type StatusResponse = {
 	/* :: ...NMStatusResponse, */
 	playersArray: PlayersState
@@ -62,11 +62,7 @@ const defaultState: ServersState = [
 		id: 0,
 		active: false,
 		name: 'Test Server 1',
-		credentials: {
-			ip: '31.204.150.21',
-			port: '64099',
-			password: '*****'
-		},
+		credentials: dev,
 		status: {
 			name: 'i3d.net #457934',
 			ip: '192.168.1.1:64040',
@@ -111,7 +107,7 @@ const defaultState: ServersState = [
 		id: 1,
 		active: true,
 		name: 'Test Server 2',
-		credentials: dev,
+		credentials: us75,
 		status: {
 			name: 'my cool dev server',
 			ip: '192.168.1.2:64041',

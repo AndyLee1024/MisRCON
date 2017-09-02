@@ -35,6 +35,12 @@ const Container = styled.div`
 	flex-direction: row;
 	padding: 10px;
 	box-sizing: border-box;
+	flex-flow: wrap;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
 `;
 
 export default connect(store => ({

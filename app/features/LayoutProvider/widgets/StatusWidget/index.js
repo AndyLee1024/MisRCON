@@ -52,7 +52,7 @@ class StatusWidget extends Component {
 			<Wrapper width={this.state.width}>
 				<Left height={this.state.height} width={this.state.width}>
 					<ServerName
-						name={activeServer.name}
+						name={activeServer.status.name}
 						height={this.state.height}
 						width={this.state.width}
 					/>
