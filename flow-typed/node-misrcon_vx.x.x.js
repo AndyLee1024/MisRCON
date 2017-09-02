@@ -97,10 +97,10 @@ declare module 'node-misrcon' {
 
 	declare export type TryParseResponse =
 		| {
-			data: WhiteListResponse | StatusResponse | BanListResponse,
-			type: 'whitelist' | 'banlist' | 'status'
-		}
-			| false;
+				data: WhiteListResponse | StatusResponse | BanListResponse,
+				type: 'whitelist' | 'banlist' | 'status'
+			}
+		| false;
 
 	declare export type AllData = {
 		status: StatusResponse,

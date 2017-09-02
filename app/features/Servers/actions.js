@@ -4,15 +4,10 @@
  */
 import misrcon from 'node-misrcon';
 import type {
-	StatusResponse,
-	BanListResponse,
-	WhiteListResponse
-} from 'node-misrcon';
-import type {
-	Action,
-	ThunkAction,
-	Dispatch,
-	GetState
+  Action,
+  ThunkAction,
+  Dispatch,
+  GetState,
 } from '../../constants/ActionTypes';
 import type { ServerState } from './state';
 import type { PrintToConsoleFunction } from '../LayoutProvider/widgets/ConsoleWidget/types';
@@ -23,108 +18,132 @@ import { getActiveServer, normalizeAllData, normalizeStatus } from './utils';
  * and want to add it to state
  */
 export function recievedServerData(data: ServerState): Action {
-	return {
-		type: 'UPDATE_SERVER_DATA',
-		payload: data
-	};
+  return {
+    type: 'UPDATE_SERVER_DATA',
+    payload: data,
+  };
 }
 
 /**
  * Indicates that the server is performing an RCON action
  */
 export function rconPending(): Action {
-	return {
-		type: 'SEND_RCON_COMMAND_PENDING'
-	};
+  return {
+    type: 'SEND_RCON_COMMAND_PENDING',
+  };
+}
+
+/**
+ * Makes a Server active by the id
+ */
+export function makeServerActive(id: number): Action {
+  return {
+    type: 'MAKE_SERVER_ACTIVE',
+    id,
+  };
+}
+
+/**
+ * Switches to a server by id
+ */
+export function switchToServer(id: number): ThunkAction {
+  return (dispatch: Dispatch, getState: GetState) => {
+    dispatch(makeServerActive(id));
+    dispatch(fetchActiveServerData());
+  };
 }
 
 /**
  * Gets all the data for the active server
  */
 export function fetchActiveServerData(): ThunkAction {
-	return (dispatch: Dispatch, getState: GetState) => {
-		dispatch(rconPending());
-		const activeServer = getActiveServer(getState().servers);
-		misrcon
-			.getAllServerData(activeServer.credentials)
-			.then(allData => {
-				dispatch(
-					recievedServerData({
-						...activeServer,
-						...normalizeAllData(allData)
-					})
-				);
-			})
-			.catch(e => {
-				throw e;
-			});
-	};
+  return (dispatch: Dispatch, getState: GetState) => {
+    dispatch(rconPending());
+    const activeServer = getActiveServer(getState().servers);
+    misrcon
+      .getAllServerData(activeServer.credentials)
+      .then(allData => {
+        dispatch(
+          recievedServerData({
+            ...activeServer,
+            ...normalizeAllData(allData),
+          }),
+        );
+        return null;
+      })
+      .catch(e => {
+        throw e;
+      });
+  };
 }
 
 /**
  * Sends a command to a server via the ConsoleWidget
  */
 export function sendConsoleCommandToServer(
-	command: Array<string>,
-	printToConsole: PrintToConsoleFunction
+  command: Array<string>,
+  printToConsole: PrintToConsoleFunction,
 ): ThunkAction {
-	return (dispatch: Dispatch, getState: GetState) => {
-		const activeServer = getActiveServer(getState().servers);
-		dispatch(rconPending());
-		misrcon
-			.sendRCONCommandToServer({
-				...activeServer.credentials,
-				command: command.join(' ')
-			})
-			.then(response => {
-				printToConsole(response);
-				dispatch(tryParseAndAddToState(response));
-			})
-			.catch(e => {
-				throw e;
-			});
-	};
+  return (dispatch: Dispatch, getState: GetState) => {
+    const activeServer = getActiveServer(getState().servers);
+    dispatch(rconPending());
+    misrcon
+      .sendRCONCommandToServer({
+        ...activeServer.credentials,
+        command: command.join(' '),
+      })
+      .then(response => {
+        printToConsole(response);
+        dispatch(tryParseAndAddToState(response));
+        return null;
+      })
+      .catch(e => {
+        throw e;
+      });
+  };
 }
 
 /**
  * Given some random server response try and do something with it.
  */
 export function tryParseAndAddToState(response: string): ThunkAction {
-	return (dispatch: Dispatch, getState: GetState) => {
-		const activeServer = getActiveServer(getState().servers);
-		const parsed = misrcon.tryParseResponse(response);
-		if (parsed) {
-			switch (parsed.type) {
-				case 'whitelist':
-					dispatch(
-						recievedServerData({ ...activeServer, whitelist: parsed.data })
-					);
-					break;
-				case 'status':
-					dispatch(
-						recievedServerData({
-							...activeServer,
-							status: normalizeStatus(parsed.data)
-						})
-					);
-					break;
-				case 'banlist':
-					dispatch(
-						recievedServerData({ ...activeServer, banlist: parsed.data })
-					);
-					break;
-			}
-		}
-	};
+  return (dispatch: Dispatch, getState: GetState) => {
+    const activeServer = getActiveServer(getState().servers);
+    const parsed = misrcon.tryParseResponse(response);
+    if (parsed) {
+      switch (parsed.type) {
+        case 'whitelist':
+          dispatch(
+            recievedServerData({ ...activeServer, whitelist: parsed.data }),
+          );
+          break;
+        case 'status':
+          dispatch(
+            recievedServerData({
+              ...activeServer,
+              status: normalizeStatus(parsed.data),
+            }),
+          );
+          break;
+        case 'banlist':
+          dispatch(
+            recievedServerData({ ...activeServer, banlist: parsed.data }),
+          );
+          break;
+        default:
+          break;
+      }
+    }
+  };
 }
 
 /**
  * Given a task send it to the server and do something with the response
  */
 export function sendTaskCommandToServer(response: string): ThunkAction {
-	return (dispatch: Dispatch, getState: GetState) => {
-		// send command to server from task
-	};
+  return (dispatch: Dispatch, getState: GetState) => {
+    // send command to server from task
+  };
 }
 
 // /**

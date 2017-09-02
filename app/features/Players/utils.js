@@ -5,13 +5,23 @@
  * Description:
  */
 import store from 'store';
-import type { PlayersArray as NMPlayersArray } from 'node-misrcon';
+import type { PlayersArray } from 'node-misrcon';
 
-import type { Player, PlayersState, ISO8601DateString } from './state';
+import type { PlayerState, PlayersState, ISO8601DateString } from './state';
 import { defaultPlayer } from './state';
 
 // the name of the players database
 const dbName: string = 'misrcon-players-db';
+
+/**
+ * Normalise the playersArray from node-misrcon PlayersArray<PlayerState> to our internal PlayersArray<PlayerState>
+ */
+export const normalizePlayersArray = (
+	players: PlayersArray
+): PlayersState => {
+	return players.map(player => ({ ...defaultPlayer, ...player }));
+};
+
 
 /**
  * Bootstraps the database for use
@@ -30,7 +40,7 @@ export const getPlayersFromDb = (): PlayersState => store.get(dbName);
 /**
  * Adds/Overwrites(puts) a player in the database
  */
-export const putPlayerToDb = (player: Player) => {
+export const putPlayerToDb = (player: PlayerState) => {
 	store.set(dbName, [].concat(getPlayersFromDb(), player));
 };
 
@@ -38,7 +48,7 @@ export const putPlayerToDb = (player: Player) => {
  * Gets a player by steamid from the database
  * if the player doesn't exist it will create it and return the new player
  */
-export const getPlayerFromDb = (steam: string): Player => {
+export const getPlayerFromDb = (steam: string): PlayerState => {
 	let player = getPlayersFromDb().filter(
 		storedPlayer => storedPlayer.steam === steam
 	)[0];
@@ -54,22 +64,14 @@ export const getPlayerFromDb = (steam: string): Player => {
  * returns a player with the last seen value updated
  */
 export const updateLastSeen = (
-	player: Player,
+	player: PlayerState,
 	time: ISO8601DateString = new Date().toISOString()
-): Player => ({ ...player, lastSeen: time });
+): PlayerState => ({ ...player, lastSeen: time });
 
 /**
  * Updates the player in the players database and grabs any values from the db that are blank on inserted player
  */
-export const syncPlayer = (player: Player): Player => {
+export const syncPlayer = (player: PlayerState): PlayerState => {
 	return player;
 };
 
-/**
- * Normalise the playersArray from node-misrcon PlayersArray<Player> to our internal PlayersArray<Player>
- */
-export const normalizePlayersArray = (
-	players: NMPlayersArray
-): PlayersState => {
-	return players.map(player => ({ ...defaultPlayer, ...player }));
-};

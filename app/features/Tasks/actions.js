@@ -9,10 +9,10 @@ import { scheduleTask } from './utils';
 import type { TaskType } from './state';
 
 import type {
-	GetState,
-	Action,
-	Dispatch,
-	ThunkAction
+  GetState,
+  Action,
+  Dispatch,
+  ThunkAction
 } from '../../constants/ActionTypes';
 
 /**
@@ -20,38 +20,38 @@ import type {
  * and schedules a task to be executed by node-cron
  */
 export const bootStrap = (): ThunkAction => (
-	dispatch: Dispatch,
-	getState: GetState
+  dispatch: Dispatch,
+  getState: GetState
 ) => {
-	const storedTasks = store.get('tasks');
-	if (storedTasks !== undefined) {
-		storedTasks.map(task => {
-			dispatch(addTaskAndScheduleCron(task));
-		});
-	}
+  const storedTasks = store.get('tasks');
+  if (storedTasks !== undefined) {
+    storedTasks.forEach(task => {
+      dispatch(addTaskAndScheduleCron(task));
+    });
+  }
 };
 
 /**
  * This function adds a task to state
  */
 export function addTask(task: TaskType): Action {
-	return {
-		type: 'ADD_TASK',
-		task
-	};
+  return {
+    type: 'ADD_TASK',
+    task
+  };
 }
 /**
  * This thunk adds a task to state
  * and schedules a task to be executed by node-cron
  */
 export const addTaskAndScheduleCron = (task: TaskType): ThunkAction => (
-	dispatch: Dispatch,
-	getState: GetState
+  dispatch: Dispatch,
+  getState: GetState
 ) => {
-	const scheduledTask = scheduleTask(task, dispatch, getState);
-	if (scheduledTask) {
-		dispatch(addTask(scheduledTask));
-	}
+  const scheduledTask = scheduleTask(task, dispatch, getState);
+  if (scheduledTask) {
+    dispatch(addTask(scheduledTask));
+  }
 };
 
 /**
@@ -59,10 +59,10 @@ export const addTaskAndScheduleCron = (task: TaskType): ThunkAction => (
  * and cancels the task to be executed by node-cron
  */
 export function removeTask(id: number): Action {
-	return {
-		type: 'REMOVE_TASK',
-		id
-	};
+  return {
+    type: 'REMOVE_TASK',
+    id
+  };
 }
 
 /**
@@ -70,10 +70,10 @@ export function removeTask(id: number): Action {
  * and removes the task from the execution queue
  */
 export function pauseTask(id: number): Action {
-	return {
-		type: 'PAUSE_TASK',
-		id
-	};
+  return {
+    type: 'PAUSE_TASK',
+    id
+  };
 }
 
 /**
@@ -81,18 +81,18 @@ export function pauseTask(id: number): Action {
  * and adds the task to the execution queue
  */
 export function playTask(id: number): Action {
-	return {
-		type: 'PLAY_TASK',
-		id
-	};
+  return {
+    type: 'PLAY_TASK',
+    id
+  };
 }
 
 /**
  * This function increments the task timesRun field based on the id of the task
  */
 export function incrementTask(id: number): Action {
-	return {
-		type: 'INCREMENT_TASK',
-		id
-	};
+  return {
+    type: 'INCREMENT_TASK',
+    id
+  };
 }

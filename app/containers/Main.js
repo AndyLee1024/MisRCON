@@ -7,27 +7,31 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import LayoutProvider from '../features/LayoutProvider';
+import Servers from '../features/Servers';
 
 import { MisRCONTheme } from '../styles/theme';
 import bootStrap from '../utils/bootstrap';
 
-class Main extends Component {
-	props: {
-		store: any
-	};
-	componentWillMount() {
-		bootStrap(this.props.store.dispatch);
-	}
+import type { Store } from '../constants/ActionTypes';
 
-	render() {
-		return (
-			<MuiThemeProvider muiTheme={MisRCONTheme}>
-				<div style={{ display: 'flex' }}>
-					<LayoutProvider store={this.props.store} />
-				</div>
-			</MuiThemeProvider>
-		);
-	}
+class Main extends Component {
+  props: {
+    store: Store
+  };
+  componentWillMount() {
+    bootStrap(this.props.store.dispatch);
+  }
+
+  render() {
+    return (
+      <MuiThemeProvider muiTheme={MisRCONTheme}>
+        <div style={{ display: 'flex' }}>
+          <LayoutProvider store={this.props.store} />
+          <Servers dispatch={this.props.store.dispatch} servers={[]} />
+        </div>
+      </MuiThemeProvider>
+    );
+  }
 }
 
 export default Main;

@@ -8,11 +8,11 @@ import styled from 'styled-components';
 import Paper from 'material-ui/Paper/index';
 import Avatar from 'material-ui/Avatar/index';
 
-import type { Player } from '../features/Players/state';
+import type { PlayerState } from '../features/Players/state';
 
 class PlayerCard extends Component {
 	props: {
-		player: Player,
+		player: PlayerState,
 		kickPlayer?: any,
 		banPlayer?: any,
 		updatePlayerNote?: any,

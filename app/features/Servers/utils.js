@@ -3,10 +3,20 @@
  * Name: Servers Utils
  * Description: Functions to get, modify or work with data from the Servers state
  */
-import type { AllData, BanListResponse, WhiteListResponse, StatusResponse as NMStatusResponse } from 'node-misrcon';
+import type {
+	AllData,
+	BanListResponse,
+	WhiteListResponse,
+	StatusResponse
+} from 'node-misrcon';
 
 import type { AppState } from '../../constants/ActionTypes';
-import type { Credentials, ServersState, ServerState, StatusResponse } from './state';
+import type {
+	Credentials,
+	ServersState,
+	ServerState,
+	StatusState
+} from './state';
 
 import { normalizePlayersArray } from '../Players/utils';
 
@@ -26,12 +36,14 @@ export const getActiveServer = (servers: ServersState): ServerState =>
 	servers.filter(server => server.active === true)[0];
 
 /**
- * Takes
+ * Takes a StatusResponse from node-misrcon and converts it into a StatusState
  */
-export const normalizeStatus = (status: NMStatusResponse): StatusResponse => ({
-	...status,
-	playersArray: normalizePlayersArray(status.playersArray)
-});
+export const normalizeStatus = (status: StatusResponse): any => {
+	return {
+		...status,
+		playersArray: normalizePlayersArray(status.playersArray)
+	};
+};
 
 /**
  * normalize the allData response from node-misrcon and convert it into our internal StatusResponse

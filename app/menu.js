@@ -1,5 +1,5 @@
 // @flow
-import { app, Menu, shell, BrowserWindow } from 'electron';
+import { app, Menu, shell, BrowserWindow, remote } from 'electron';
 
 export default class MenuBuilder {
 	mainWindow: BrowserWindow;
@@ -154,7 +154,7 @@ export default class MenuBuilder {
 						label: '&New Server',
 						accelerator: 'Ctrl+N',
 						click: () => {
-							console.log(this.mainWindow);
+							this.mainWindow.webContents.send('NEW_SERVER_CLICKED')
 						}
 					},
 					{

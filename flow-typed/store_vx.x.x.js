@@ -19,5 +19,5 @@ declare module 'store' {
 		deserialize(value: string): any,
 		forEach(command: (key: string, value: any) => void): void
 	}
-	declare module.exports: StoreJSStatic;
+	declare export default StoreJSStatic;
 }

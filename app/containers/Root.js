@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
 import { Provider } from 'react-redux';
-
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import type { Store } from '../constants/ActionTypes';
 import Main from './Main';
 
 // Needed for onTouchTap
@@ -11,7 +11,7 @@ import Main from './Main';
 injectTapEventPlugin();
 
 type RootType = {
-	store: {}
+	store: Store
 };
 
 export default function Root({ store }: RootType) {

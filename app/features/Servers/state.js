@@ -4,9 +4,7 @@
  * Description:
  */
 import store from 'store';
-// noinspection Eslint
 import type {
-	StatusResponse as NMStatusResponse,
 	BanListResponse,
 	WhiteListResponse
 } from 'node-misrcon';
@@ -25,9 +23,29 @@ export type Credentials = {
 	password: string
 };
 
-// TODO: FlowFix Spread operator here works but eslint doesn't like it
-export type StatusResponse = {
-	/* :: ...NMStatusResponse, */
+
+export type StatusState = {
+	// The name of the server
+	name: string, // US75
+
+	// The IP of the server
+	ip: string, // 192.168.1.1
+
+	// The Time of Day from the server
+	time: string, // 14:30
+
+	// The Dedicated Server Version
+	version: string, // 184321
+
+	// The map being run on the server currently
+	level: string, // islands
+
+	// The game rules of the dedicated server
+	gameRules: string, // Miscreated
+
+	// The numer of players on the server
+	players: string,  // 0/50
+
 	playersArray: PlayersState
 };
 
@@ -48,7 +66,7 @@ export type ServerState = {
 	banlist: BanListResponse,
 
 	// the status response contains the playersArray
-	status: StatusResponse,
+	status: StatusState,
 
 	// the array of whitelisted players
 	whitelist: WhiteListResponse

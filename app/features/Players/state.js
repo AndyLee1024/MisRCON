@@ -1,12 +1,12 @@
 // @flow
 /**
  * Name: state
- * Description: The Players State (based around the Player type of node-misrcon
+ * Description: The Players State (based around the PlayerState type of node-misrcon
  */
 // ISO8601 Extended Format
 export type ISO8601DateString = string; // 2017-08-31T04:23:01.933Z
 
-export type Player = {
+export type PlayerState = {
 	// The 64 bit steam id of the player
 	steam: string,
 
@@ -41,10 +41,10 @@ export type Player = {
 	lastSeen: ISO8601DateString // 2017-08-31T04:23:01.933Z
 };
 
-export type PlayersState = Array<Player>;
+export type PlayersState = Array<PlayerState>;
 
 // this is the default player we can use anywhere we need to initialize a new player
-export const defaultPlayer: Player = {
+export const defaultPlayer: PlayerState = {
 	steam: '',
 	name: '',
 	entID: '',
@@ -58,6 +58,6 @@ export const defaultPlayer: Player = {
 	lastSeen: new Date().toISOString()
 };
 
-export const initialState: PlayersState = [];
+export const initialState: PlayersState = [defaultPlayer];
 
 export default initialState;
