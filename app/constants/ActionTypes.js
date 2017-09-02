@@ -21,6 +21,7 @@ export type AppState = {
 
 // Redux Emits a bunch of it's own stuff so I need to allow those
 export type BaseReduxAction = { type: $Subtype<string> };
+export type ReduxInitAction = { type: '@@INIT' };
 
 /**
  * LayoutProvider
@@ -63,18 +64,19 @@ export type NotificationActions =
  * Every action we have in the app
  */
 export type Action =
-  | BaseReduxAction
+  | ReduxInitAction
   | TasksActions
   | ServersActions
   | LayoutProviderActions
   | NotificationActions;
 
-export type Store = ReduxStore<AppState, Action>;
+export type State = ServersState &
+  LayoutProviderState &
+  TasksState &
+  NotificationsState;
 
 export type GetState = () => AppState;
 
-export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any;
+export type Store = ReduxStore<State, Action>;
 
-export type PromiseAction = Promise<Action>;
-
-export type Dispatch = ReduxDispatch<AppState, Action | ThunkAction | PromiseAction>;
+export type Dispatch = ReduxDispatch<Action>;
