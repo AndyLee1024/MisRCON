@@ -7,7 +7,7 @@ import type {
   Action,
   ThunkAction,
   Dispatch,
-  GetState,
+  GetState
 } from '../../constants/ActionTypes';
 import type { ServerState } from './state';
 import type { PrintToConsoleFunction } from '../LayoutProvider/widgets/ConsoleWidget/types';
@@ -17,10 +17,10 @@ import { getActiveServer, normalizeAllData, normalizeStatus } from './utils';
  * Called after we've received and parsed server data
  * and want to add it to state
  */
-export function recievedServerData(data: ServerState): Action {
+export function updateServerData(data: ServerState): Action {
   return {
     type: 'UPDATE_SERVER_DATA',
-    payload: data,
+    payload: data
   };
 }
 
@@ -29,7 +29,7 @@ export function recievedServerData(data: ServerState): Action {
  */
 export function rconPending(): Action {
   return {
-    type: 'SEND_RCON_COMMAND_PENDING',
+    type: 'SEND_RCON_COMMAND_PENDING'
   };
 }
 
@@ -39,7 +39,7 @@ export function rconPending(): Action {
 export function makeServerActive(id: number): Action {
   return {
     type: 'MAKE_SERVER_ACTIVE',
-    id,
+    id
   };
 }
 
@@ -63,12 +63,11 @@ export function fetchActiveServerData(): ThunkAction {
     misrcon
       .getAllServerData(activeServer.credentials)
       .then(allData => {
-        dispatch(
-          recievedServerData({
-            ...activeServer,
-            ...normalizeAllData(allData),
-          }),
-        );
+        const serverData = {
+          ...activeServer,
+          ...normalizeAllData(allData)
+        };
+        dispatch(updateServerData(serverData));
         return null;
       })
       .catch(e => {
@@ -82,7 +81,7 @@ export function fetchActiveServerData(): ThunkAction {
  */
 export function sendConsoleCommandToServer(
   command: Array<string>,
-  printToConsole: PrintToConsoleFunction,
+  printToConsole: PrintToConsoleFunction
 ): ThunkAction {
   return (dispatch: Dispatch, getState: GetState) => {
     const activeServer = getActiveServer(getState().servers);
@@ -90,7 +89,7 @@ export function sendConsoleCommandToServer(
     misrcon
       .sendRCONCommandToServer({
         ...activeServer.credentials,
-        command: command.join(' '),
+        command: command.join(' ')
       })
       .then(response => {
         printToConsole(response);
@@ -114,21 +113,19 @@ export function tryParseAndAddToState(response: string): ThunkAction {
       switch (parsed.type) {
         case 'whitelist':
           dispatch(
-            recievedServerData({ ...activeServer, whitelist: parsed.data }),
+            updateServerData({ ...activeServer, whitelist: parsed.data })
           );
           break;
         case 'status':
           dispatch(
-            recievedServerData({
+            updateServerData({
               ...activeServer,
-              status: normalizeStatus(parsed.data),
-            }),
+              status: normalizeStatus(parsed.data)
+            })
           );
           break;
         case 'banlist':
-          dispatch(
-            recievedServerData({ ...activeServer, banlist: parsed.data }),
-          );
+          dispatch(updateServerData({ ...activeServer, banlist: parsed.data }));
           break;
         default:
           break;

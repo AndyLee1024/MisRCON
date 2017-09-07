@@ -56,6 +56,7 @@ class Servers extends Component<void, Props, State> {
         <ServerSelectContainer>
           {this.props.servers.map(server =>
             <ServerItem
+              key={server.id}
               onClick={() => {
                 this.handleServerItemClick(server.id);
               }}

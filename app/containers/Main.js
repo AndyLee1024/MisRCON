@@ -27,7 +27,7 @@ class Main extends Component {
       <MuiThemeProvider muiTheme={MisRCONTheme}>
         <div style={{ display: 'flex' }}>
           <LayoutProvider store={this.props.store} />
-          <Servers dispatch={this.props.store.dispatch} servers={[]} />
+          <Servers dispatch={this.props.store.dispatch} servers={this.props.store.getState().servers} />
         </div>
       </MuiThemeProvider>
     );
