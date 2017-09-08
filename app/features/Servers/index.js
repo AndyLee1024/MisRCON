@@ -23,7 +23,7 @@ type State = {
 
 class Servers extends Component<void, Props, State> {
   state = {
-    open: true
+    open: false
   };
 
   componentDidMount() {

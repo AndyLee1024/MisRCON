@@ -76,7 +76,7 @@ export const defaultState: ServersState = [
   {
     id: 0,
     active: false,
-    name: 'Test Server 1',
+    name: 'Dev Server',
     credentials: dev,
     status: {
       name: 'i3d.net #457934',
@@ -121,7 +121,7 @@ export const defaultState: ServersState = [
   {
     id: 1,
     active: true,
-    name: 'Test Server 2',
+    name: 'US75',
     credentials: us75,
     status: {
       name: 'my cool dev server',

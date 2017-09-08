@@ -24,6 +24,6 @@ export const lightText = lighten(text, 0.7);
 export const brightText = lighten(text, 0.9);
 
 //
-export const red = '#55252c';
-export const yellow = '#b99f4c';
+export const red = '#B71C1C';
+export const yellow = '#FFC107';
 export const green = '#386939';

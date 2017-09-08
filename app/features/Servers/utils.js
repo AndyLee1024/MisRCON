@@ -48,6 +48,9 @@ export const normalizeStatus = (status: StatusResponse): any => {
  */
 export const normalizeAllData = (allData: AllData): any => ({
   ...allData,
+  // remove the duplicate values if any from whitelist and banlist
+  whitelist: [...new Set(allData.whitelist)],
+  banlist: [...new Set(allData.banlist)],
   status: normalizeStatus(allData.status)
 });
 

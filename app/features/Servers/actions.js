@@ -3,15 +3,11 @@
  * Name: Servers Redux Actions
  */
 import misrcon from 'node-misrcon';
-import type {
-  Action,
-  ThunkAction,
-  Dispatch,
-  GetState
-} from '../../constants/ActionTypes';
+import type { Action, Dispatch, GetState } from '../../constants/ActionTypes';
 import type { ServerState } from './state';
 import type { PrintToConsoleFunction } from '../LayoutProvider/widgets/ConsoleWidget/types';
 import { getActiveServer, normalizeAllData, normalizeStatus } from './utils';
+
 
 /**
  * Called after we've received and parsed server data
@@ -46,7 +42,7 @@ export function makeServerActive(id: number): Action {
 /**
  * Switches to a server by id
  */
-export function switchToServer(id: number): ThunkAction {
+export function switchToServer(id: number) {
   return (dispatch: Dispatch, getState: GetState) => {
     dispatch(makeServerActive(id));
     dispatch(fetchActiveServerData());
@@ -56,7 +52,7 @@ export function switchToServer(id: number): ThunkAction {
 /**
  * Gets all the data for the active server
  */
-export function fetchActiveServerData(): ThunkAction {
+export function fetchActiveServerData() {
   return (dispatch: Dispatch, getState: GetState) => {
     dispatch(rconPending());
     const activeServer = getActiveServer(getState().servers);
@@ -82,7 +78,7 @@ export function fetchActiveServerData(): ThunkAction {
 export function sendConsoleCommandToServer(
   command: Array<string>,
   printToConsole: PrintToConsoleFunction
-): ThunkAction {
+) {
   return (dispatch: Dispatch, getState: GetState) => {
     const activeServer = getActiveServer(getState().servers);
     dispatch(rconPending());
@@ -105,7 +101,7 @@ export function sendConsoleCommandToServer(
 /**
  * Given some random server response try and do something with it.
  */
-export function tryParseAndAddToState(response: string): ThunkAction {
+export function tryParseAndAddToState(response: string) {
   return (dispatch: Dispatch, getState: GetState) => {
     const activeServer = getActiveServer(getState().servers);
     const parsed = misrcon.tryParseResponse(response);
@@ -137,7 +133,7 @@ export function tryParseAndAddToState(response: string): ThunkAction {
 /**
  * Given a task send it to the server and do something with the response
  */
-export function sendTaskCommandToServer(response: string): ThunkAction {
+export function sendTaskCommandToServer(response: string) {
   return (dispatch: Dispatch, getState: GetState) => {
     // send command to server from task
   };
@@ -159,7 +155,7 @@ export function sendTaskCommandToServer(response: string): ThunkAction {
 // 	};
 // }
 //
-// export function getStatus(): ThunkAction {
+// export function getStatus() {
 // 	return (dispatch: Dispatch, getState: GetState) => {
 // 		dispatch(fetchingStatus());
 // 		misrcon
@@ -190,7 +186,7 @@ export function sendTaskCommandToServer(response: string): ThunkAction {
 // 	};
 // }
 //
-// export function getWhitelist(): ThunkAction {
+// export function getWhitelist() {
 // 	return (dispatch: Dispatch, getState: GetState) => {
 // 		dispatch(fetchingWhitelist());
 // 		misrcon
@@ -207,7 +203,7 @@ export function sendTaskCommandToServer(response: string): ThunkAction {
 // 	};
 // }
 //
-// export function whitelistPlayer(steamid: string): ThunkAction {
+// export function whitelistPlayer(steamid: string) {
 // 	return (dispatch: Dispatch, getState: GetState) => {
 // 		misrcon
 // 			.sendRCONCommandToServer({
@@ -219,7 +215,7 @@ export function sendTaskCommandToServer(response: string): ThunkAction {
 // 	};
 // }
 //
-// export function unWhitelistPlayer(steamid: string): ThunkAction {
+// export function unWhitelistPlayer(steamid: string) {
 // 	return (dispatch: Dispatch, getState: GetState) => {
 // 		misrcon
 // 			.sendRCONCommandToServer({
@@ -247,7 +243,7 @@ export function sendTaskCommandToServer(response: string): ThunkAction {
 // 	};
 // }
 //
-// export function getBanList(): ThunkAction {
+// export function getBanList() {
 // 	return (dispatch: Dispatch, getState: GetState) => {
 // 		dispatch(fetchingBanList());
 // 		misrcon
@@ -262,7 +258,7 @@ export function sendTaskCommandToServer(response: string): ThunkAction {
 // 	};
 // }
 //
-// export function banPlayer(steamid: string): ThunkAction {
+// export function banPlayer(steamid: string) {
 // 	return (dispatch: Dispatch, getState: GetState) => {
 // 		misrcon
 // 			.sendRCONCommandToServer({
@@ -274,7 +270,7 @@ export function sendTaskCommandToServer(response: string): ThunkAction {
 // 	};
 // }
 //
-// export function unBanPlayer(steamid: string): ThunkAction {
+// export function unBanPlayer(steamid: string) {
 // 	return (dispatch: Dispatch, getState: GetState) => {
 // 		misrcon
 // 			.sendRCONCommandToServer({
@@ -289,7 +285,7 @@ export function sendTaskCommandToServer(response: string): ThunkAction {
 // /**
 //  * Kicks
 //  */
-// export function kickPlayer(steamid: string): ThunkAction {
+// export function kickPlayer(steamid: string) {
 // 	return (dispatch: Dispatch, getState: GetState) => {
 // 		misrcon
 // 			.sendRCONCommandToServer({

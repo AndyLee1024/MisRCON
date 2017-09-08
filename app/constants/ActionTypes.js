@@ -7,7 +7,7 @@ import type { Store as ReduxStore, DispatchAPI } from 'redux';
 import type { ServersState, ServerState } from '../features/Servers/state';
 import type { LayoutProviderState } from '../features/LayoutProvider/state';
 import type { TasksState, TaskType } from '../features/Tasks/state';
-import type { NotificationsState } from '../features/Notifications/state';
+import type { NotificationsState, NotificationConfig } from '../features/Notifications/state';
 
 /**
  * AppState Type
@@ -54,10 +54,8 @@ export type TasksActions =
  * Notification system - notify
  */
 export type NotificationActions =
-  | { type: 'EMIT_INFO', msg: string }
-  | { type: 'EMIT_WARN', msg: string }
-  | { type: 'EMIT_ERROR', msg: string }
-  | { type: 'DISMISS_NOTIFY' };
+  | { type: 'NOTIFY', config: NotificationConfig }
+  | { type: 'DISMISS_NOTIFICATION', id: number };
 
 /**
  * Every action we have in the app
@@ -76,4 +74,4 @@ export type Store = ReduxStore<AppState, Action, Dispatch>;
 
 export type GetState = () => AppState;
 
-export type ThunkAction = (dispatch: Dispatch, getState: () => AppState) => void;
+export type ThunkAction = (dispatch: Dispatch, getState: () => AppState) => any;

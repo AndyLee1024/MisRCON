@@ -11,15 +11,14 @@ import type { TaskType } from './state';
 import type {
   GetState,
   Action,
-  Dispatch,
-  ThunkAction
+  Dispatch
 } from '../../constants/ActionTypes';
 
 /**
  * This thunk adds a task to state
  * and schedules a task to be executed by node-cron
  */
-export const bootStrap = (): ThunkAction => (
+export const bootStrap = () => (
   dispatch: Dispatch,
   getState: GetState
 ) => {
@@ -44,7 +43,7 @@ export function addTask(task: TaskType): Action {
  * This thunk adds a task to state
  * and schedules a task to be executed by node-cron
  */
-export const addTaskAndScheduleCron = (task: TaskType): ThunkAction => (
+export const addTaskAndScheduleCron = (task: TaskType) => (
   dispatch: Dispatch,
   getState: GetState
 ) => {

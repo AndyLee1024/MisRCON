@@ -8,6 +8,7 @@ import rootReducer from '../reducers';
 import * as serversActions from '../features/Servers/actions';
 import * as LayoutProviderActions from '../features/LayoutProvider/actions';
 import * as TasksActions from '../features/Tasks/actions';
+import * as NotificationActions from '../features/Notifications/actions';
 
 const history = createHashHistory();
 
@@ -30,7 +31,8 @@ const configureStore = initialState => {
 	const actionCreators = {
 		...serversActions,
 		...LayoutProviderActions,
-		...TasksActions
+		...TasksActions,
+    ...NotificationActions
 	};
 	// If Redux DevTools Extension is installed use it, otherwise use Redux compose
 	/* eslint-disable no-underscore-dangle */
