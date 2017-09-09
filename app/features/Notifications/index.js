@@ -6,8 +6,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import type { Dispatch } from '../../constants/ActionTypes';
 import Standard from './components/Standard';
+import type { Dispatch } from '../../constants/ActionTypes';
 import type { NotificationsState } from './state';
 
 class Notifications extends Component {

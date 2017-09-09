@@ -184,6 +184,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "babel-standalone": "^6.26.0",
     "brace": "^0.10.0",
     "date-fns": "^1.28.5",
     "devtron": "^1.4.0",

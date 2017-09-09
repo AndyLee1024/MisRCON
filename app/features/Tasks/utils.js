@@ -4,8 +4,8 @@
  * Description:
  */
 import cron from 'node-schedule';
-
-import {sendRCONCommandToServer} from 'node-misrcon';
+import misrcon, { sendRCONCommandToServer } from 'node-misrcon';
+import { transform } from 'babel-standalone';
 
 import type { TaskType } from './state';
 import type { Dispatch, GetState } from '../../constants/ActionTypes';
@@ -17,29 +17,49 @@ import { getCredentialsFromAppStateById } from '../Servers/utils';
  * function so it can increment counts.
  */
 export function scheduleTask(
-	task: TaskType,
-	dispatch: Dispatch,
-	getState: GetState
+  task: TaskType,
+  dispatch: Dispatch,
+  getState: GetState
 ): TaskType | false {
-	const cronJob = cron.scheduleJob(task.date, () => {
-		sendRCONCommandToServer({
-				...getCredentialsFromAppStateById(getState(), task.serverId),
-				command: task.payload
-			})
-			.then(res => {
-				console.log(`${task.payload} Response: \n ${res}`);
-				dispatch(incrementTask(task.id));
-				return null;
-			})
-			.catch(() => {
-				console.log(`Error running task: ${task.name} `);
-			});
-	});
-	if (cronJob === null) {
-		// TODO: Handle cron string error
-		console.log('invalid cron string');
-		return false;
-	}
+  const cronJob = cron.scheduleJob(task.date, () => {
+    if (task.code) {
+      window.misrcon = misrcon;
+      eval(compileCode(task.payload));
+    } else {
+      sendRCONCommandToServer({
+        ...getCredentialsFromAppStateById(getState(), task.serverId),
+        command: task.payload
+      })
+        .then(res => {
+          console.log(`${task.payload} Response: \n ${res}`);
+          dispatch(incrementTask(task.id));
+          return null;
+        })
+        .catch(() => {
+          console.log(`Error running task: ${task.name} `);
+        });
+    }
+  });
+  if (!task.enabled) {
+    cronJob.cancel();
+  }
+  if (cronJob === null) {
+    // TODO: Handle cron string error
+    console.log('invalid cron string');
+    return false;
+  }
 
-	return { ...task, cronJob };
+  return { ...task, cronJob };
+}
+
+export function compileCode(code: string) {
+  const options = {
+    babelrc: false,
+    filename: 'repl',
+    presets: ['stage-0'],
+    plugins: ['transform-regenerator'],
+    sourceMap: true
+  };
+  const compiled = transform(code, options);
+  return compiled.code;
 }

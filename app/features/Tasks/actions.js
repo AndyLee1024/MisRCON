@@ -6,23 +6,16 @@
 import store from 'store';
 import { scheduleTask } from './utils';
 
-import type { TaskType } from './state';
+import type { TasksState, TaskType } from './state';
 
-import type {
-  GetState,
-  Action,
-  Dispatch
-} from '../../constants/ActionTypes';
+import type { GetState, Action, Dispatch } from '../../constants/ActionTypes';
 
 /**
  * This thunk adds a task to state
  * and schedules a task to be executed by node-cron
  */
-export const bootStrap = () => (
-  dispatch: Dispatch,
-  getState: GetState
-) => {
-  const storedTasks = store.get('tasks');
+export const bootStrap = () => (dispatch: Dispatch, getState: GetState) => {
+  const storedTasks: TasksState | typeof undefined = store.get('tasks');
   if (storedTasks !== undefined) {
     storedTasks.forEach(task => {
       dispatch(addTaskAndScheduleCron(task));

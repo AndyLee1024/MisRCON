@@ -35,6 +35,7 @@
       "order": ["type-annotations", "static-methods", "lifecycle", "everything-else", "render"]
     }],
     "react/jsx-no-bind": "off",
+    "react/jsx-wrap-multilines": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "react/prefer-stateless-function": "off"
   },
