@@ -5,7 +5,7 @@
  */
 import cron from 'node-schedule';
 import misrcon, { sendRCONCommandToServer } from 'node-misrcon';
-import { transform } from 'babel-standalone';
+// import { transform } from 'babel-standalone';
 
 import type { TaskType } from './state';
 import type { Dispatch, GetState } from '../../constants/ActionTypes';
@@ -53,13 +53,15 @@ export function scheduleTask(
 }
 
 export function compileCode(code: string) {
-  const options = {
-    babelrc: false,
-    filename: 'repl',
-    presets: ['stage-0'],
-    plugins: ['transform-regenerator'],
-    sourceMap: true
-  };
-  const compiled = transform(code, options);
-  return compiled.code;
+  // TODO: Crashes npm run package-win because babel-standalone is too big and fat and meaty
+  // const options = {
+  //   babelrc: false,
+  //   filename: 'repl',
+  //   presets: ['stage-0'],
+  //   plugins: ['transform-regenerator'],
+  //   sourceMap: true
+  // };
+  // const compiled = transform(code, options);
+  // return compiled.code;
+  return code;
 }
