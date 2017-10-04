@@ -14,7 +14,8 @@ class StandardNotification extends Component {
   };
   props: {
     dispatch: Dispatch,
-    config: NotificationConfig
+    config: NotificationConfig,
+    position: number
   };
   state = {
     showing: true
@@ -40,7 +41,7 @@ class StandardNotification extends Component {
       color = red;
     }
     return (
-      <Container color={color}>
+      <Container color={color} position={this.props.position}>
         <Wrapper>
           <div style={{ width: '100%', textAlign: 'left', paddingLeft: 10 }}>
             {this.props.config.message}
@@ -72,7 +73,8 @@ const Wrapper = styled.div`
 const Container = styled.div`
   background: ${props => props.color};
   position: absolute;
-  bottom: 10px;
+  bottom: ${props => props.position * 70}px;
+  margin-bottom: 10px;
   width: 350px;
   height: 60px;
   right: 20px;

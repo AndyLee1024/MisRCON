@@ -9,7 +9,7 @@ import { injectGlobal } from 'styled-components';
 import { white, orange, lightBlue, midBlue, midText } from './colors';
 
 export const addGlobalStyling = () => {
-	injectGlobal`
+  injectGlobal`
 	::-webkit-scrollbar {
 		width: 0.5em;
 		height: 0.4em;
@@ -28,27 +28,27 @@ export const addGlobalStyling = () => {
 };
 
 export const MisRCONTheme = getMuiTheme({
-	tooltip: {
-		color: midText,
-		rippleBackgroundColor: midBlue
-	},
-	spacing,
-	fontFamily: 'Roboto, sans-serif',
-	borderRadius: 2,
-	palette: {
-		primary1Color: orange,
-		primary2Color: midBlue,
-		primary3Color: lightBlue,
-		accent1Color: lightBlue,
-		accent2Color: orange,
-		accent3Color: orange,
-		textColor: white,
-		secondaryTextColor: white,
-		alternateTextColor: white,
-		canvasColor: midBlue,
-		borderColor: midBlue,
-		disabledColor: lightBlue,
-		pickerHeaderColor: orange,
-		clockCircleColor: lightBlue
-	}
+  tooltip: {
+    color: midText,
+    rippleBackgroundColor: midBlue
+  },
+  spacing,
+  fontFamily: 'Roboto, sans-serif',
+  borderRadius: 2,
+  palette: {
+    primary1Color: orange,
+    primary2Color: midBlue,
+    primary3Color: lightBlue,
+    accent1Color: lightBlue,
+    accent2Color: orange,
+    accent3Color: orange,
+    textColor: white,
+    secondaryTextColor: white,
+    alternateTextColor: white,
+    canvasColor: midBlue,
+    borderColor: midBlue,
+    disabledColor: lightBlue,
+    pickerHeaderColor: orange,
+    clockCircleColor: lightBlue
+  }
 });

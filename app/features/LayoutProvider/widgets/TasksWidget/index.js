@@ -5,6 +5,7 @@
  * Description:
  */
 import React, { Component } from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import fuzzy from 'fuzzy';
 // Actions
@@ -64,22 +65,17 @@ class TasksWidget extends Component {
   state: {
     filterValue: string,
     open: boolean,
-    task: TaskType
+    date: Date,
+    task: TaskType,
+    error: { msg: string, type: 'cron' | 'name' | 'conflict' | null }
   };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      filterValue: '',
-      open: false,
-      task: defaultTaskState
-    };
-  }
-
-  componentDidMount() {
-    // Bootstrap tasks
-    this.props.dispatch(TasksActions.bootStrap());
-  }
+  state = {
+    filterValue: '',
+    open: false,
+    task: defaultTaskState,
+    date: moment(),
+    error: { msg: '', type: null }
+  };
 
   toggleTaskDialog = () => {
     this.setState({ open: !this.state.open });
@@ -149,9 +145,24 @@ class TasksWidget extends Component {
 
   onChangeDatePicker = (event: null, date) => {
     this.setState({
+      date
+    });
+  };
+
+  onChangeTimePicker = (event: null, pickerTime) => {
+    const date = moment(this.state.date);
+    const time = moment(pickerTime);
+    this.setState({
       task: {
         ...this.state.task,
-        date: date.toString()
+        date: moment({
+          year: date.year(),
+          month: date.month(),
+          day: date.date(),
+          hour: time.hour(),
+          minute: time.minute(),
+          second: time.second()
+        }).toISOString()
       }
     });
   };
@@ -188,6 +199,7 @@ class TasksWidget extends Component {
           onChangeNameTextField={this.onChangeNameTextField}
           onChangeCronStringTextField={this.onChangeCronStringTextField}
           onChangeDatePicker={this.onChangeDatePicker}
+          onChangeTimePicker={this.onChangeTimePicker}
           toggleCodeCheckBox={this.toggleCodeCheckBox}
           toggleRecurringCheckBox={this.toggleRecurringCheckBox}
         />

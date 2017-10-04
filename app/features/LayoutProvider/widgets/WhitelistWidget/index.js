@@ -13,7 +13,7 @@ import PlayerCard from '../../../../components/PlayerCard';
 import FilterBar from '../../../../components/FilterBar';
 // Functions
 import { getActiveServer } from '../../../Servers/utils';
-import { getPlayerFromDb } from '../../../Players/utils';
+import { getPlayer } from '../../../Players/utils';
 
 
 import type { ServersState, ServerState } from '../../../Servers/state';
@@ -53,7 +53,7 @@ class WhitelistWidget extends Component {
         {filterList.map(steamID =>
           <PlayerCard
             key={steamID}
-            player={getPlayerFromDb(steamID)}
+            player={getPlayer(steamID)}
           />
         )}
         <Spacer />

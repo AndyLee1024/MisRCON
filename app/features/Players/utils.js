@@ -4,11 +4,13 @@
  * Name: utils
  * Description:
  */
+import axios from 'axios';
 import store from 'store';
 import type { PlayersArray } from 'node-misrcon';
 
-import type { PlayerState, PlayersState, ISO8601DateString } from './state';
+import { steamApiKey } from '../../../secrets';
 import { defaultPlayer } from './state';
+import type { PlayerState, PlayersState } from './state';
 
 // the name of the players database
 const dbName: string = 'misrcon-players-db';
@@ -16,72 +18,111 @@ const dbName: string = 'misrcon-players-db';
 /**
  * Normalise the playersArray from node-misrcon PlayersArray<PlayerState> to our internal PlayersArray<PlayerState>
  */
-export const normalizePlayersArray = (players: PlayersArray): PlayersState => {
-  return players.map(player => ({ ...defaultPlayer, ...player }));
-};
+export const normalizePlayersArray = (players: PlayersArray): PlayersState =>
+  players.map(player => ({ ...defaultPlayer, ...player }));
 
 /**
  * Bootstraps the database for use
  */
 export const bootStrapPlayersDb = (): void => {
   if (store.get(dbName) === undefined) {
+    console.log('boot strapping db');
     store.set(dbName, []);
   }
 };
 
 /**
- * Gets all the players from the database
+ * Gets all the players from the PlayersDatabase
  */
-export const getPlayersFromDb = (): PlayersState => store.get(dbName);
+export const getAllPlayers = (): PlayersState => store.get(dbName);
 
 /**
- * Adds/Overwrites(puts) a player in the database
+ * Gets a player from the PlayersDatabase if it doesn't exist create it and return it
  */
-export const putPlayerToDb = (player: PlayerState) => {
-  const storedPlayers = getPlayersFromDb();
-  store.set(dbName, [].concat(storedPlayers, updatePlayerIfExists(player)));
-};
-
-/**
- * If a player exists update it and return it otherwise return it
- */
-export const updatePlayerIfExists = (player: PlayerState): PlayerState => {
-  const storedPlayer = getPlayersFromDb().filter(
-    p => p.steam === player.steam
+export const getPlayer = (steam: string): PlayerState => {
+  const storedPlayer = getAllPlayers().filter(
+    player => player.steam === steam
   )[0];
-  if (storedPlayer !== undefined) {
-    return { ...player, ...storedPlayer };
+  if (storedPlayer) {
+    // player exists
+    return syncPlayer(storedPlayer);
   }
-  return { ...player };
+  // player doesn't exist
+  return syncPlayer({
+    ...defaultPlayer,
+    avatarURL: getSteamAvatar(steam),
+    steam
+  });
 };
 
 /**
- * Gets a player by steamid from the database
- * if the player doesn't exist it will create it and return the new player
- */
-export const getPlayerFromDb = (steam: string): PlayerState => {
-  let player = getPlayersFromDb().filter(
-    storedPlayer => storedPlayer.steam === steam
-  )[0];
-  if (player === undefined) {
-    player = { ...defaultPlayer, steam };
-    putPlayerToDb(player);
-  }
-
-  return player;
-};
-
-/**
- * returns a player with the last seen value updated
- */
-export const updateLastSeen = (
-  player: PlayerState,
-  time: ISO8601DateString = new Date().toISOString()
-): PlayerState => ({ ...player, lastSeen: time });
-
-/**
- * Updates the player in the players database and grabs any values from the db that are blank on inserted player
+ * Adds/Updates a player to the PlayersDatabase and returns it
  */
 export const syncPlayer = (player: PlayerState): PlayerState => {
-  return player;
+  // the PlayersDatabase without the current player in it
+  const storedPlayers = getAllPlayers().filter(pl => pl.steam !== player.steam);
+  const currentPlayer = getAllPlayers().filter(
+    pl => pl.steam === player.steam
+  )[0];
+  if (currentPlayer) {
+    // player exists
+    const savedPlayer = {
+      ...player,
+      lastSeen: new Date().toISOString(),
+      avatarURL: currentPlayer.avatarURL
+    };
+    store.set(dbName, [].concat(storedPlayers, savedPlayer));
+    return savedPlayer;
+  }
+  // player doesn't exist
+  const savedPlayer = {
+    ...player,
+    lastSeen: new Date().toISOString(),
+    avatarURL: getSteamAvatar(player.steam)
+  };
+  store.set(dbName, [].concat(storedPlayers, savedPlayer));
+  return savedPlayer;
 };
+
+/**
+ * Sets and gets the player in the PlayersDatabase
+ */
+export const getSteamAvatar = (steam: string): Promise<string> => {
+  console.log('Getting Steam Avatar for: ', steam);
+  return axios
+    .get('https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/', {
+      params: {
+        key: apiKey,
+        steamids: steam
+      }
+    })
+    .then(res => res.data.response.players[0]);
+};
+
+export function getAvatar(steam, cancelToken) {
+  const player = store.get(steam);
+  if (player !== undefined) {
+    return new Promise((resolve, reject) => resolve(player.avatar));
+  } else {
+    return axios
+      .get('https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/', {
+        cancelToken,
+        params: {
+          key: apiKey,
+          steamids: steam
+        }
+      })
+      .then(res => {
+        log('silly', 'calling Gaben for avatars');
+        // store the player data in local storage
+        store.set(steam, {
+          ...store.get(steam),
+          avatar: res.data.response.players[0].avatar
+        });
+        return res.data.response.players[0].avatar;
+      })
+      .catch(err => {
+        log('error', err);
+      });
+  }
+}

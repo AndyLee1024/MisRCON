@@ -23,7 +23,5 @@ export type NotificationConfig = {
 
 export type NotificationsState = Array<NotificationConfig>;
 
-const initialState: NotificationsState = [
-  { id: 0, message: 'Hello', timeOut: 1500, theme: 'error', showing: true }
-];
+const initialState: NotificationsState = [];
 export default initialState;

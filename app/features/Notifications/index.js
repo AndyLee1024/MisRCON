@@ -4,6 +4,7 @@
  * Description:
  */
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 import Standard from './components/Standard';
@@ -17,12 +18,13 @@ class Notifications extends Component {
   };
   render() {
     return (
-      <div>
-        {this.props.notifications.map(notification => {
+      <Container>
+        {this.props.notifications.sort().map((notification, index) => {
           switch (notification.theme) {
             case 'warn':
               return (
                 <Standard
+                  position={index}
                   key={notification.id}
                   dispatch={this.props.dispatch}
                   config={notification}
@@ -31,6 +33,7 @@ class Notifications extends Component {
             case 'error':
               return (
                 <Standard
+                  position={index}
                   key={notification.id}
                   dispatch={this.props.dispatch}
                   config={notification}
@@ -39,6 +42,7 @@ class Notifications extends Component {
             case 'info':
               return (
                 <Standard
+                  position={index}
                   key={notification.id}
                   dispatch={this.props.dispatch}
                   config={notification}
@@ -48,10 +52,19 @@ class Notifications extends Component {
               return null;
           }
         })}
-      </div>
+      </Container>
     );
   }
 }
+
+const Container = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+`;
 
 export default connect(store => ({
   notifications: store.notifications

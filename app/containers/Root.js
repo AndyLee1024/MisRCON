@@ -11,13 +11,13 @@ import Main from './Main';
 injectTapEventPlugin();
 
 type RootType = {
-	store: Store
+  store: Store
 };
 
 export default function Root({ store }: RootType) {
-	return (
-		<Provider store={store}>
-			<Main store={store} />
-		</Provider>
-	);
+  return (
+    <Provider store={store}>
+      <Main store={store} />
+    </Provider>
+  );
 }

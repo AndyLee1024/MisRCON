@@ -24,7 +24,7 @@ export type TaskType = {
   recurring: boolean,
 
   // datetime of when to run or cron string
-  date: number | string,
+  date: number | string | Date,
 
   // should we eval this as js code?
   code: boolean,

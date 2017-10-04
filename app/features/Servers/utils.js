@@ -54,6 +54,9 @@ export const normalizeAllData = (allData: AllData): any => ({
   status: normalizeStatus(allData.status)
 });
 
+/**
+ * Stores the current value into the database and returns it
+ */
 export const storeAndReturn = (key: string, value: any) => {
   store.set(key, value);
   return value;

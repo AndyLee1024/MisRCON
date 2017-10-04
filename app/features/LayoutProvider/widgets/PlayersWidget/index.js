@@ -12,7 +12,7 @@ import PlayerCard from '../../../../components/PlayerCard';
 import FilterBar from '../../../../components/FilterBar';
 // Functions
 import { getActiveServer } from '../../../Servers/utils';
-import { getPlayerFromDb } from '../../../Players/utils';
+import { syncPlayer } from '../../../Players/utils';
 
 // Types
 import type { ServersState, ServerState } from '../../../Servers/state';
@@ -51,10 +51,7 @@ class PlayersWidget extends Component {
           value={this.state.filterValue}
         />
         {filterList.map(player =>
-          <PlayerCard
-            key={player.steam}
-            player={getPlayerFromDb(player.steam)}
-          />
+          <PlayerCard key={player.steam} player={syncPlayer(player)} />
         )}
         <Spacer />
       </Container>
@@ -75,9 +72,7 @@ const Container = styled.div`
   overflow: auto;
 `;
 
-const Spacer = styled.div`
-  flex-grow: 100;
-`;
+const Spacer = styled.div`flex-grow: 100;`;
 
 export default connect(store => ({
   servers: store.servers

@@ -2,13 +2,12 @@
  * Name: utils
  * Description:
  */
-import { css } from 'styled-components'
+import { css } from 'styled-components';
 
 export const media = {
-	small: (...args) => css`
+  small: (...args) => css`
     @media (max-width: 150px) {
-      ${ css(...args) }
+      ${css(...args)}
     }
   `
 };
-

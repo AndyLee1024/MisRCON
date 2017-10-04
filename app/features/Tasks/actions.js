@@ -9,6 +9,7 @@ import { scheduleTask } from './utils';
 import type { TasksState, TaskType } from './state';
 
 import type { GetState, Action, Dispatch } from '../../constants/ActionTypes';
+import { emitInfo } from '../Notifications/actions';
 
 /**
  * This thunk adds a task to state
@@ -18,7 +19,14 @@ export const bootStrap = () => (dispatch: Dispatch, getState: GetState) => {
   const storedTasks: TasksState | typeof undefined = store.get('tasks');
   if (storedTasks !== undefined) {
     storedTasks.forEach(task => {
-      dispatch(addTaskAndScheduleCron(task));
+      // check if the task is past the current date
+      if (new Date(task.date) > Date.now() || task.recurring) {
+        dispatch(addTaskAndScheduleCron(task));
+      }
+      if (new Date(task.date) < Date.now() && !task.recurring) {
+        dispatch(removeTask(task.id));
+        dispatch(emitInfo(`Removing Expired Task: ${task.name}`));
+      }
     });
   }
 };

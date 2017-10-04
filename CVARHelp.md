@@ -156,13 +156,6 @@ New GameRule CVars (Whitelisted only):
 --------------------------------------
 ##### g_gameRules_bases=2
 	Non-zone restricted bases (Bases can be build in cities for events or server specific requirements etc.)
-##### g_gameRules_faction3-6_equip="itemclass;itemclass;..."
-	Faction equipment packs (semicolon seperated list).
-	The spelling needs to be exact and case sensitive, should invalid item classes be used it can
-	cause your server requiring a full reset of your servers database (so stick to item classes
-	defined in the itemspawnmanager). Double check everything and use copy&pase.
-	We defined some default ones beforehand, the item classes need to be looked up in the pak files:
-	Scripts.pak/GameSDK/Scripts/Spawners/ItemSpawnerManager.lua (only use classes not categories)
   
 New Messaging CVars (Whitelisted only):
 ---------------------------------------

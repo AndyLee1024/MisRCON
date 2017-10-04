@@ -12,16 +12,14 @@ import type { Dispatch } from '../../constants/ActionTypes';
 import { darkBlue, black } from '../../styles/colors';
 import type { ServersState } from './state';
 
-type Props = {
-  servers: ServersState,
-  dispatch: Dispatch
-};
-
-type State = {
-  open: boolean
-};
-
-class Servers extends Component<void, Props, State> {
+class Servers extends Component {
+  props: {
+    servers: ServersState,
+    dispatch: Dispatch
+  };
+  state: {
+    open: boolean
+  };
   state = {
     open: false
   };

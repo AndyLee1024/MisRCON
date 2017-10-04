@@ -7,7 +7,11 @@ import type { Store as ReduxStore, DispatchAPI } from 'redux';
 import type { ServersState, ServerState } from '../features/Servers/state';
 import type { LayoutProviderState } from '../features/LayoutProvider/state';
 import type { TasksState, TaskType } from '../features/Tasks/state';
-import type { NotificationsState, NotificationConfig } from '../features/Notifications/state';
+import type {
+  NotificationsState,
+  NotificationConfig
+} from '../features/Notifications/state';
+import type { PlayerState } from '../features/Players/state';
 
 /**
  * AppState Type
@@ -58,6 +62,11 @@ export type NotificationActions =
   | { type: 'DISMISS_NOTIFICATION', id: number };
 
 /**
+ * Notification system - notify
+ */
+export type PlayersActions = { type: 'ADD_PLAYER', player: PlayerState };
+
+/**
  * Every action we have in the app
  */
 export type Action =
@@ -65,7 +74,8 @@ export type Action =
   | TasksActions
   | ServersActions
   | LayoutProviderActions
-  | NotificationActions;
+  | NotificationActions
+  | PlayersActions;
 
 // used to dispatch redux actions
 export type Dispatch = DispatchAPI<Action | ThunkAction>;

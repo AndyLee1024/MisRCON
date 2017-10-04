@@ -8,7 +8,7 @@ const history = createHashHistory();
 const enhancer = applyMiddleware(thunk);
 
 function configureStore(initialState: Object) {
-	return createStore(rootReducer, initialState, enhancer);
+  return createStore(rootReducer, initialState, enhancer);
 }
 
 export default { configureStore, history };
