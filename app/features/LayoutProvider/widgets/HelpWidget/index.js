@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import marked from 'marked';
 import './darcula-markdown.global.css';
 
-import helpString from '../../../../../CVARHelp.md';
+//import helpString from '../../../../../CVARHelp.md';
 
 
 class HelpWidget extends Component {
@@ -24,7 +24,7 @@ class HelpWidget extends Component {
 					boxSizing: ' border-box'
 				}}
 				className="markdown-body"
-				dangerouslySetInnerHTML={{ __html: marked.parse(helpString) }}
+				dangerouslySetInnerHTML={{ __html: marked.parse(```# Test```) }}
 			/>
 		);
 	}

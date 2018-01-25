@@ -27,7 +27,7 @@ export type AppState = {
 export type BaseReduxAction = { type: $Subtype<string> };
 
 /**
- * LayoutProvider
+ * LayoutProvider - layout
  */
 export type LayoutProviderActions =
   | { type: 'SAVE_LAYOUT_PROVIDER_STATE' }
@@ -35,7 +35,7 @@ export type LayoutProviderActions =
   | { type: 'RESTORE_LAYOUT_PROVIDER_STATE', payload: LayoutProviderState };
 
 /**
- * Servers  - The Actions that control the Servers
+ * Servers  - The Actions that control the Servers - servers
  */
 export type ServersActions =
   | { type: 'UPDATE_SERVER_DATA', payload: ServerState }
@@ -45,7 +45,7 @@ export type ServersActions =
   | { type: 'MAKE_SERVER_ACTIVE', id: number };
 
 /**
- * Scheduled Tasks
+ * Scheduled Tasks - tasks
  */
 export type TasksActions =
   | { type: 'ADD_TASK', task: TaskType }
@@ -62,7 +62,7 @@ export type NotificationActions =
   | { type: 'DISMISS_NOTIFICATION', id: number };
 
 /**
- * Notification system - notify
+ * Players - players
  */
 export type PlayersActions = { type: 'ADD_PLAYER', player: PlayerState };
 

@@ -1,4 +1,4 @@
-/* eslint global-require: 1, flowtype-errors/show-errors: 0 */
+/* eslint global-require: 0, flowtype-errors/show-errors: 0 */
 
 /**
  * This module executes inside of electron's main process. You can start
@@ -8,7 +8,7 @@
  * When running `npm run build` or `npm run build-main`, this file is compiled to
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  *
- * @flow
+ *
  */
 import { app, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
@@ -62,8 +62,8 @@ app.on('ready', async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728
+    width: 1920,
+    height: 1080
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
@@ -79,6 +79,18 @@ app.on('ready', async () => {
   });
 
   mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
+
+  mainWindow.on('unresponsive', () => {
+    mainWindow = null;
+  });
+
+  mainWindow.webContents.on('crashed', () => {
+    mainWindow = null;
+  });
+
+  process.on('uncaughtException', () => {
     mainWindow = null;
   });
 

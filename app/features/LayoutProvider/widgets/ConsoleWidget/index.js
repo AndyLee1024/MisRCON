@@ -9,7 +9,7 @@ import Terminal from 'terminal-in-react';
 
 import * as serverActions from '../../../Servers/actions';
 
-import helpString from '../../../../../CVARHelp.md';
+// import helpString from '../../../../../CVARHelp.md';
 
 import './console.global.css';
 
@@ -50,13 +50,20 @@ class ConsoleWidget extends Component {
 		this.commands = {
 			help: {
 				method: (args: Object, print: PrintToConsoleFunction) => {
-					print(helpString);
+					print(
+						```
+					Test
+					```
+					);
 				}
 			}
 		};
 	}
 
-	commandPassThrough = (command: Array<string>, print: PrintToConsoleFunction) => {
+	commandPassThrough = (
+		command: Array<string>,
+		print: PrintToConsoleFunction
+	) => {
 		this.props.dispatch(
 			serverActions.sendConsoleCommandToServer(command, print)
 		);

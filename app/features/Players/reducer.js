@@ -10,13 +10,13 @@ import type { PlayersState } from './state';
 import defaultState from './state';
 
 export default function players(
-  state: PlayersState = defaultState,
-  action: Action
+	state: PlayersState = defaultState,
+	action: Action
 ): PlayersState {
-  switch (action.type) {
-    case 'SAVE_LAYOUT_PROVIDER_STATE':
-      return state;
-    default:
-      return state;
-  }
+	switch (action.type) {
+		case 'SAVE_LAYOUT_PROVIDER_STATE':
+			return state;
+		default:
+			return state;
+	}
 }

@@ -42,7 +42,8 @@ export type StatusState = {
   // The numer of players on the server
   players: string, // 0/50
 
-  playersArray: PlayersState
+  // The array of all the players
+  playersArray: any
 };
 
 export type ServerState = {
@@ -98,7 +99,9 @@ export const defaultState: ServersState = [
           profile: '0',
           notes: '',
           avatarURL: 'http://placehold.it/42x42',
-          lastSeen: new Date().toISOString()
+          lastSeen: new Date().toISOString(),
+          bannedOn: [],
+          whitelistedOn: []
         },
         {
           steam: '76561197975954831',
@@ -111,7 +114,9 @@ export const defaultState: ServersState = [
           profile: '0',
           notes: '',
           avatarURL: 'http://placehold.it/42x42',
-          lastSeen: new Date().toISOString()
+          lastSeen: new Date().toISOString(),
+          bannedOn: [],
+          whitelistedOn: []
         }
       ]
     },
@@ -143,7 +148,9 @@ export const defaultState: ServersState = [
           profile: '0',
           notes: '',
           avatarURL: 'http://placehold.it/42x42',
-          lastSeen: new Date().toISOString()
+          lastSeen: new Date().toISOString(),
+          bannedOn: [],
+          whitelistedOn: []
         },
         {
           steam: '76561197975954831',
@@ -156,7 +163,9 @@ export const defaultState: ServersState = [
           profile: '0',
           notes: '',
           avatarURL: 'http://placehold.it/42x42',
-          lastSeen: new Date().toISOString()
+          lastSeen: new Date().toISOString(),
+          bannedOn: [],
+          whitelistedOn: []
         }
       ]
     },

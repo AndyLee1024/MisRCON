@@ -29,9 +29,7 @@ const configureStore = initialState => {
 
 	// Redux DevTools Configuration
 	const actionCreators = {
-		...serversActions,
 		...LayoutProviderActions,
-		...TasksActions,
     ...NotificationActions
 	};
 	// If Redux DevTools Extension is installed use it, otherwise use Redux compose
@@ -62,3 +60,4 @@ const configureStore = initialState => {
 };
 
 export default { configureStore, history };
+
