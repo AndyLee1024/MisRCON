@@ -1,7 +1,7 @@
 {
   "name": "MisRCON",
   "productName": "MisRCON",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "RCON Tool for Miscreated game.",
   "main": "main.js",
   "scripts": {
