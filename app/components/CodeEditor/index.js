@@ -11,11 +11,11 @@ import 'brace/ext/language_tools';
 import './aceEditorTheme';
 import './codeEditor.global.css';
 
-class CodeEditor extends Component {
-  props: {
-    onChangeCodeEditor: any,
-    value: string
-  };
+type Props = {
+  onChangeCodeEditor: any,
+  value: string
+};
+class CodeEditor extends Component<Props> {
   ace: HTMLElement;
 
   render() {
@@ -24,9 +24,7 @@ class CodeEditor extends Component {
         <AceEditor
           enableBasicAutocompletion
           enableLiveAutocompletion
-          ref={r => {
-            this.ace = r;
-          }}
+          ref={r => {this.ace = r;}}
           value={this.props.value}
           width="100%"
           height="300px"

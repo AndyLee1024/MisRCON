@@ -12,14 +12,14 @@ import type { Dispatch } from '../../constants/ActionTypes';
 import { darkBlue, black } from '../../styles/colors';
 import type { ServersState } from './state';
 
-class Servers extends Component {
-  props: {
-    servers: ServersState,
-    dispatch: Dispatch
-  };
-  state: {
-    open: boolean
-  };
+type Props = {
+  servers: ServersState,
+  dispatch: Dispatch
+};
+type State = {
+  open: boolean
+};
+class Servers extends Component<Props, State> {
   state = {
     open: false
   };
@@ -52,7 +52,7 @@ class Servers extends Component {
     return (
       <Container open={this.state.open}>
         <ServerSelectContainer>
-          {this.props.servers.map(server =>
+          {this.props.servers.map(server => (
             <ServerItem
               key={server.id}
               onClick={() => {
@@ -61,7 +61,7 @@ class Servers extends Component {
             >
               {server.name}
             </ServerItem>
-          )}
+          ))}
         </ServerSelectContainer>
       </Container>
     );

@@ -75,7 +75,7 @@ const TaskDialog = (props: Props) => {
         onChange={props.onChangeNameTextField}
       />
 
-      {props.task.recurring ?
+      {props.task.recurring ? (
         <TextField
           fullWidth
           hintText={'Cron String'}
@@ -83,11 +83,12 @@ const TaskDialog = (props: Props) => {
           name={'Date'}
           onChange={props.onChangeCronStringTextField}
         />
-        :
+      ) : (
         <div>
           <DatePicker onChange={props.onChangeDatePicker} hintText={'Date'} />
           <TimePicker onChange={props.onChangeTimePicker} hintText={'Time'} />
-        </div>}
+        </div>
+      )}
 
       <CodeEditor
         onChangeCodeEditor={props.onChangeCodeEditor}

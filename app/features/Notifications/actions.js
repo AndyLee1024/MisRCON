@@ -16,7 +16,6 @@ function addNotification(config: NotificationConfig) {
     config
   };
 }
-
 /**
  * Dismisses the notification
  */
@@ -26,7 +25,6 @@ export function dismissNotification(id: number) {
     id
   };
 }
-
 /**
  * Creates an Info Notification
  */
@@ -43,7 +41,6 @@ export function emitInfo(message: string) {
     );
   };
 }
-
 /**
  * Creates an Error Notification
  */
@@ -60,7 +57,6 @@ export function emitError(message: string) {
     );
   };
 }
-
 /**
  * Creates a Warning Notification
  */
@@ -77,7 +73,6 @@ export function emitWarning(message: string) {
     );
   };
 }
-
 // TODO: Allow it to accept custom react components
 /**
  * Creates a Custom Notification

@@ -12,10 +12,8 @@ import { dev, us75 } from '../../../secrets';
 export type Credentials = {
   // the ip address of the servers
   ip: string,
-
   // the port of the server
   port: string,
-
   // the rcon password
   password: string
 };
@@ -23,25 +21,18 @@ export type Credentials = {
 export type StatusState = {
   // The name of the server
   name: string, // US75
-
   // The IP of the server
   ip: string, // 192.168.1.1
-
   // The Time of Day from the server
   time: string, // 14:30
-
   // The Dedicated Server Version
   version: string, // 184321
-
   // The map being run on the server currently
   level: string, // islands
-
   // The game rules of the dedicated server
   gameRules: string, // Miscreated
-
   // The numer of players on the server
   players: string, // 0/50
-
   // The array of all the players
   playersArray: any
 };
@@ -49,22 +40,16 @@ export type StatusState = {
 export type ServerState = {
   // a unique id to identify the server by and get creds
   id: number,
-
   // is this the active server
   active: boolean,
-
   // The display name of the server
   name: string,
-
   // the server credentials
   credentials: Credentials,
-
   // the banned players on this server
   banlist: BanListResponse,
-
   // the status response contains the playersArray
   status: StatusState,
-
   // the array of whitelisted players
   whitelist: WhiteListResponse
 };

@@ -55,7 +55,7 @@ class LayoutProvider extends Component {
 
   componentWillUnmount() {
     console.log('removing listener');
-    window.removeEventListener('resize', ()=>{});
+    window.removeEventListener('resize', () => {});
   }
 
   render() {

@@ -15,14 +15,14 @@ import TextField from 'material-ui/TextField/index';
 
 import type { PlayerState } from '../features/Players/state';
 
-class PlayerCard extends Component {
-  props: {
-    player: PlayerState,
-    kickPlayer?: any,
-    banPlayer?: any,
-    updatePlayerNote?: any,
-    whitelistPlayer?: any
-  };
+type Props = {
+  player: PlayerState,
+  kickPlayer?: any,
+  banPlayer?: any,
+  updatePlayerNote?: any,
+  whitelistPlayer?: any
+};
+class PlayerCard extends Component<Props> {
   static defaultProps = {
     kickPlayer: () => {},
     banPlayer: () => {},
@@ -67,12 +67,12 @@ class PlayerCard extends Component {
 }
 
 const Container = styled(Paper)`
-	display: flex;
-	width: 250px;
-	height: 150px;
-	min-width: 250px;
-	min-height: 150px;
-	margin: 15px;
+  display: flex;
+  width: 250px;
+  height: 150px;
+  min-width: 250px;
+  min-height: 150px;
+  margin: 15px;
 `;
 
 export default PlayerCard;

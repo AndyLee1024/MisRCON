@@ -17,6 +17,23 @@ import { getPlayer } from '../../../Players/utils';
 
 import type { ServersState, ServerState } from '../../../Servers/state';
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  box-sizing: border-box;
+  flex-flow: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+`;
+
+const Spacer = styled.div`
+  flex-grow: 100;
+`;
+
 class BansWidget extends Component {
   props: {
     servers: ServersState
@@ -49,34 +66,14 @@ class BansWidget extends Component {
           onChange={this.onChangeFilterBar}
           value={this.state.filterValue}
         />
-        {filterList.map(steamID =>
-          <PlayerCard
-            key={steamID}
-            player={getPlayer(steamID)}
-          />
-        )}
+        {filterList.map(steamID => (
+          <PlayerCard key={steamID} player={getPlayer(steamID)} />
+        ))}
         <Spacer />
       </Container>
     );
   }
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding: 10px;
-  box-sizing: border-box;
-  flex-flow: wrap;
-  align-items: flex-start;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-`;
-
-const Spacer = styled.div`
-  flex-grow: 100;
-`;
 
 export default connect(store => ({
   servers: store.servers

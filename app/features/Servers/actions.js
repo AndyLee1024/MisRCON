@@ -3,11 +3,11 @@
  * Name: Servers Redux Actions
  */
 import misrcon from 'node-misrcon';
+import type { ReduxThunk } from 'redux-thunk';
 import type { Action, Dispatch, GetState } from '../../constants/ActionTypes';
 import type { ServerState } from './state';
 import type { PrintToConsoleFunction } from '../LayoutProvider/widgets/ConsoleWidget/types';
 import { getActiveServer, normalizeAllData, normalizeStatus } from './utils';
-
 
 /**
  * Called after we've received and parsed server data
@@ -52,23 +52,13 @@ export function switchToServer(id: number) {
 /**
  * Gets all the data for the active server
  */
-export function fetchActiveServerData() {
-  return (dispatch: Dispatch, getState: GetState) => {
+export function fetchActiveServerData(): ReduxThunk {
+  return async (dispatch: Dispatch, getState: GetState) => {
     dispatch(rconPending());
     const activeServer = getActiveServer(getState().servers);
-    misrcon
-      .getAllServerData(activeServer.credentials)
-      .then(allData => {
-        const serverData = {
-          ...activeServer,
-          ...normalizeAllData(allData)
-        };
-        dispatch(updateServerData(serverData));
-        return null;
-      })
-      .catch(e => {
-        throw e;
-      });
+    const allData = await misrcon.getAllServerData(activeServer.credentials);
+    const serverData = { ...activeServer, ...normalizeAllData(allData) };
+    dispatch(updateServerData(serverData));
   };
 }
 
@@ -79,22 +69,15 @@ export function sendConsoleCommandToServer(
   command: Array<string>,
   printToConsole: PrintToConsoleFunction
 ) {
-  return (dispatch: Dispatch, getState: GetState) => {
+  return async (dispatch: Dispatch, getState: GetState) => {
     const activeServer = getActiveServer(getState().servers);
     dispatch(rconPending());
-    misrcon
-      .sendRCONCommandToServer({
-        ...activeServer.credentials,
-        command: command.join(' ')
-      })
-      .then(response => {
-        printToConsole(response);
-        dispatch(tryParseAndAddToState(response));
-        return null;
-      })
-      .catch(e => {
-        throw e;
-      });
+    const response = await misrcon.sendRCONCommandToServer({
+      ...activeServer.credentials,
+      command: command.join(' ')
+    });
+    printToConsole(response);
+    dispatch(tryParseAndAddToState(response));
   };
 }
 

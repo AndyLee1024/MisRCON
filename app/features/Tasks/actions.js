@@ -28,6 +28,8 @@ export const bootStrap = () => (dispatch: Dispatch, getState: GetState) => {
         dispatch(emitInfo(`Removing Expired Task: ${task.name}`));
       }
     });
+  } else {
+    store.set('tasks', []);
   }
 };
 

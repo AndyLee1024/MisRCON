@@ -55,20 +55,20 @@ const Column = {
   flexGrow: 1,
   width: '100%'
 };
+type Props = {
+  tasks: TasksState,
+  dispatch: any,
+  servers: ServersState
+};
+type State = {
+  filterValue: string,
+  open: boolean,
+  date: moment$Moment,
+  task: TaskType,
+  error: { msg: string, type: 'cron' | 'name' | 'conflict' | null }
+};
 
-class TasksWidget extends Component {
-  props: {
-    tasks: TasksState,
-    dispatch: any,
-    servers: ServersState
-  };
-  state: {
-    filterValue: string,
-    open: boolean,
-    date: Date,
-    task: TaskType,
-    error: { msg: string, type: 'cron' | 'name' | 'conflict' | null }
-  };
+class TasksWidget extends Component<Props, State> {
   state = {
     filterValue: '',
     open: false,
@@ -216,7 +216,7 @@ class TasksWidget extends Component {
         </div>
 
         <div style={Column}>
-          {filterList.map(task =>
+          {filterList.map(task => (
             <TaskItem
               key={task.id}
               task={task}
@@ -224,7 +224,7 @@ class TasksWidget extends Component {
               handleClickPlayTaskButton={this.playTask}
               handleClickRemoveTaskButton={this.removeTask}
             />
-          )}
+          ))}
         </div>
         <div style={spacer} />
       </div>

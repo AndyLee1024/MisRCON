@@ -18,18 +18,18 @@ import { MisRCONTheme } from '../../styles/theme';
  * Wraps a widget in the redux store provider and material ui theme
  */
 function wrapWidget(Widget, store, layout) {
-	class Wrapped extends Component {
-		render() {
-			return (
-				<Provider store={store}>
-					<MuiThemeProvider muiTheme={MisRCONTheme}>
-						<Widget {...this.props} layout={layout} />
-					</MuiThemeProvider>
-				</Provider>
-			);
-		}
-	}
-	return Wrapped;
+  class Wrapped extends Component {
+    render() {
+      return (
+        <Provider store={store}>
+          <MuiThemeProvider muiTheme={MisRCONTheme}>
+            <Widget {...this.props} layout={layout} />
+          </MuiThemeProvider>
+        </Provider>
+      );
+    }
+  }
+  return Wrapped;
 }
 
 /**
@@ -40,35 +40,35 @@ function wrapWidget(Widget, store, layout) {
  * it can also use material ui themes
  */
 export default function registerWidgetsToLayout(
-	layout: GoldenLayout,
-	store: any
+  layout: GoldenLayout,
+  store: any
 ) {
-	layout.registerComponent(
-		'bans-widget',
-		wrapWidget(BansWidget, store, layout)
-	);
-	layout.registerComponent(
-		'console-widget',
-		wrapWidget(ConsoleWidget, store, layout)
-	);
-	layout.registerComponent(
-		'help-widget',
-		wrapWidget(HelpWidget, store, layout)
-	);
-	layout.registerComponent(
-		'players-widget',
-		wrapWidget(PlayersWidget, store, layout)
-	);
-	layout.registerComponent(
-		'status-widget',
-		wrapWidget(StatusWidget, store, layout)
-	);
-	layout.registerComponent(
-		'tasks-widget',
-		wrapWidget(TasksWidget, store, layout)
-	);
-	layout.registerComponent(
-		'whitelist-widget',
-		wrapWidget(WhitelistWidget, store)
-	);
+  layout.registerComponent(
+    'bans-widget',
+    wrapWidget(BansWidget, store, layout)
+  );
+  layout.registerComponent(
+    'console-widget',
+    wrapWidget(ConsoleWidget, store, layout)
+  );
+  layout.registerComponent(
+    'help-widget',
+    wrapWidget(HelpWidget, store, layout)
+  );
+  layout.registerComponent(
+    'players-widget',
+    wrapWidget(PlayersWidget, store, layout)
+  );
+  layout.registerComponent(
+    'status-widget',
+    wrapWidget(StatusWidget, store, layout)
+  );
+  layout.registerComponent(
+    'tasks-widget',
+    wrapWidget(TasksWidget, store, layout)
+  );
+  layout.registerComponent(
+    'whitelist-widget',
+    wrapWidget(WhitelistWidget, store)
+  );
 }
